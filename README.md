@@ -1,3 +1,8 @@
+// Written by Marina
+something 
+
+// Written by Andrei
+
 //Exsample of readme file
 
 This is an QRA app

@@ -10,4 +10,8 @@ This is an QRA app
 QRA - QR application
 
 I don't know what to write next
+
+// Written by Kate
+ meow
+
 // end of exsample

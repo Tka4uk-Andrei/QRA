@@ -21,24 +21,28 @@
         android:textSize="20sp" />
 
     <Button
+        android:id="@+id/qr_scan_btn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Scan QR code" />
 
     <Button
+        android:id="@+id/json_parse_btn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Parce json text" />
+        android:text="Parse json text" />
 
     <Button
+        android:id="@+id/send_request_btn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Send web request" />
 
     <Button
+        android:id="@+id/settings_btn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

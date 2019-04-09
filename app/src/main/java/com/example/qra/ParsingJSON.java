@@ -20,11 +20,34 @@ import java.io.StringWriter;
 public class ParsingJSON {
 
 
+    /**
+     * attribute total sum your shopping
+     */
     private int totalSum;
+
+    /**
+     * attribute paied nds sum (nds10% + nds18%)
+     */
     private int paiedNdsSum;
+
+    /**
+     * attribute number of products which you bought
+     */
     private int quantityPurchases;
+
+    /**
+     * attribute store address
+     */
     private String addresOfPurchase;
+
+    /**
+     * attribute buying time
+     */
     private String buyTime;
+
+    /**
+     * attribute array of your products list
+     */
     private ShoppingList[] ShoppingListArray;
 
 

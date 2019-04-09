@@ -7,9 +7,17 @@ package com.example.qra;
  * Author: Marina Alekseeva
  */
 public class ShoppingList {
+
+    /**
+     * attribute name of the product
+     */
     private String name;
+
+    /**
+     * attribute price of the product
+     */
     private int price;
-    //namesAndPrices(){ name = "-"; price =0;}
+
 
     /**
      * @return price of the product
@@ -28,7 +36,6 @@ public class ShoppingList {
 
     /**
      * This function sets the name of the product.
-     *
      * @param name
      */
     public void setName(String name) {
@@ -37,7 +44,6 @@ public class ShoppingList {
 
     /**
      * This function sets the price of the product.
-     *
      * @param price
      */
     public void setPrice(int price) {

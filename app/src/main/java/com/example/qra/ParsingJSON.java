@@ -11,7 +11,7 @@ import java.io.StringWriter;
 
 /**
  * class responsible for recognizing JSON strings
- *  Author: Marina Alekseeva
+ * Author: Marina Alekseeva
  */
 
 
@@ -31,35 +31,35 @@ public class ParsingJSON {
     /**
      * @return total sum your shopping
      */
-    public int getTotalSum(){
+    public int getTotalSum() {
         return totalSum;
     }
 
     /**
      * @return paied nds sum (nds10% + nds18%)
      */
-    public int getPaiedNdsSum(){
+    public int getPaiedNdsSum() {
         return paiedNdsSum;
     }
 
     /**
      * @return number of products which you bought
      */
-    public int getQuantityPurchases(){
+    public int getQuantityPurchases() {
         return totalSum;
     }
 
     /**
      * @return store address
      */
-    public String getAddresOfPurchase(){
+    public String getAddresOfPurchase() {
         return addresOfPurchase;
     }
 
     /**
      * @return buying time
      */
-    public String getBuyTime(){
+    public String getBuyTime() {
         return buyTime;
     }
 
@@ -73,14 +73,15 @@ public class ParsingJSON {
 
     /**
      * method responsible for counting the number of goods purchased
+     *
      * @param arrayOfItems
      * @return quantity of purchases
      */
     public int countingTheNumberOfGoods(JSONArray arrayOfItems) {
         int quantityGoodsPurchased = 0;
         try {
-            for(; quantityGoodsPurchased > -1; quantityGoodsPurchased++){ // цикл пока не закончатся объекты
-                JSONObject val =  arrayOfItems.getJSONObject(quantityGoodsPurchased);
+            for (; quantityGoodsPurchased > -1; quantityGoodsPurchased++) { // цикл пока не закончатся объекты
+                JSONObject val = arrayOfItems.getJSONObject(quantityGoodsPurchased);
                 quantityGoodsPurchased += val.getInt("quantity") - 1;
             }
 
@@ -92,9 +93,10 @@ public class ParsingJSON {
 
     /**
      * field constructor
+     *
      * @param stringJSON
      */
-    ParsingJSON(String stringJSON){
+    ParsingJSON(String stringJSON) {
         try {
             JSONObject jsonResponse = new JSONObject(stringJSON);
             JSONObject document = jsonResponse.getJSONObject("document");
@@ -110,13 +112,13 @@ public class ParsingJSON {
 
 
             ShoppingListArray = new ShoppingList[quantityPurchases];
-            for (int i = 0; i < quantityPurchases; i++){
+            for (int i = 0; i < quantityPurchases; i++) {
                 ShoppingListArray[i] = new ShoppingList();
             }
 
-            for (int i = 0;i < quantityPurchases; i++) {
+            for (int i = 0; i < quantityPurchases; i++) {
                 int quantityOfGoodsOfOneType = items.getJSONObject(i).getInt("quantity");
-                for (int j = 0; j < quantityOfGoodsOfOneType ; j ++){
+                for (int j = 0; j < quantityOfGoodsOfOneType; j++) {
                     ShoppingListArray[i].setPrice(items.getJSONObject(i).getInt("price"));
                     ShoppingListArray[i].setName(items.getJSONObject(i).getString("name"));
                 }
@@ -127,7 +129,7 @@ public class ParsingJSON {
             //e.printStackTrace();
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
-          //  return errors.toString();
+            //  return errors.toString();
         }
 
     }

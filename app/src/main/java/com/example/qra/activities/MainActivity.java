@@ -60,16 +60,8 @@ public class MainActivity extends AppCompatActivity {
                         intent = new Intent(ACTION_SCAN);
                         intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
                         startActivityForResult(intent, 0);
-                    } catch (ActivityNotFoundException anfe) {
-                        Toast.makeText(getApplicationContext(), "QR reader app doesn't installed on device",
-                                Toast.LENGTH_LONG).show();
-
-                        // TODO show message that will start load from Play Market
-                        // showDialog(MainActivity.this, "Сканнер не найден",
-                        // "Установить сканер с Play Market?", "Да", "Нет").show();4
-                        //
-                        // request URL
-                        // https://play.google.com/store/search?q=com.google.zxing.client.android&c=apps
+                    } catch (ActivityNotFoundException exception) {
+                        (new AppNotInstalledDialog()).show(getSupportFragmentManager(), "custom");
                     }
                 } else {
                     if (v == jsonButton) {
@@ -81,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Settings button pressed",
                                 Toast.LENGTH_SHORT).show();
                     }
-
                     if (intent != null)
                         startActivity(intent);
                     else

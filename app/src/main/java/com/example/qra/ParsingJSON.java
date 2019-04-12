@@ -19,79 +19,10 @@ import java.io.StringWriter;
 
 public class ParsingJSON {
 
-
     /**
-     * attribute total sum your shopping
+     * attribute object that stores check information
      */
-    private int totalSum;
-
-    /**
-     * attribute paied nds sum (nds10% + nds18%)
-     */
-    private int paiedNdsSum;
-
-    /**
-     * attribute number of products which you bought
-     */
-    private int quantityPurchases;
-
-    /**
-     * attribute store address
-     */
-    private String addresOfPurchase;
-
-    /**
-     * attribute buying time
-     */
-    private String buyTime;
-
-    /**
-     * attribute array of your products list
-     */
-    private ShoppingList[] ShoppingListArray;
-
-
-    /**
-     * @return total sum your shopping
-     */
-    public int getTotalSum() {
-        return totalSum;
-    }
-
-    /**
-     * @return paied nds sum (nds10% + nds18%)
-     */
-    public int getPaiedNdsSum() {
-        return paiedNdsSum;
-    }
-
-    /**
-     * @return number of products which you bought
-     */
-    public int getQuantityPurchases() {
-        return totalSum;
-    }
-
-    /**
-     * @return store address
-     */
-    public String getAddresOfPurchase() {
-        return addresOfPurchase;
-    }
-
-    /**
-     * @return buying time
-     */
-    public String getBuyTime() {
-        return buyTime;
-    }
-
-    /**
-     * @return array of your products list
-     */
-    public ShoppingList[] getShoppingListArray() {
-        return ShoppingListArray;
-    }
+    CheckInformationStorage object;
 
 
     /**
@@ -100,7 +31,7 @@ public class ParsingJSON {
      * @param arrayOfItems
      * @return quantity of purchases
      */
-    public int countingTheNumberOfGoods(JSONArray arrayOfItems) {
+    private int countingTheNumberOfGoods(JSONArray arrayOfItems) {
         int quantityGoodsPurchased = 0;
         try {
             for (; quantityGoodsPurchased > -1; quantityGoodsPurchased++) { // цикл пока не закончатся объекты
@@ -119,31 +50,28 @@ public class ParsingJSON {
      *
      * @param stringJSON
      */
-    ParsingJSON(String stringJSON) {
+    public ParsingJSON(String stringJSON) {
+        object = new CheckInformationStorage();
         try {
             JSONObject jsonResponse = new JSONObject(stringJSON);
             JSONObject document = jsonResponse.getJSONObject("document");
             JSONObject receipt = document.getJSONObject("receipt");
 
-            totalSum = receipt.getInt("ecashTotalSum");
-            paiedNdsSum = receipt.getInt("nds18") + receipt.getInt("nds10");
-            addresOfPurchase = receipt.getString("retailPlaceAddress");
-            buyTime = receipt.getString("dateTime");
+            object.setTotalSum(receipt.getInt("ecashTotalSum"));
+            object.setPaiedNdsSum(receipt.getInt("nds18") + receipt.getInt("nds10"));
+            object.setAddresOfPurchase(receipt.getString("retailPlaceAddress"));
+            object.setBuyTime(receipt.getString("dateTime"));
 
             JSONArray items = receipt.getJSONArray("items");
-            quantityPurchases = countingTheNumberOfGoods(items);
 
+            object.setQuantityPurchases(countingTheNumberOfGoods(items));
+            object.declareAnArray();
 
-            ShoppingListArray = new ShoppingList[quantityPurchases];
-            for (int i = 0; i < quantityPurchases; i++) {
-                ShoppingListArray[i] = new ShoppingList();
-            }
-
-            for (int i = 0; i < quantityPurchases; i++) {
+            for (int i = 0; i < object.getQuantityPurchases(); i++) {
                 int quantityOfGoodsOfOneType = items.getJSONObject(i).getInt("quantity");
                 for (int j = 0; j < quantityOfGoodsOfOneType; j++) {
-                    ShoppingListArray[i].setPrice(items.getJSONObject(i).getInt("price"));
-                    ShoppingListArray[i].setName(items.getJSONObject(i).getString("name"));
+                    object.setPriseInShoppingListArray(i, items.getJSONObject(i).getInt("price"));
+                    object.setNameInShoppingListArray(i, items.getJSONObject(i).getString("name"));
                 }
             }
 
@@ -158,4 +86,10 @@ public class ParsingJSON {
     }
 
 
+    /**
+     * @return check information object
+     */
+    public CheckInformationStorage getObject() {
+        return object;
+    }
 }

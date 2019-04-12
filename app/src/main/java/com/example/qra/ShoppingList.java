@@ -14,13 +14,36 @@ public class ShoppingList {
     private String name;
 
     /**
-     * attribute price of the product
+     * attribute price of the this products
      */
     private int price;
 
 
     /**
-     * @return price of the product
+     * attribute number of goods with the given name
+     */
+    private int quantityOfGoodsWithThisName;
+
+
+    /**
+     * This function sets tquantity of goods with the given name
+     *
+     * @param numberOfGoodsWithThisName
+     */
+    public void setQuantityOfGoodsWithThisName(int numberOfGoodsWithThisName) {
+        this.quantityOfGoodsWithThisName = numberOfGoodsWithThisName;
+    }
+
+
+    /**
+     * @return quantity of goods with the given name
+     */
+    public int getQuantityOfGoodsWithThisName() {
+        return quantityOfGoodsWithThisName;
+    }
+
+    /**
+     * @return price of the this products
      */
     public int getPrice() {
         return price;
@@ -36,6 +59,7 @@ public class ShoppingList {
 
     /**
      * This function sets the name of the product.
+     *
      * @param name
      */
     public void setName(String name) {
@@ -43,7 +67,8 @@ public class ShoppingList {
     }
 
     /**
-     * This function sets the price of the product.
+     * This function sets the price of the this products
+     *
      * @param price
      */
     public void setPrice(int price) {

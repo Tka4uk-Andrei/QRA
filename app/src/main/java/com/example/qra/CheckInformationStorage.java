@@ -98,6 +98,15 @@ public class CheckInformationStorage {
 
 
     /**
+     * @param numberInTheListOfProducts
+     * @return quantity of similar products with the given name.
+     */
+    public int getQuantityOfGoodsWithThisNameInShoppingListArray(int numberInTheListOfProducts) {
+        return ShoppingListArray[numberInTheListOfProducts].getQuantityOfGoodsWithThisName();
+    }
+
+
+    /**
      * This method allows you to set store address
      *
      * @param addresOfPurchase
@@ -163,6 +172,17 @@ public class CheckInformationStorage {
      */
     public void setPriseInShoppingListArray(int numberInTheListOfProducts, int prise) {
         ShoppingListArray[numberInTheListOfProducts].setPrice(prise);
+    }
+
+    /**
+     * This method allows you to set quantity of similar products with the given name.
+     *
+     * @param numberInTheListOfProducts
+     * @param quantityOfGoodsWithThisName
+     */
+    public void setQuantityOfGoodsWithThisNameInShoppingListArray
+    (int numberInTheListOfProducts, int quantityOfGoodsWithThisName) {
+        ShoppingListArray[numberInTheListOfProducts].setQuantityOfGoodsWithThisName(quantityOfGoodsWithThisName);
     }
 
 

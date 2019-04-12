@@ -8,6 +8,8 @@ import org.json.JSONObject;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import static java.lang.System.exit;
+
 
 /**
  * class responsible for recognizing JSON strings
@@ -16,6 +18,7 @@ import java.io.StringWriter;
 
 
 //I added only what I thought was necessary (for example, I did not add the name of the cashier)
+
 
 public class ParsingJSON {
 
@@ -35,8 +38,7 @@ public class ParsingJSON {
         int quantityGoodsPurchased = 0;
         try {
             for (; quantityGoodsPurchased > -1; quantityGoodsPurchased++) { // цикл пока не закончатся объекты
-                JSONObject val = arrayOfItems.getJSONObject(quantityGoodsPurchased);
-                quantityGoodsPurchased += val.getInt("quantity") - 1;
+                JSONObject value = arrayOfItems.getJSONObject(quantityGoodsPurchased);
             }
 
         } catch (JSONException e) {
@@ -45,44 +47,65 @@ public class ParsingJSON {
         return quantityGoodsPurchased;
     }
 
+
     /**
      * field constructor
      *
      * @param stringJSON
+     * @throws ParsingJsonException an object of this class has an attribute with an error message
      */
-    public ParsingJSON(String stringJSON) {
+    public ParsingJSON(String stringJSON) throws ParsingJsonException {
+        String stringDocument = "document";
+        String stringReceipt = "receipt";
+        String stringEcashTotalSum = "ecashTotalSum";
+        String stringNds18 = "nds18";
+        String stringNds10 = "nds10";
+        String stringRetailPlaceAddress = "retailPlaceAddress";
+        String stringDateTime = "dateTime";//
+        String stringItems = "items";
+        String stringQuantity = "quantity";
+        String stringSum = "sum";
+        String stringName = "name";
+
         object = new CheckInformationStorage();
+        JSONObject jsonResponse = null;
         try {
-            JSONObject jsonResponse = new JSONObject(stringJSON);
-            JSONObject document = jsonResponse.getJSONObject("document");
-            JSONObject receipt = document.getJSONObject("receipt");
+            jsonResponse = new JSONObject(stringJSON);
+            JSONObject document = jsonResponse.getJSONObject(stringDocument);
+            JSONObject receipt = document.getJSONObject(stringReceipt);
 
-            object.setTotalSum(receipt.getInt("ecashTotalSum"));
-            object.setPaiedNdsSum(receipt.getInt("nds18") + receipt.getInt("nds10"));
-            object.setAddresOfPurchase(receipt.getString("retailPlaceAddress"));
-            object.setBuyTime(receipt.getString("dateTime"));
+            object.setTotalSum(receipt.getInt(stringEcashTotalSum));
+            object.setPaiedNdsSum(receipt.getInt(stringNds18) + receipt.getInt(stringNds10));
+            object.setAddresOfPurchase(receipt.getString(stringRetailPlaceAddress));
+            object.setBuyTime(receipt.getString(stringDateTime));
 
-            JSONArray items = receipt.getJSONArray("items");
+            JSONArray items = receipt.getJSONArray(stringItems);
 
             object.setQuantityPurchases(countingTheNumberOfGoods(items));
             object.declareAnArray();
 
             for (int i = 0; i < object.getQuantityPurchases(); i++) {
-                int quantityOfGoodsOfOneType = items.getJSONObject(i).getInt("quantity");
-                for (int j = 0; j < quantityOfGoodsOfOneType; j++) {
-                    object.setPriseInShoppingListArray(i, items.getJSONObject(i).getInt("price"));
-                    object.setNameInShoppingListArray(i, items.getJSONObject(i).getString("name"));
-                }
+                object.setNameInShoppingListArray(i, items.getJSONObject(i).getString(stringName));
+                object.setQuantityOfGoodsWithThisNameInShoppingListArray(i,
+                        items.getJSONObject(i).getInt(stringQuantity));
+                object.setPriseInShoppingListArray(i, items.getJSONObject(i).getInt(stringSum));
             }
-
-
         } catch (JSONException e) {
             //e.printStackTrace();
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
-            //  return errors.toString();
+            String mesegeError[] = errors.toString().split(":", 2);
+            String mesegeErrorFinal[] = mesegeError[1].split("\n", 2);
+
+            throw new ParsingJsonException(mesegeErrorFinal[0]); //здесь будет выведено, где
+            //возникла ошибка и будет брошено исключение, с полем, содержащем информацию об этом
+
+
         }
 
+//            StringWriter errors = new StringWriter();
+//            e.printStackTrace(new PrintWriter(errors));
+//           return errors.toString();
     }
 
 

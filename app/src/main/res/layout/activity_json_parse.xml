@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
     tools:context=".activities.JsonParseActivity">
 
     <TextView
-        android:textSize="25sp"
-        android:layout_gravity="center"
-        android:text="JSON activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.1"/>
+        android:layout_gravity="center"
+        android:layout_weight="0.1"
+        android:text="JSON activity"
+        android:textSize="25sp" />
 
     <EditText
-        android:hint="Enter JSON string"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="30"/>
+        android:layout_weight="30"
+        android:hint="Enter JSON string" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Parse"
-        android:layout_weight="0.1"/>
-
-
+        android:layout_weight="0.1"
+        android:text="Parse" />
 
 
 </android.widget.LinearLayout>

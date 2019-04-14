@@ -1,6 +1,7 @@
 package com.example.qra.data;
 import android.os.AsyncTask;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -49,10 +50,10 @@ public class WebRequestData {
                 rd.close();
                 response = resp.toString();
                 return response;
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
                 return null;
-            } finally {
+            }  finally {
                 if (connection != null) {
                     connection.disconnect();
                 }
@@ -61,14 +62,11 @@ public class WebRequestData {
     }
 
     /**
-     * Return the response to the http request \\
-     * Author: Ekaterina Novoselova
+     * @return the response to the http request \\
+     * @autor : Ekaterina Novoselova
      */
     public String getWebRequestData() {
-        QrData targetQr = new QrData();
-        targetQr.setFiscalNumber("9251440300003811");
-        targetQr.setFiscalDocument("8947");
-        targetQr.setFiscalSignOfDocument("3163913062");
+        QrData targetQr = new QrData("9251440300003811","8947","3163913062");
 
         new GetRequestSender().execute(targetQr);
         return response;

@@ -5,6 +5,11 @@ public class QrData {
     private String fiscalDocument;
     private String fiscalSignOfDocument;
 
+    QrData(String fiscalNum, String fiscalDoc, String fiscalSignOfDoc){
+        fiscalNumber = fiscalNum;
+        fiscalDocument = fiscalDoc;
+        fiscalSignOfDocument = fiscalSignOfDoc;
+    }
     public String getFiscalNumber(){
         return fiscalNumber;
     }
@@ -15,17 +20,5 @@ public class QrData {
 
     public String getFiscalSignOfDocument(){
         return fiscalSignOfDocument;
-    }
-
-    public void setFiscalNumber(String fiscalNum){
-        fiscalNumber = fiscalNum;
-    }
-
-    public void setFiscalDocument(String fiscalDoc){
-        fiscalDocument = fiscalDoc;
-    }
-
-    public void setFiscalSignOfDocument(String fiscalSignOfDoc){
-        fiscalSignOfDocument = fiscalSignOfDoc;
     }
 }

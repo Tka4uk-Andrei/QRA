@@ -112,8 +112,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Send request button pressed",
                             Toast.LENGTH_SHORT).show();
                 } else if (v == settingsButton) {
-                    Toast.makeText(getApplicationContext(), "Settings button pressed",
-                            Toast.LENGTH_SHORT).show();
+                    //TODO switch to settings activity
+                    intent = new Intent(getApplicationContext(), RegisterInFnsActivity.class);
                 }
                 if (intent != null)
                     startActivity(intent);

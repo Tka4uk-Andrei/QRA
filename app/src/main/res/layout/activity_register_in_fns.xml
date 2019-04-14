@@ -4,28 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.RegisterInFnsActivity"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="10dp"
+    tools:context=".activities.RegisterInFnsActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="Phone number"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/phone_number"
-        android:hint="phone number"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:inputType="phone"
+        android:hint="phone number" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="Password"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/password"
-        android:hint="password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:inputType="numberPassword"
+        android:hint="password" />
 
     <Button
         android:id="@+id/register_btn"
-        android:text="Register"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Register" />
 
 
 </android.widget.LinearLayout>

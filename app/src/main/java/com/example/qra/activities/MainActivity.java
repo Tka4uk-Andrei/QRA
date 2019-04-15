@@ -2,6 +2,7 @@ package com.example.qra.activities;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +17,28 @@ import com.example.qra.R;
  */
 public class MainActivity extends AppCompatActivity {
 
-    static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
+    private static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
+    private static final String FIRST_TIME_RUN = "First time";
+    private static final String IS_FIRST_TIME = "is first";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences firstTimePreference = getApplicationContext().getSharedPreferences(FIRST_TIME_RUN, MODE_PRIVATE);
+        boolean isFirstLaunch = firstTimePreference.getBoolean(IS_FIRST_TIME, true);
+
+        if (isFirstLaunch) {
+            Toast.makeText(getApplicationContext(), "First Launch",
+                    Toast.LENGTH_SHORT).show();
+            SharedPreferences.Editor editor = firstTimePreference.edit();
+            editor.putBoolean(IS_FIRST_TIME, false);
+            editor.apply();
+        } else {
+            Toast.makeText(getApplicationContext(), "I was launched previously",
+                    Toast.LENGTH_SHORT).show();
+        }
 
         ConnectViewsWithCode();
         setViewListeners();
@@ -95,8 +112,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Send request button pressed",
                             Toast.LENGTH_SHORT).show();
                 } else if (v == settingsButton) {
-                    Toast.makeText(getApplicationContext(), "Settings button pressed",
-                            Toast.LENGTH_SHORT).show();
+                    //TODO switch to settings activity
+                    intent = new Intent(getApplicationContext(), RegisterInFnsActivity.class);
                 }
                 if (intent != null)
                     startActivity(intent);

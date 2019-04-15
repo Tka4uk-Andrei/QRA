@@ -16,11 +16,6 @@ import com.example.qra.R;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private Button qrScanButton;
-    private Button jsonButton;
-    private Button requestButton;
-    private Button settingsButton;
-
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
 
     @Override
@@ -50,38 +45,6 @@ public class MainActivity extends AppCompatActivity {
      */
     public void setViewListeners() {
 
-        class MenuBtnClickListener implements View.OnClickListener {
-            @Override
-            public void onClick(View v) {
-                Intent intent = null;
-
-                if (v == qrScanButton) {
-                    try {
-                        intent = new Intent(ACTION_SCAN);
-                        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-                        startActivityForResult(intent, 0);
-                    } catch (ActivityNotFoundException exception) {
-                        (new AppNotInstalledDialog()).show(getSupportFragmentManager(), "custom");
-                    }
-                } else {
-                    if (v == jsonButton) {
-                        intent = new Intent(getApplicationContext(), JsonParseActivity.class);
-                    } else if (v == requestButton) {
-                        Toast.makeText(getApplicationContext(), "Send request button pressed",
-                                Toast.LENGTH_SHORT).show();
-                    } else if (v == settingsButton) {
-                        Toast.makeText(getApplicationContext(), "Settings button pressed",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                    if (intent != null)
-                        startActivity(intent);
-                    else
-                        Toast.makeText(getApplicationContext(), "ERROR. Don't know what activity i need to start",
-                                Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-        MenuBtnClickListener menuBtnClickListener = new MenuBtnClickListener();
 
         qrScanButton.setOnClickListener(menuBtnClickListener);
         jsonButton.setOnClickListener(menuBtnClickListener);
@@ -104,4 +67,46 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    private Button qrScanButton;
+    private Button jsonButton;
+    private Button requestButton;
+    private Button settingsButton;
+
+    private View.OnClickListener menuBtnClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = null;
+
+            // TODO move texts to resources
+            if (v == qrScanButton) {
+                try {
+                    intent = new Intent(ACTION_SCAN);
+                    intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+                    startActivityForResult(intent, 0);
+                } catch (ActivityNotFoundException exception) {
+                    (new AppNotInstalledDialog()).show(getSupportFragmentManager(), "APP_NOT_INSTALLED");
+                }
+            } else {
+                if (v == jsonButton) {
+                    intent = new Intent(getApplicationContext(), JsonParseActivity.class);
+                } else if (v == requestButton) {
+                    Toast.makeText(getApplicationContext(), "Send request button pressed",
+                            Toast.LENGTH_SHORT).show();
+                } else if (v == settingsButton) {
+                    Toast.makeText(getApplicationContext(), "Settings button pressed",
+                            Toast.LENGTH_SHORT).show();
+                }
+                if (intent != null)
+                    startActivity(intent);
+                else
+                    Toast.makeText(getApplicationContext(), "ERROR. Don't know what activity i need to start",
+                            Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
 }
+
+

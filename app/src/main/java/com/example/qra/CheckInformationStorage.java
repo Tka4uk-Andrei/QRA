@@ -2,38 +2,45 @@ package com.example.qra;
 
 /**
  * this class is responsible for storing check information
+ *
+ * @author: Marina Alekseeva
  */
 public class CheckInformationStorage {
 
     /**
-     * attribute total sum your shopping
+     * total sum your shopping
      */
     private int totalSum;
 
     /**
-     * attribute paied nds sum (nds10% + nds18%)
+     * Tax Identification Number
+     */
+    private String inn;
+
+    /**
+     * paied nds sum (nds10% + nds18%)
      */
     private int paiedNdsSum;
 
     /**
-     * attribute number of products which you bought
+     * number of products which you bought
      */
     private int quantityPurchases;
 
     /**
-     * attribute store address
+     * store address
      */
     private String addresOfPurchase;
 
     /**
-     * attribute buying time
+     * buying time
      */
     private String buyTime;
 
     /**
-     * attribute array of your products list
+     * array of your products list
      */
-    private ShoppingList[] ShoppingListArray;
+    private ItemsList[] shoppingList;
 
 
     /**
@@ -41,6 +48,13 @@ public class CheckInformationStorage {
      */
     public int getTotalSum() {
         return totalSum;
+    }
+
+    /**
+     * @return Tax Identification Number
+     */
+    public String getInn() {
+        return inn;
     }
 
     /**
@@ -75,34 +89,34 @@ public class CheckInformationStorage {
     /**
      * @return array of your products list
      */
-    public ShoppingList[] getShoppingListArray() {
-        return ShoppingListArray;
+    public ItemsList[] getShoppingList() {
+        return shoppingList;
     }
 
 
     /**
-     * @param numberInTheListOfProducts
+     * @param numberInTheListOfProducts number items in the list of products in the order
      * @return price of this item
      */
-    public int getPriseInShoppingListArray(int numberInTheListOfProducts) {
-        return ShoppingListArray[numberInTheListOfProducts].getPrice();
+    public int getPriseInShoppingList(int numberInTheListOfProducts) {
+        return shoppingList[numberInTheListOfProducts].getPrice();
     }
 
     /**
-     * @param numberInTheListOfProducts
+     * @param numberInTheListOfProducts number items in the list of products in the order
      * @return name of this item
      */
-    public String getNameInShoppingListArray(int numberInTheListOfProducts) {
-        return ShoppingListArray[numberInTheListOfProducts].getName();
+    public String getNameInShoppingList(int numberInTheListOfProducts) {
+        return shoppingList[numberInTheListOfProducts].getName();
     }
 
 
     /**
-     * @param numberInTheListOfProducts
+     * @param numberInTheListOfProducts number items in the list of products in the order
      * @return quantity of similar products with the given name.
      */
-    public int getQuantityOfGoodsWithThisNameInShoppingListArray(int numberInTheListOfProducts) {
-        return ShoppingListArray[numberInTheListOfProducts].getQuantityOfGoodsWithThisName();
+    public int getQuantityOfGoodsWithThisNameInShoppingList(int numberInTheListOfProducts) {
+        return shoppingList[numberInTheListOfProducts].getQuantityOfGoodsWithThisName();
     }
 
 
@@ -128,7 +142,7 @@ public class CheckInformationStorage {
     /**
      * This method allows you to set paied nds sum (nds10% + nds18%)
      *
-     * @param paiedNdsSum
+     * @param paiedNdsSum paied nds sum (nds10% + nds18%)
      */
     public void setPaiedNdsSum(int paiedNdsSum) {
         this.paiedNdsSum = paiedNdsSum;
@@ -137,7 +151,7 @@ public class CheckInformationStorage {
     /**
      * This method allows you to set number of products which you bought
      *
-     * @param quantityPurchases
+     * @param quantityPurchases number of products which you bought
      */
     public void setQuantityPurchases(int quantityPurchases) {
         this.quantityPurchases = quantityPurchases;
@@ -145,66 +159,60 @@ public class CheckInformationStorage {
 
 
     /**
-     * array ShoppingListArray initialization
-     */
-    public void declareAnArray() {
-        ShoppingListArray = new ShoppingList[quantityPurchases];
-        for (int i = 0; i < quantityPurchases; i++) {
-            ShoppingListArray[i] = new ShoppingList();
-        }
-    }
-
-
-    /**
      * This method allows you to set array of your products list
      *
-     * @param shoppingListArray
+     * @param shoppingList array of your products list
      */
-    public void setShoppingListArray(ShoppingList[] shoppingListArray) {
-        ShoppingListArray = shoppingListArray;
+    public void setShoppingList(ItemsList[] shoppingList) {
+        this.shoppingList = shoppingList;
     }
 
     /**
      * This method allows you to set name of this item
      *
-     * @param numberInTheListOfProducts
+     * @param numberInTheListOfProducts number items in the list of products in the order
      * @param prise
      */
-    public void setPriseInShoppingListArray(int numberInTheListOfProducts, int prise) {
-        ShoppingListArray[numberInTheListOfProducts].setPrice(prise);
+    public void setPriseInShoppingList(int numberInTheListOfProducts, int prise) {
+        shoppingList[numberInTheListOfProducts].setPrice(prise);
     }
 
     /**
      * This method allows you to set quantity of similar products with the given name.
      *
-     * @param numberInTheListOfProducts
-     * @param quantityOfGoodsWithThisName
+     * @param numberInTheListOfProducts   number items in the list of products in the order
+     * @param quantityOfGoodsWithThisName number of goods with the given name
      */
-    public void setQuantityOfGoodsWithThisNameInShoppingListArray
+    public void setQuantityOfGoodsWithThisNameInShoppingList
     (int numberInTheListOfProducts, int quantityOfGoodsWithThisName) {
-        ShoppingListArray[numberInTheListOfProducts].setQuantityOfGoodsWithThisName(quantityOfGoodsWithThisName);
+        shoppingList[numberInTheListOfProducts].setQuantityOfGoodsWithThisName(quantityOfGoodsWithThisName);
     }
 
 
     /**
      * This method allows you to set name of this item
      *
-     * @param numberInTheListOfProducts
+     * @param numberInTheListOfProducts number items in the list of products in the order
      * @param name
      */
-    public void setNameInShoppingListArray(int numberInTheListOfProducts, String name) {
-        ShoppingListArray[numberInTheListOfProducts].setName(name);
+    public void setNameInShoppingList(int numberInTheListOfProducts, String name) {
+        shoppingList[numberInTheListOfProducts].setName(name);
     }
 
 
     /**
      * This method allows you to set total sum your shopping
      *
-     * @param totalSum
+     * @param totalSum total sum your shopping
      */
     public void setTotalSum(int totalSum) {
         this.totalSum = totalSum;
     }
 
-
+    /**
+     * @param inn Tax Identification Number
+     */
+    public void setInn(String inn) {
+        this.inn = inn;
+    }
 }

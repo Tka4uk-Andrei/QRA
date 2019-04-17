@@ -3,14 +3,14 @@ package com.example.qra;
 /**
  * This class is responsible for handling JSONException exceptions.
  * an object of this class has an attribute with an error message
- * Author: Marina Alekseeva
+ *
+ * @author: Marina Alekseeva
  */
 public class ParsingJsonException extends Exception {
 
     private String errorMessage;
 
     public ParsingJsonException(String description) {
-        super(description);
         errorMessage = description;
     }
 

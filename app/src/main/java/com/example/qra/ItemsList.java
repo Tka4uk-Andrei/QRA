@@ -4,31 +4,32 @@ package com.example.qra;
 /**
  * This class is responsible for storing information about the goods purchased
  * (the name of the product and its price of the product)
- * Author: Marina Alekseeva
+ *
+ * @author: Marina Alekseeva
  */
-public class ShoppingList {
+public class ItemsList {
 
     /**
-     * attribute name of the product
+     * name of the product
      */
     private String name;
 
     /**
-     * attribute price of the this products
+     * price of the this products
      */
     private int price;
 
 
     /**
-     * attribute number of goods with the given name
+     * number of goods with the given name
      */
     private int quantityOfGoodsWithThisName;
 
 
     /**
-     * This function sets tquantity of goods with the given name
+     * This function sets quantity of goods with the given name
      *
-     * @param numberOfGoodsWithThisName
+     * @param numberOfGoodsWithThisName number items in the list of products in the order
      */
     public void setQuantityOfGoodsWithThisName(int numberOfGoodsWithThisName) {
         this.quantityOfGoodsWithThisName = numberOfGoodsWithThisName;

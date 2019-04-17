@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
      */
     public void setViewListeners() {
 
-
         qrScanButton.setOnClickListener(menuBtnClickListener);
         jsonButton.setOnClickListener(menuBtnClickListener);
         requestButton.setOnClickListener(menuBtnClickListener);

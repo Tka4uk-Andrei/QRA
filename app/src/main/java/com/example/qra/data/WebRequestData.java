@@ -1,5 +1,6 @@
 package com.example.qra.data;
 import android.os.AsyncTask;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +12,11 @@ public class WebRequestData {
     private String response;
 
     private class GetRequestSender extends AsyncTask<QrData, Void, String> {
+        private Exception exception;
+
+        public Exception getException() {
+            return exception;
+        }
 
         @Override
         protected String doInBackground(QrData... qrDataParam) {
@@ -19,17 +25,16 @@ public class WebRequestData {
             QrData qrData = qrDataParam[0];
             StringBuilder urlSB = new StringBuilder();
 
+            urlSB.append("https://proverkacheka.nalog.ru:9999/v1/inns/*/kkts/*/fss/");
+            urlSB.append(qrData.getFiscalNumber());
+            urlSB.append("/tickets/");
+            urlSB.append(qrData.getFiscalDocument());
+            urlSB.append("?fiscalSign=");
+            urlSB.append(qrData.getFiscalSignOfDocument());
+            urlSB.append("&sendToEmail=no");
+
+            String targetURL = urlSB.toString();
             try {
-                urlSB.append("https://proverkacheka.nalog.ru:9999/v1/inns/*/kkts/*/fss/");
-                urlSB.append(qrData.getFiscalNumber());
-                urlSB.append("/tickets/");
-                urlSB.append(qrData.getFiscalDocument());
-                urlSB.append("?fiscalSign=");
-                urlSB.append(qrData.getFiscalSignOfDocument());
-                urlSB.append("&sendToEmail=no");
-
-                String targetURL = urlSB.toString();
-
                 //Create connection
                 URL url = new URL(targetURL);
                 connection = (HttpURLConnection) url.openConnection();
@@ -41,7 +46,7 @@ public class WebRequestData {
                 //Get Response
                 InputStream is = connection.getInputStream();
                 BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-                StringBuilder resp = new StringBuilder(); // or StringBuffer if Java version 5+
+                StringBuilder resp = new StringBuilder();
                 String line;
                 while ((line = rd.readLine()) != null) {
                     resp.append(line);
@@ -51,7 +56,7 @@ public class WebRequestData {
                 response = resp.toString();
                 return response;
             } catch (IOException e) {
-                e.printStackTrace();
+                exception = e;
                 return null;
             }  finally {
                 if (connection != null) {
@@ -65,10 +70,16 @@ public class WebRequestData {
      * @return the response to the http request \\
      * @autor : Ekaterina Novoselova
      */
-    public String getWebRequestData() {
+    public String getWebRequestData() throws Exception {
         QrData targetQr = new QrData("9251440300003811","8947","3163913062");
+        GetRequestSender sender = new GetRequestSender();
+        sender.execute(targetQr).get();
 
-        new GetRequestSender().execute(targetQr);
+        Exception e = sender.getException();
+        if(e != null) {
+            throw e;
+        }
+
         return response;
     }
 

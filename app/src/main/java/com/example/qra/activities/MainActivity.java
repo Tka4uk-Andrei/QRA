@@ -103,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(intent, 0);
                 } catch (ActivityNotFoundException exception) {
                     (new AppNotInstalledDialog()).show(getSupportFragmentManager(), "APP_NOT_INSTALLED");
+                } catch (Exception exception) {
+                    (new AppNotInstalledDialog()).show(getSupportFragmentManager(), "APP_NOT_INSTALLED");
                 }
             } else {
                 if (v == jsonButton) {

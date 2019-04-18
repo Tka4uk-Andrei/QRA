@@ -18,68 +18,59 @@ import java.io.StringWriter;
 
 //I added only what I thought was necessary (for example, I did not add the name of the cashier)
 
-
 public class ParsingJson {
 
     /**
      * constants for calling a check in the format JSON
      */
-    private static final String STRING_DOCUMENT = "document";
-    private static final String STRING_RECEIPT = "receipt";
-    private static final String STRING_TOTAL_SUM = "totalSum";
-    private static final String USER_INN = "userInn";
-    private static final String STRING_NDS_18 = "nds18";
-    private static final String STRING_NDS_10 = "nds10";
-    private static final String STRING_RETAIL_PLACE_ADDRESS = "retailPlaceAddress";
-    private static final String STRING_DATE_TIME = "dateTime";//
-    private static final String STRING_ITEMS = "items";
-    private static final String STRING_QUANTITY = "quantity";
-    private static final String STRING_SUM = "sum";
-    private static final String STRING_NAME = "name";
+    private static final String STRING_DOCUMENT_JSON_FIELD = "document";
+    private static final String STRING_RECEIPT_JSON_FIELD = "receipt";
+    private static final String STRING_TOTAL_SUM_JSON_FIELD = "totalSum";
+    private static final String USER_INN_JSON_FIELD = "userInn";
+    private static final String STRING_NDS_18_JSON_FIELD = "nds18";
+    private static final String STRING_NDS_10_JSON_FIELD = "nds10";
+    private static final String STRING_RETAIL_PLACE_ADDRESS_JSON_FIELD = "retailPlaceAddress";
+    private static final String STRING_DATE_TIME_JSON_FIELD = "dateTime";//
+    private static final String STRING_ITEMS_JSON_FIELD = "items";
+    private static final String STRING_QUANTITY_JSON_FIELD = "quantity";
+    private static final String STRING_SUM_JSON_FIELD = "sum";
+    private static final String STRING_NAME_JSON_FIELD = "name";
 
     /**
      * @param stringJSON
      * @return the object that stores check information
      * @throws ParsingJsonException an object of this class has an attribute with an error message
      */
-    public static CheckInformationStorage GetObjectFromParsingJsonString(String stringJSON) throws ParsingJsonException {
-        CheckInformationStorage tempObject;
+    public static CheckInformationStorage ParseJson(String stringJSON) throws ParsingJsonException {
 
-        tempObject = new CheckInformationStorage();
-        JSONObject jsonResponse = null;
+        CheckInformationStorage tempObject = new CheckInformationStorage();
+        JSONObject jsonResponse;
+
         try {
             jsonResponse = new JSONObject(stringJSON);
-            JSONObject document = jsonResponse.getJSONObject(STRING_DOCUMENT);
-            JSONObject receipt = document.getJSONObject(STRING_RECEIPT);
+            JSONObject document = jsonResponse.getJSONObject(STRING_DOCUMENT_JSON_FIELD);
+            JSONObject receipt = document.getJSONObject(STRING_RECEIPT_JSON_FIELD);
 
-            tempObject.setTotalSum(receipt.getInt(STRING_TOTAL_SUM));
-            tempObject.setInn(receipt.getString(USER_INN));
-            tempObject.setPaiedNdsSum(receipt.getInt(STRING_NDS_18) + receipt.getInt(STRING_NDS_10));
-            tempObject.setAddresOfPurchase(receipt.getString(STRING_RETAIL_PLACE_ADDRESS));
-            tempObject.setBuyTime(receipt.getString(STRING_DATE_TIME));
+            tempObject.setTotalSum(receipt.getInt(STRING_TOTAL_SUM_JSON_FIELD));
+            tempObject.setInn(receipt.getString(USER_INN_JSON_FIELD));
+            tempObject.setPaidNdsSum(receipt.getInt(STRING_NDS_18_JSON_FIELD) +
+                    receipt.getInt(STRING_NDS_10_JSON_FIELD));
+            tempObject.setAddressOfPurchase(receipt.getString(STRING_RETAIL_PLACE_ADDRESS_JSON_FIELD));
+            tempObject.setBuyTime(receipt.getString(STRING_DATE_TIME_JSON_FIELD));
 
-            JSONArray items = receipt.getJSONArray(STRING_ITEMS);
+            JSONArray items = receipt.getJSONArray(STRING_ITEMS_JSON_FIELD);
 
             tempObject.setQuantityPurchases(items.length());
 
-            ItemsList[] shopingList = new ItemsList[items.length()];
+            BoughtItem[] shoppingList = new BoughtItem[items.length()];
             for (int i = 0; i < tempObject.getQuantityPurchases(); i++) {
-                shopingList[i] = new ItemsList();
+                shoppingList[i] = new BoughtItem(
+                        items.getJSONObject(i).getString(STRING_NAME_JSON_FIELD),
+                        items.getJSONObject(i).getInt(STRING_SUM_JSON_FIELD),
+                        items.getJSONObject(i).getInt(STRING_QUANTITY_JSON_FIELD));
             }
 
-//            for (int i = 0; i < object.getQuantityPurchases(); i++) {
-//                object.setNameInShoppingListArray(i, items.getJSONObject(i).getString(STRING_NAME));
-//                object.setQuantityOfGoodsWithThisNameInShoppingListArray(i,
-//                        items.getJSONObject(i).getInt(STRING_QUANTITY));
-//                object.setPriseInShoppingListArray(i, items.getJSONObject(i).getInt(STRING_SUM));
-//            }
-            for (int i = 0; i < tempObject.getQuantityPurchases(); i++) {
-                shopingList[i].setName(items.getJSONObject(i).getString(STRING_NAME));
-                shopingList[i].setPrice(items.getJSONObject(i).getInt(STRING_SUM));
-                shopingList[i].setQuantityOfGoodsWithThisName(
-                        items.getJSONObject(i).getInt(STRING_QUANTITY));
-            }
-            tempObject.setShoppingList(shopingList);
+            tempObject.setShoppingList(shoppingList);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -91,12 +82,7 @@ public class ParsingJson {
             // здесь будет выведено, где возникла ошибка и будет брошено
             // исключение, с полем, содержащем информацию об этом
             throw new ParsingJsonException(mesegeErrorFinal[0]);
-
         }
         return tempObject;
-
-
     }
-
-
 }

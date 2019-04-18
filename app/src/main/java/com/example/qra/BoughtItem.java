@@ -1,13 +1,12 @@
 package com.example.qra;
 
-
 /**
  * This class is responsible for storing information about the goods purchased
  * (the name of the product and its price of the product)
  *
  * @author: Marina Alekseeva
  */
-public class ItemsList {
+public class BoughtItem {
 
     /**
      * name of the product
@@ -19,28 +18,32 @@ public class ItemsList {
      */
     private int price;
 
-
     /**
      * number of goods with the given name
      */
-    private int quantityOfGoodsWithThisName;
+    private int quantity;
 
+    public BoughtItem(String name, int price, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
 
     /**
      * This function sets quantity of goods with the given name
      *
-     * @param numberOfGoodsWithThisName number items in the list of products in the order
+     * @param quantity number items in the list of products in the order
      */
-    public void setQuantityOfGoodsWithThisName(int numberOfGoodsWithThisName) {
-        this.quantityOfGoodsWithThisName = numberOfGoodsWithThisName;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
 
     /**
      * @return quantity of goods with the given name
      */
-    public int getQuantityOfGoodsWithThisName() {
-        return quantityOfGoodsWithThisName;
+    public int getQuantity() {
+        return quantity;
     }
 
     /**
@@ -56,7 +59,6 @@ public class ItemsList {
     public String getName() {
         return name;
     }
-
 
     /**
      * This function sets the name of the product.

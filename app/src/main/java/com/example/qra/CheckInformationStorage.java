@@ -20,7 +20,7 @@ public class CheckInformationStorage {
     /**
      * paied nds sum (nds10% + nds18%)
      */
-    private int paiedNdsSum;
+    private int paidNdsSum;
 
     /**
      * number of products which you bought
@@ -30,7 +30,7 @@ public class CheckInformationStorage {
     /**
      * store address
      */
-    private String addresOfPurchase;
+    private String addressOfPurchase;
 
     /**
      * buying time
@@ -40,7 +40,7 @@ public class CheckInformationStorage {
     /**
      * array of your products list
      */
-    private ItemsList[] shoppingList;
+    private BoughtItem[] shoppingList;
 
 
     /**
@@ -60,8 +60,8 @@ public class CheckInformationStorage {
     /**
      * @return paied nds sum (nds10% + nds18%)
      */
-    public int getPaiedNdsSum() {
-        return paiedNdsSum;
+    public int getPaidNdsSum() {
+        return paidNdsSum;
     }
 
     /**
@@ -74,8 +74,8 @@ public class CheckInformationStorage {
     /**
      * @return store address
      */
-    public String getAddresOfPurchase() {
-        return addresOfPurchase;
+    public String getAddressOfPurchase() {
+        return addressOfPurchase;
     }
 
     /**
@@ -89,7 +89,7 @@ public class CheckInformationStorage {
     /**
      * @return array of your products list
      */
-    public ItemsList[] getShoppingList() {
+    public BoughtItem[] getShoppingList() {
         return shoppingList;
     }
 
@@ -116,17 +116,17 @@ public class CheckInformationStorage {
      * @return quantity of similar products with the given name.
      */
     public int getQuantityOfGoodsWithThisNameInShoppingList(int numberInTheListOfProducts) {
-        return shoppingList[numberInTheListOfProducts].getQuantityOfGoodsWithThisName();
+        return shoppingList[numberInTheListOfProducts].getQuantity();
     }
 
 
     /**
      * This method allows you to set store address
      *
-     * @param addresOfPurchase
+     * @param addressOfPurchase
      */
-    public void setAddresOfPurchase(String addresOfPurchase) {
-        this.addresOfPurchase = addresOfPurchase;
+    public void setAddressOfPurchase(String addressOfPurchase) {
+        this.addressOfPurchase = addressOfPurchase;
     }
 
 
@@ -142,10 +142,10 @@ public class CheckInformationStorage {
     /**
      * This method allows you to set paied nds sum (nds10% + nds18%)
      *
-     * @param paiedNdsSum paied nds sum (nds10% + nds18%)
+     * @param paidNdsSum paied nds sum (nds10% + nds18%)
      */
-    public void setPaiedNdsSum(int paiedNdsSum) {
-        this.paiedNdsSum = paiedNdsSum;
+    public void setPaidNdsSum(int paidNdsSum) {
+        this.paidNdsSum = paidNdsSum;
     }
 
     /**
@@ -163,7 +163,7 @@ public class CheckInformationStorage {
      *
      * @param shoppingList array of your products list
      */
-    public void setShoppingList(ItemsList[] shoppingList) {
+    public void setShoppingList(BoughtItem[] shoppingList) {
         this.shoppingList = shoppingList;
     }
 
@@ -185,7 +185,7 @@ public class CheckInformationStorage {
      */
     public void setQuantityOfGoodsWithThisNameInShoppingList
     (int numberInTheListOfProducts, int quantityOfGoodsWithThisName) {
-        shoppingList[numberInTheListOfProducts].setQuantityOfGoodsWithThisName(quantityOfGoodsWithThisName);
+        shoppingList[numberInTheListOfProducts].setQuantity(quantityOfGoodsWithThisName);
     }
 
 

@@ -3,24 +3,24 @@ package com.example.qra.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class userDataForFns {
-    private static userDataForFns ourInstance;
+public class UserDataForFns {
+    private static UserDataForFns ourInstance;
 
     private String userName;
     private String phoneNumber;
     private String userEmail;
     private String password;
 
-    public static userDataForFns getInstance(Context context) {
+    public static UserDataForFns getInstance(Context context) {
         if (ourInstance == null)
-            ourInstance = new userDataForFns(context);
+            ourInstance = new UserDataForFns(context);
 
         return ourInstance;
     }
 
-    private userDataForFns(Context context) {
+    private UserDataForFns(Context context) {
 
-        final String APP_PREFERENCES = "userDataForFns";
+        final String APP_PREFERENCES = "UserDataForFns";
 
         SharedPreferences mSettings = context.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 

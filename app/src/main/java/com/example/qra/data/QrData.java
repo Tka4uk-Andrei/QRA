@@ -5,7 +5,7 @@ public class QrData {
     private String fiscalDocument;
     private String fiscalSignOfDocument;
 
-    QrData(String fiscalNum, String fiscalDoc, String fiscalSignOfDoc){
+    public QrData(String fiscalNum, String fiscalDoc, String fiscalSignOfDoc){
         fiscalNumber = fiscalNum;
         fiscalDocument = fiscalDoc;
         fiscalSignOfDocument = fiscalSignOfDoc;

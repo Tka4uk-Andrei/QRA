@@ -18,6 +18,19 @@ public class UserDataForFns {
         return ourInstance;
     }
 
+    public UserDataForFns(String phone, String pass){
+        phoneNumber = phone;
+        password = pass;
+    }
+
+    public  String getPassword(){
+        return password;
+    }
+
+    public String getPhoneNumber(){
+        return phoneNumber;
+    }
+
     private UserDataForFns(Context context) {
 
         final String APP_PREFERENCES = "UserDataForFns";

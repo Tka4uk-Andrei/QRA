@@ -8,13 +8,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class WebRequestData {
+public class WebRequestSender {
     private String response;
 
     private class GetRequestSender extends AsyncTask<QrData, Void, String> {
         private Exception exception;
 
-        public Exception getException() {
+        private Exception getException() {
             return exception;
         }
 
@@ -70,8 +70,7 @@ public class WebRequestData {
      * @return the response to the http request \\
      * @autor : Ekaterina Novoselova
      */
-    public String getWebRequestData() throws Exception {
-        QrData targetQr = new QrData("9251440300003811","8947","3163913062");
+    public String getWebRequestData(QrData targetQr, UserDataForFns userDataForFns) throws Exception {
         GetRequestSender sender = new GetRequestSender();
         sender.execute(targetQr).get();
 
@@ -82,5 +81,4 @@ public class WebRequestData {
 
         return response;
     }
-
 }

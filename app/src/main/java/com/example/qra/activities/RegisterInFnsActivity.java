@@ -15,6 +15,9 @@ public class RegisterInFnsActivity extends AppCompatActivity {
 
     private EditText telephoneText;
     private EditText passwordText;
+    private EditText userNameText;
+    private EditText emailText;
+
     private Button registerBtn;
 
 
@@ -27,11 +30,15 @@ public class RegisterInFnsActivity extends AppCompatActivity {
 
         telephoneText = findViewById(R.id.phone_number);
         passwordText = findViewById(R.id.password);
+        userNameText = findViewById(R.id.user_name);
+        emailText = findViewById(R.id.email);
+
         registerBtn = findViewById(R.id.register_btn);
 
         passwordText.setText(UserDataForFns.getInstance(getApplicationContext()).getPassword());
         telephoneText.setText(UserDataForFns.getInstance(null).getPhoneNumber());
-
+        userNameText.setText(UserDataForFns.getInstance(null).getUserName());
+        emailText.setText(UserDataForFns.getInstance(null).getUserEmail());
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +48,8 @@ public class RegisterInFnsActivity extends AppCompatActivity {
 
                 UserDataForFns.getInstance(null).setPassword(passwordText.getText().toString());
                 UserDataForFns.getInstance(null).setPhoneNumber(telephoneText.getText().toString());
+                UserDataForFns.getInstance(null).setUserEmail(emailText.getText().toString());
+                UserDataForFns.getInstance(null).setUserName(userNameText.getText().toString());
                 UserDataForFns.getInstance(null).apply(getApplicationContext());
             }
         });

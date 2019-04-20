@@ -12,7 +12,8 @@ import java.net.URL;
 import static android.util.Base64.DEFAULT;
 
 public class WebRequestData {
-    private UserDataForFns currentUserData;
+    private String phone;
+    private String password;
 
     private String response;
     private Exception exception;
@@ -41,8 +42,8 @@ public class WebRequestData {
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("device-id", "192.168.211.72");
                 connection.setRequestProperty("device-os", "android, v.8.0.0");
-                connection.setRequestProperty("Authorization", base64Encode(currentUserData.getPhoneNumber(),
-                        currentUserData.getPassword()));
+                connection.setRequestProperty("Authorization", base64Encode(phone,
+                        password));
 
                 //Get Response
                 InputStream is = connection.getInputStream();
@@ -71,8 +72,9 @@ public class WebRequestData {
      * @return the response to the http request \\
      * @autor : Ekaterina Novoselova
      */
-    public String getWebRequestData(QrData targetQr, UserDataForFns currentUserData) throws Exception {
-        this.currentUserData = currentUserData;
+    public String getWebRequestData(QrData targetQr, String phone, String password) throws Exception {
+        this.phone = phone;
+        this.password = password;
 
         GetRequestSender sender = new GetRequestSender();
         sender.execute(targetQr).get();

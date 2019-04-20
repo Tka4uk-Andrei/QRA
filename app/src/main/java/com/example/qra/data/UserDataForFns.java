@@ -18,17 +18,20 @@ public class UserDataForFns {
         return ourInstance;
     }
 
-    public UserDataForFns(String phone, String pass){
-        phoneNumber = phone;
-        password = pass;
-    }
-
-    public  String getPassword(){
-        return password;
+    public  String getUserName(){
+        return userName;
     }
 
     public String getPhoneNumber(){
         return phoneNumber;
+    }
+
+    public  String getUserEmail(){
+        return userEmail;
+    }
+
+    public  String getPassword(){
+        return password;
     }
 
     private UserDataForFns(Context context) {

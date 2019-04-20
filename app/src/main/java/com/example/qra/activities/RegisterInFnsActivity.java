@@ -9,16 +9,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.qra.R;
+import com.example.qra.data.UserDataForFns;
 
 public class RegisterInFnsActivity extends AppCompatActivity {
 
     private EditText telephoneText;
     private EditText passwordText;
+    private EditText userNameText;
+    private EditText emailText;
+
     private Button registerBtn;
 
-    private static final String USER_LOGIN_DATA = "USER_DATA_IN_FNS";
-    private static final String PHONE_KEY = "PHONE";
-    private static final String PASSWORD_KEY = "PASSWORD";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +30,15 @@ public class RegisterInFnsActivity extends AppCompatActivity {
 
         telephoneText = findViewById(R.id.phone_number);
         passwordText = findViewById(R.id.password);
+        userNameText = findViewById(R.id.user_name);
+        emailText = findViewById(R.id.email);
+
         registerBtn = findViewById(R.id.register_btn);
 
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences(USER_LOGIN_DATA, MODE_PRIVATE);
-
-        passwordText.setText(preferences.getString(PASSWORD_KEY, ""));
-        telephoneText.setText(preferences.getString(PHONE_KEY, ""));
+        passwordText.setText(UserDataForFns.getInstance(getApplicationContext()).getPassword());
+        telephoneText.setText(UserDataForFns.getInstance(null).getPhoneNumber());
+        userNameText.setText(UserDataForFns.getInstance(null).getUserName());
+        emailText.setText(UserDataForFns.getInstance(null).getUserEmail());
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,13 +46,11 @@ public class RegisterInFnsActivity extends AppCompatActivity {
                 // TODO registration request
                 Toast.makeText(getApplicationContext(), "Registration couldn't be started now, but I'm saving data", Toast.LENGTH_SHORT).show();
 
-                SharedPreferences.Editor preferencesEditor = getApplicationContext().getSharedPreferences(USER_LOGIN_DATA, MODE_PRIVATE).edit();
-
-                preferencesEditor.putString(PASSWORD_KEY, passwordText.getText().toString());
-                preferencesEditor.putString(PHONE_KEY, telephoneText.getText().toString());
-
-                preferencesEditor.apply();
-
+                UserDataForFns.getInstance(null).setPassword(passwordText.getText().toString());
+                UserDataForFns.getInstance(null).setPhoneNumber(telephoneText.getText().toString());
+                UserDataForFns.getInstance(null).setUserEmail(emailText.getText().toString());
+                UserDataForFns.getInstance(null).setUserName(userNameText.getText().toString());
+                UserDataForFns.getInstance(null).apply(getApplicationContext());
             }
         });
     }

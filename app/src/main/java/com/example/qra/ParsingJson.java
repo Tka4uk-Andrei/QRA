@@ -1,6 +1,9 @@
 package com.example.qra;
 
 
+import com.example.qra.data.check.BoughtItem;
+import com.example.qra.data.check.CheckInformationStorage;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.example.qra;
+package com.example.qra.model.parser;
 
 /**
  * This class is responsible for handling JSONException exceptions.

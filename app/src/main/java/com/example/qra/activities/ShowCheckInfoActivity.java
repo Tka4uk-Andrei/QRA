@@ -9,11 +9,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.qra.ParsingJson;
-import com.example.qra.ParsingJsonException;
+import com.example.qra.model.parser.ParsingJson;
+import com.example.qra.model.parser.ParsingJsonException;
 import com.example.qra.R;
-import com.example.qra.data.check.BoughtItem;
-import com.example.qra.data.check.CheckInformationStorage;
+import com.example.qra.model.check.BoughtItem;
+import com.example.qra.model.check.CheckInformationStorage;
 
 public class ShowCheckInfoActivity extends AppCompatActivity {
 

@@ -1,8 +1,9 @@
-package com.example.qra;
+package com.example.qra.model.parser;
 
 
-import com.example.qra.data.check.BoughtItem;
-import com.example.qra.data.check.CheckInformationStorage;
+import com.example.qra.model.check.BoughtItem;
+import com.example.qra.model.check.CheckInformationStorage;
+import com.example.qra.model.parser.ParsingJsonException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,24 +34,24 @@ public class ParsingJson {
     private static final String STRING_NDS_18_JSON_FIELD = "nds18";
     private static final String STRING_NDS_10_JSON_FIELD = "nds10";
     private static final String STRING_RETAIL_PLACE_ADDRESS_JSON_FIELD = "retailPlaceAddress";
-    private static final String STRING_DATE_TIME_JSON_FIELD = "dateTime";//
+    private static final String STRING_DATE_TIME_JSON_FIELD = "dateTime";
     private static final String STRING_ITEMS_JSON_FIELD = "items";
     private static final String STRING_QUANTITY_JSON_FIELD = "quantity";
     private static final String STRING_SUM_JSON_FIELD = "sum";
     private static final String STRING_NAME_JSON_FIELD = "name";
 
     /**
-     * @param stringJSON
+     * @param stringJson
      * @return the object that stores check information
      * @throws ParsingJsonException an object of this class has an attribute with an error message
      */
-    public static CheckInformationStorage ParseJson(String stringJSON) throws ParsingJsonException {
+    public static CheckInformationStorage ParseJson(String stringJson) throws ParsingJsonException {
 
         CheckInformationStorage tempObject = new CheckInformationStorage();
         JSONObject jsonResponse;
 
         try {
-            jsonResponse = new JSONObject(stringJSON);
+            jsonResponse = new JSONObject(stringJson);
             JSONObject document = jsonResponse.getJSONObject(STRING_DOCUMENT_JSON_FIELD);
             JSONObject receipt = document.getJSONObject(STRING_RECEIPT_JSON_FIELD);
 

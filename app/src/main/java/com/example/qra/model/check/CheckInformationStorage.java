@@ -1,4 +1,4 @@
-package com.example.qra.data.check;
+package com.example.qra.model.check;
 
 /**
  * this class is responsible for storing check information

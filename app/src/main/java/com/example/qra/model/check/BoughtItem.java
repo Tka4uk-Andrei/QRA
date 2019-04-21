@@ -1,4 +1,4 @@
-package com.example.qra.data.check;
+package com.example.qra.model.check;
 
 /**
  * This class is responsible for storing information about the goods purchased

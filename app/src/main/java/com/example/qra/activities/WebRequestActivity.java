@@ -24,6 +24,7 @@ public class WebRequestActivity extends AppCompatActivity {
         String response = null;
         try {
             QrData qrData = new QrData("9251440300006654","27152","1988421315");
+
             UserDataForFns userData = getInstanceDefault();
             response = WebRequestData.getWebRequestData(qrData, userData);
             StringBuilder a = new StringBuilder();

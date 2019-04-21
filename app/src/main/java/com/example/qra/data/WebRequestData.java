@@ -17,7 +17,7 @@ public class WebRequestData {
      */
     public static String getWebRequestData(final QrData targetQr, final UserDataForFns userData) throws Exception {
         final String[] response = new String[1];
-        final Exception[] exception = new Exception[1];
+        final WebRequestException[] exception = new WebRequestException[1];
         Thread t = new Thread(new Runnable() {
             public void run() {
                 HttpURLConnection connection = null;
@@ -54,7 +54,15 @@ public class WebRequestData {
                     rd.close();
                     response[0] = resp.toString();
                 } catch (IOException e) {
-                    exception[0] = e;
+                    try {
+                        int responseCode = 0;
+                        if (connection != null) {
+                            responseCode = connection.getResponseCode();
+                            exception[0] = new WebRequestException(responseCode, e.getMessage());
+                        }
+                    } catch (IOException ex) {
+                        exception[0] = new WebRequestException(ex.getMessage());
+                    }
                 } finally {
                     if (connection != null) {
                         connection.disconnect();
@@ -77,7 +85,7 @@ public class WebRequestData {
     private static String base64Encode(String phone, String password) {
         StringBuilder authorizationSB = new StringBuilder();
         authorizationSB.append(phone);
-        authorizationSB.append(':');
+        authorizationSB.append(":");
         authorizationSB.append(password);
         String authorization = authorizationSB.toString();
 

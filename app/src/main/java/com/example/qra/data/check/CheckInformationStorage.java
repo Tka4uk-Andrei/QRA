@@ -1,4 +1,4 @@
-package com.example.qra;
+package com.example.qra.data.check;
 
 /**
  * this class is responsible for storing check information
@@ -6,6 +6,8 @@ package com.example.qra;
  * @author: Marina Alekseeva
  */
 public class CheckInformationStorage {
+
+    //TODO iterator
 
     /**
      * total sum your shopping

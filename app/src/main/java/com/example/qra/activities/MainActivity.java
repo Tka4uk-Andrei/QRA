@@ -17,6 +17,8 @@ import com.example.qra.R;
  */
 public class MainActivity extends AppCompatActivity {
 
+    public static final String QR_DATA_EXTRA = "QR_DATA";
+
     private static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
     private static final String FIRST_TIME_RUN = "First time";
     private static final String IS_FIRST_TIME = "is first";
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         jsonButton = findViewById(R.id.json_parse_btn);
         requestButton = findViewById(R.id.send_request_btn);
         settingsButton = findViewById(R.id.settings_btn);
+        showCheckButton = findViewById(R.id.show_check_btn);
     }
 
     /**
@@ -66,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         jsonButton.setOnClickListener(menuBtnClickListener);
         requestButton.setOnClickListener(menuBtnClickListener);
         settingsButton.setOnClickListener(menuBtnClickListener);
+        showCheckButton.setOnClickListener(menuBtnClickListener);
+
     }
 
     @Override
@@ -79,7 +84,9 @@ public class MainActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(this, "Содержание: " + contents + " Формат: " + format, Toast.LENGTH_LONG);
                 toast.show();
 
-                // TODO switch to request
+                Intent webRequestIntent = new Intent(getApplicationContext(), WebRequestActivity.class);
+                webRequestIntent.putExtra(QR_DATA_EXTRA, intent.getStringExtra("SCAN_RESULT"));
+                startActivity(webRequestIntent);
             }
         }
     }
@@ -88,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     private Button jsonButton;
     private Button requestButton;
     private Button settingsButton;
+    private Button showCheckButton;
 
     private View.OnClickListener menuBtnClickListener = new View.OnClickListener() {
 
@@ -116,7 +124,10 @@ public class MainActivity extends AppCompatActivity {
                 } else if (v == settingsButton) {
                     //TODO switch to settings activity
                     intent = new Intent(getApplicationContext(), RegisterInFnsActivity.class);
+                } else if (v == showCheckButton) {
+                    intent = new Intent(getApplicationContext(), ShowCheckInfoActivity.class);
                 }
+
                 if (intent != null)
                     startActivity(intent);
                 else

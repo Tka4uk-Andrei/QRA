@@ -118,9 +118,8 @@ public class MainActivity extends AppCompatActivity {
                 if (v == jsonButton) {
                     intent = new Intent(getApplicationContext(), JsonParseActivity.class);
                 } else if (v == requestButton) {
-                    //Toast.makeText(getApplicationContext(), "Send request button pressed",
-                    //        Toast.LENGTH_SHORT).show();
-                    intent = new Intent(getApplicationContext(), WebRequestActivity.class);
+                    Toast.makeText(getApplicationContext(), "Send request button pressed",
+                            Toast.LENGTH_SHORT).show();
                 } else if (v == settingsButton) {
                     //TODO switch to settings activity
                     intent = new Intent(getApplicationContext(), RegisterInFnsActivity.class);
@@ -138,5 +137,3 @@ public class MainActivity extends AppCompatActivity {
     };
 
 }
-
-

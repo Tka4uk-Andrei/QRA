@@ -6,9 +6,6 @@ import android.widget.Toast;
 
 import com.example.qra.R;
 import com.example.qra.data.QrData;
-import com.example.qra.data.UserDataForFns;
-import com.example.qra.data.WebRequestSender;
-import com.example.qra.data.QrData;
 import com.example.qra.data.WebRequestData;
 
 
@@ -26,14 +23,11 @@ public class WebRequestActivity extends AppCompatActivity {
 
         String response = null;
         try {
-            response = new WebRequestSender().getWebRequestData(qrData, null);
-            QrData targetQr = new QrData("9251440300006654","27152","1988421315");
-            new WebRequestData().getWebRequestData(targetQr, "+79097984616", "229963");
+            response = WebRequestData.getWebRequestData(qrData, null);
         }
         catch (Exception e) {
             Toast.makeText(WebRequestActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
         Intent intent = new Intent(getApplicationContext(), ShowCheckInfoActivity.class);
         if (response != null) {
             intent.putExtra(JSON_DATA, response);

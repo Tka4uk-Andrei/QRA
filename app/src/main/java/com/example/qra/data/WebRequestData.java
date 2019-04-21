@@ -16,9 +16,9 @@ public class WebRequestData {
      * @autor : Ekaterina Novoselova
      */
     public static String getWebRequestData(final QrData targetQr, final UserDataForFns userData) throws Exception {
-    final String[] response = new String[1];
+        final String[] response = new String[1];
         final Exception[] exception = new Exception[1];
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             public void run() {
                 HttpURLConnection connection = null;
 
@@ -61,7 +61,9 @@ public class WebRequestData {
                     }
                 }
             }
-        }).start();
+        });
+        t.start();
+        t.join();
         if (exception[0] != null) {
             throw exception[0];
         }

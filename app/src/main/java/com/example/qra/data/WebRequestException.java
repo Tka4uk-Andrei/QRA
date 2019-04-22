@@ -2,9 +2,18 @@ package com.example.qra.data;
 
 /**
  * Class that creates messages for some web request exceptions \\
+ *
  * @autor : Ekaterina Novoselova
  */
 public class WebRequestException extends Exception {
+
+    public static final String CHECK_DOES_NOT_EXIST_MESSAGE = "Check doesn't exist";
+    public static final String BAD_REQUEST_MESSAGE = "Bad request";
+    public static final String CHECK_NOT_FOUND_MESSAGE = "Check not found";
+    public static final String AUTHORIZATION_ERROR_MESSAGE = "Authorization error";
+    public static final String WRONG_LOGIN_OR_PASSWORD_MESSAGE = "Wrong login or password";
+
+
     private String message;
 
     public WebRequestException(String msg) {
@@ -13,15 +22,15 @@ public class WebRequestException extends Exception {
 
     public WebRequestException(int code, String msg) {
         if (code == 451) {
-            message = "Check doesn't exist";
+            message = CHECK_DOES_NOT_EXIST_MESSAGE;
         } else if (code == 400) {
-            message = "Bad request";
+            message = BAD_REQUEST_MESSAGE;
         } else if (code == 406) {
-            message = "Check not found";
+            message = CHECK_NOT_FOUND_MESSAGE;
         } else if (code == 401) {
-            message = "Authorization error";
+            message = AUTHORIZATION_ERROR_MESSAGE;
         } else if (code == 403) {
-            message = "Wrong login or password";
+            message = WRONG_LOGIN_OR_PASSWORD_MESSAGE;
         } else message = msg;
     }
 

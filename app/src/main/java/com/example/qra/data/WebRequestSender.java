@@ -9,9 +9,11 @@ import java.net.URL;
 
 import static android.util.Base64.DEFAULT;
 
-public class WebRequestData {
+public class WebRequestSender {
 
     /**
+     * Method that send web request to receive check data \\
+     *
      * @return the response to the http request \\
      * @autor : Ekaterina Novoselova
      */

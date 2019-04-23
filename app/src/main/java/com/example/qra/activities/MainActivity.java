@@ -23,6 +23,12 @@ public class MainActivity extends AppCompatActivity {
     private static final String FIRST_TIME_RUN = "First time";
     private static final String IS_FIRST_TIME = "is first";
 
+    private Button qrScanButton;
+    private Button jsonButton;
+    private Button requestButton;
+    private Button settingsButton;
+    private Button showCheckButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,12 +97,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private Button qrScanButton;
-    private Button jsonButton;
-    private Button requestButton;
-    private Button settingsButton;
-    private Button showCheckButton;
-
+    
     private View.OnClickListener menuBtnClickListener = new View.OnClickListener() {
 
         @Override

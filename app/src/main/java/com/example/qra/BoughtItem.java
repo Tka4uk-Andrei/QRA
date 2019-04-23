@@ -1,5 +1,7 @@
 package com.example.qra;
 
+import static com.example.qra.Categories.getNotDistributedCategory;
+
 /**
  * This class is responsible for storing information about the goods purchased
  * (the name of the product and its price of the product)
@@ -23,10 +25,16 @@ public class BoughtItem {
      */
     private int quantity;
 
+    /**
+     * What category does the product belong to
+     */
+    private String category;
+
     public BoughtItem(String name, int price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.category = getNotDistributedCategory();
     }
 
     /**
@@ -76,5 +84,23 @@ public class BoughtItem {
      */
     public void setPrice(int price) {
         this.price = price;
+    }
+
+
+    /**
+     * @return what category does the product belong to
+     */
+    public String getCategory() {
+        return category;
+    }
+
+
+    /**
+     * This function sets what category does the product belong to
+     *
+     * @param category
+     */
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

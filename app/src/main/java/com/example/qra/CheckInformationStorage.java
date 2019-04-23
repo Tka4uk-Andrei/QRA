@@ -104,6 +104,14 @@ public class CheckInformationStorage {
 
     /**
      * @param numberInTheListOfProducts number items in the list of products in the order
+     * @return category of this item
+     */
+    public String getCategoryInShoppingList(int numberInTheListOfProducts) {
+        return shoppingList[numberInTheListOfProducts].getCategory();
+    }
+
+    /**
+     * @param numberInTheListOfProducts number items in the list of products in the order
      * @return name of this item
      */
     public String getNameInShoppingList(int numberInTheListOfProducts) {
@@ -186,6 +194,18 @@ public class CheckInformationStorage {
     public void setQuantityOfGoodsWithThisNameInShoppingList
     (int numberInTheListOfProducts, int quantityOfGoodsWithThisName) {
         shoppingList[numberInTheListOfProducts].setQuantity(quantityOfGoodsWithThisName);
+    }
+
+
+    /**
+     * This method allows you to set what category does the product belong to of this item.
+     *
+     * @param numberInTheListOfProducts number items in the list of products in the order
+     * @param category                  of goods with the given name
+     */
+    public void setCategoryInShoppingList
+    (int numberInTheListOfProducts, String category) {
+        shoppingList[numberInTheListOfProducts].setCategory(category);
     }
 
 

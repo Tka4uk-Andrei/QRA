@@ -97,8 +97,7 @@ public class UseOfDataBase {
             contentValues.put(dataBase.COLUMN_NAME_NAME, object.getNameInShoppingList(i));
             contentValues.put(dataBase.COLUMN_NAME_QUANTITY, object.getQuantityOfGoodsWithThisNameInShoppingList(i));
             contentValues.put(dataBase.COLUMN_NAME_PRISE, object.getPriseInShoppingList(i));
-            //дописать распределение по категориям, пока все фрукты
-            contentValues.put(dataBase.COLUMN_NAME_CATEGORIES, Categories.defineCategory(object.getNameInShoppingList(i)));
+            contentValues.put(dataBase.COLUMN_NAME_CATEGORIES, object.getCategoryInShoppingList(i));
             contentValues.put("checkList_id", _id);
 
             //второй аргумент используется для вставки пустой строки - это не нужно сейчас
@@ -106,7 +105,7 @@ public class UseOfDataBase {
             contentValues.clear();
         }
 
-       // Log.d("log", "Data inserted");
+        // Log.d("log", "Data inserted");
     }
 
 
@@ -119,7 +118,7 @@ public class UseOfDataBase {
         initialization(context);
         sqLiteDatabase.delete(dataBase.TABLE_NAME_SHOP_LIST, null, null);
         sqLiteDatabase.delete(dataBase.TABLE_NAME_CHECK_LIST, null, null);
-       // Log.d("log", "Data deleted");
+        // Log.d("log", "Data deleted");
     }
 
 //    public void showShopList() {
@@ -148,9 +147,11 @@ public class UseOfDataBase {
             int priseIndex = cursor.getColumnIndex(dataBase.COLUMN_NAME_PRISE);
             int nameIndex = cursor.getColumnIndex(dataBase.COLUMN_NAME_NAME);
             int quantityIndex = cursor.getColumnIndex(dataBase.COLUMN_NAME_QUANTITY);
+            int categoryIndex = cursor.getColumnIndex(dataBase.COLUMN_NAME_CATEGORIES);
 
             shoppingList[i] = new BoughtItem(cursor.getString(nameIndex),
                     cursor.getInt(priseIndex), cursor.getInt(quantityIndex));
+            shoppingList[i].setCategory(cursor.getString(categoryIndex));
 
             cursor.moveToNext();
         }
@@ -182,7 +183,8 @@ public class UseOfDataBase {
             int adressIndex = cursor.getColumnIndex(dataBase.COLUMN_NAME_ADDRESS);
             int timeIndex = cursor.getColumnIndex(dataBase.COLUMN_NAME_TIME);
             int quantityALlPurchasesIndex = cursor.getColumnIndex(dataBase.COLUMN_NAME_QUANTITY_PURCHASES);
-            int idIndex = cursor.getColumnIndex("_id"); //можно без этого
+
+            int idIndex = cursor.getColumnIndex("_id"); //
 
             checkList[i] = new CheckInformationStorage();
             checkList[i].setTotalSum(cursor.getInt(sumIndex));
@@ -197,17 +199,20 @@ public class UseOfDataBase {
             //кол-ву позиций (проблема только в том, что массив будет от большего числа)
             BoughtItem[] shoppingList = new BoughtItem[checkList[i].getQuantityPurchases()];
 
-            int checkList_idIndex = cursorShop.getColumnIndex("checkList_id"); //можно без этого
+            int checkList_idIndex = cursorShop.getColumnIndex("checkList_id"); //
 
             for (int j = 0; (j < checkList[i].getQuantityPurchases()) && //; j++)// &&
                     (cursorShop.getInt(checkList_idIndex) == cursor.getInt(idIndex)); j++) {
                 int priseIndex = cursorShop.getColumnIndex(dataBase.COLUMN_NAME_PRISE);
                 int nameIndex = cursorShop.getColumnIndex(dataBase.COLUMN_NAME_NAME);
                 int quantityIndex = cursorShop.getColumnIndex(dataBase.COLUMN_NAME_QUANTITY);
-                checkList_idIndex = cursorShop.getColumnIndex("checkList_id"); //можно без этого
+                int categoryIndex = cursorShop.getColumnIndex(dataBase.COLUMN_NAME_CATEGORIES);
+
+                checkList_idIndex = cursorShop.getColumnIndex("checkList_id"); //
 
                 shoppingList[j] = new BoughtItem(cursorShop.getString(nameIndex),
                         cursorShop.getInt(priseIndex), cursorShop.getInt(quantityIndex));
+                shoppingList[j].setCategory(cursorShop.getString(categoryIndex));
 
                 cursorShop.moveToNext();
             }

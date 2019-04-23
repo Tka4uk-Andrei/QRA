@@ -39,7 +39,7 @@ public class QrData {
         return ans.toString();
     }
 
-    QrData(String fiscalNum, String fiscalDoc, String fiscalSignOfDoc){
+    public QrData(String fiscalNum, String fiscalDoc, String fiscalSignOfDoc){
         fiscalNumber = fiscalNum;
         fiscalDocument = fiscalDoc;
         fiscalSignOfDocument = fiscalSignOfDoc;

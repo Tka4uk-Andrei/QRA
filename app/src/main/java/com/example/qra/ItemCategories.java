@@ -5,7 +5,7 @@ package com.example.qra;
  *
  * @author: Marina Alekseeva
  */
-public class Categories {
+public class ItemCategories {
     public static final String NOT_DISTRIBUTED = "not distributed";
     public static final String FRUITS = "fruits";
     public static final String BERRIES = "berries";
@@ -17,12 +17,4 @@ public class Categories {
     public static final String DRINKS_HOT = "hot drinks";
     public static final String MEAT = "meat";
 
-    public static String getNotDistributedCategory() {
-        return NOT_DISTRIBUTED;
-    }
-
-    //дописать распределение по категориям
-    public static String defineCategory(String name) {
-        return FRUITS;
-    }
 }

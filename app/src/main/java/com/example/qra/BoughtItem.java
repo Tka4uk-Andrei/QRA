@@ -1,6 +1,5 @@
 package com.example.qra;
 
-import static com.example.qra.Categories.getNotDistributedCategory;
 
 /**
  * This class is responsible for storing information about the goods purchased
@@ -34,7 +33,7 @@ public class BoughtItem {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-        this.category = getNotDistributedCategory();
+        this.category = ItemCategories.NOT_DISTRIBUTED;
     }
 
     /**

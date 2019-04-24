@@ -17,7 +17,6 @@ import com.example.qra.model.check.CheckInformationStorage;
 
 public class ShowCheckInfoActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

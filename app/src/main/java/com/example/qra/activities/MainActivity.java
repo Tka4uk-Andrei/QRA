@@ -24,10 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String IS_FIRST_TIME = "is first";
 
     private Button qrScanButton;
-    private Button jsonButton;
     private Button requestButton;
     private Button settingsButton;
-    private Button showCheckButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +57,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void ConnectViewsWithCode() {
         qrScanButton = findViewById(R.id.qr_scan_btn);
-        jsonButton = findViewById(R.id.json_parse_btn);
         requestButton = findViewById(R.id.send_request_btn);
         settingsButton = findViewById(R.id.settings_btn);
-        showCheckButton = findViewById(R.id.show_check_btn);
     }
 
     /**
@@ -72,10 +68,8 @@ public class MainActivity extends AppCompatActivity {
     public void setViewListeners() {
 
         qrScanButton.setOnClickListener(menuBtnClickListener);
-        jsonButton.setOnClickListener(menuBtnClickListener);
         requestButton.setOnClickListener(menuBtnClickListener);
         settingsButton.setOnClickListener(menuBtnClickListener);
-        showCheckButton.setOnClickListener(menuBtnClickListener);
 
     }
 
@@ -97,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    
+
     private View.OnClickListener menuBtnClickListener = new View.OnClickListener() {
 
         @Override
@@ -116,17 +110,10 @@ public class MainActivity extends AppCompatActivity {
                     (new AppNotInstalledDialog()).show(getSupportFragmentManager(), "APP_NOT_INSTALLED");
                 }
             } else {
-                if (v == jsonButton) {
-                    intent = new Intent(getApplicationContext(), JsonParseActivity.class);
-                } else if (v == requestButton) {
-                    Toast.makeText(getApplicationContext(), "Send request button pressed",
-                            Toast.LENGTH_SHORT).show();
-                } else if (v == settingsButton) {
-                    //TODO switch to settings activity
+                if (v == requestButton)
+                    intent = new Intent(getApplicationContext(), WebRequestActivity.class);
+                else if (v == settingsButton)
                     intent = new Intent(getApplicationContext(), RegisterInFnsActivity.class);
-                } else if (v == showCheckButton) {
-                    intent = new Intent(getApplicationContext(), ShowCheckInfoActivity.class);
-                }
 
                 if (intent != null)
                     startActivity(intent);

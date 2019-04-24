@@ -7,11 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 
-//я не думаю, что объединять классы, хранящие бд и использующие - хорошая идея
-//на данный момент, для добавления/озврата необхдимо создать обьект класса,
-//нужно исправить -> исправлено
-//проверить -> it is work
-
 /**
  * class responsible for using of data base
  *
@@ -43,13 +38,6 @@ public class CheckDataBase {
         public StorageCheckDataBase(Context context) {
             super(context, DATABASE_Name, null, DATABASE_VERSION);
         }
-
-
-        //возвращает бд для чтения -getReadableDatabase()
-        //возвращает бд чтения и записи - getWritableDatabase()
-        //при открытии - onOpen()
-        //
-
 
         // вызывается при первом создании бд
         @Override
@@ -85,7 +73,6 @@ public class CheckDataBase {
     private static StorageCheckDataBase dataBase;
     private static SQLiteDatabase sqLiteDatabase;
 
-
     //используется для добавления новых строк в таблицу, каждый объект этого класса
     //представляет собой одну троку таблицы и выглядит как массив с именами столбцов и значениями
     //которые им соответствуют
@@ -100,21 +87,6 @@ public class CheckDataBase {
         contentValues = new ContentValues();
     }
 
-//    private void logCursor(Cursor c) {
-////        if (c != null) {
-////            if (c.moveToFirst()) {
-////                String str;
-////                do {
-////                    str = "";
-////                    for (String cn : c.getColumnNames()) {
-////                        str = str.concat(cn + " = " + c.getString(c.getColumnIndex(cn)) + "; ");
-////                    }
-////                    Log.d("log", str);
-////                } while (c.moveToNext());
-////            }
-////        } else
-////            Log.d("log", "Cursor is null");
-////    }
 
     /**
      * insert in data base
@@ -157,7 +129,6 @@ public class CheckDataBase {
             contentValues.clear();
         }
 
-        // Log.d("log", "Data inserted");
     }
 
 
@@ -170,17 +141,8 @@ public class CheckDataBase {
         initialization(context);
         sqLiteDatabase.delete(StorageCheckDataBase.TABLE_NAME_SHOP_LIST, null, null);
         sqLiteDatabase.delete(StorageCheckDataBase.TABLE_NAME_CHECK_LIST, null, null);
-        // Log.d("log", "Data deleted");
     }
 
-//    public void showShopList() {
-//
-//        //данные без сортировок и групировок
-//        Cursor cursor = chengerShopListWrite.query(DBShopList.SHOP, null,
-//                null, null, null, null, null);
-//        logCursor(cursor);
-//        cursor.close();
-//    }
 
     /**
      * get all your goods
@@ -200,9 +162,8 @@ public class CheckDataBase {
             shoppingList[i] = new BoughtItem(
                     cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME)),
                     cursor.getInt(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_PRISE)),
-                    cursor.getInt(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY)));
-
-            shoppingList[i].setCategory(cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_CATEGORIES)));
+                    cursor.getInt(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY)),
+                    cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_CATEGORIES)));
 
             cursor.moveToNext();
         }
@@ -254,8 +215,8 @@ public class CheckDataBase {
                 shoppingList[j] = new BoughtItem(
                         cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME)),
                         cursorShop.getInt(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_PRISE)),
-                        cursorShop.getInt(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY)));
-                shoppingList[j].setCategory(cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_CATEGORIES)));
+                        cursorShop.getInt(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY)),
+                        cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_CATEGORIES)));
 
                 cursorShop.moveToNext();
             }
@@ -271,12 +232,4 @@ public class CheckDataBase {
         return checkList;
     }
 
-
-//    public void showCheck() {
-//        Cursor cursor = chengerShopListWrite.query(DBShopList.CHECK, null,
-//                null, null, null, null, null);
-//
-//        logCursor(cursor);
-//        cursor.close();
-//    }
 }

@@ -36,6 +36,13 @@ public class BoughtItem {
         this.category = ItemCategories.NOT_DISTRIBUTED;
     }
 
+    public BoughtItem(String name, int price, int quantity, String category) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.category = category;
+    }
+
     /**
      * This function sets quantity of goods with the given name
      *

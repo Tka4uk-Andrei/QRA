@@ -97,32 +97,6 @@ public class CheckInformationStorage {
 
 
     /**
-     * @param numberInTheListOfProducts number items in the list of products in the order
-     * @return price of this item
-     */
-    public int getPriseInShoppingList(int numberInTheListOfProducts) {
-        return shoppingList[numberInTheListOfProducts].getPrice();
-    }
-
-    /**
-     * @param numberInTheListOfProducts number items in the list of products in the order
-     * @return name of this item
-     */
-    public String getNameInShoppingList(int numberInTheListOfProducts) {
-        return shoppingList[numberInTheListOfProducts].getName();
-    }
-
-
-    /**
-     * @param numberInTheListOfProducts number items in the list of products in the order
-     * @return quantity of similar products with the given name.
-     */
-    public int getQuantityOfGoodsWithThisNameInShoppingList(int numberInTheListOfProducts) {
-        return shoppingList[numberInTheListOfProducts].getQuantity();
-    }
-
-
-    /**
      * This method allows you to set store address
      *
      * @param addressOfPurchase
@@ -168,39 +142,6 @@ public class CheckInformationStorage {
     public void setShoppingList(BoughtItem[] shoppingList) {
         this.shoppingList = shoppingList;
     }
-
-    /**
-     * This method allows you to set name of this item
-     *
-     * @param numberInTheListOfProducts number items in the list of products in the order
-     * @param prise
-     */
-    public void setPriseInShoppingList(int numberInTheListOfProducts, int prise) {
-        shoppingList[numberInTheListOfProducts].setPrice(prise);
-    }
-
-    /**
-     * This method allows you to set quantity of similar products with the given name.
-     *
-     * @param numberInTheListOfProducts   number items in the list of products in the order
-     * @param quantityOfGoodsWithThisName number of goods with the given name
-     */
-    public void setQuantityOfGoodsWithThisNameInShoppingList
-    (int numberInTheListOfProducts, int quantityOfGoodsWithThisName) {
-        shoppingList[numberInTheListOfProducts].setQuantity(quantityOfGoodsWithThisName);
-    }
-
-
-    /**
-     * This method allows you to set name of this item
-     *
-     * @param numberInTheListOfProducts number items in the list of products in the order
-     * @param name
-     */
-    public void setNameInShoppingList(int numberInTheListOfProducts, String name) {
-        shoppingList[numberInTheListOfProducts].setName(name);
-    }
-
 
     /**
      * This method allows you to set total sum your shopping

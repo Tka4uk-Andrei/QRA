@@ -11,11 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presenter.ShowCheckInfoActivity"></activity>
-        <activity android:name=".presenter.WebRequestActivity" />
-        <activity android:name=".presenter.RegisterInFnsActivity" />
+        <activity android:name=".view.ShowCheckInfoActivity"></activity>
+        <activity android:name=".view.WebRequestActivity" />
+        <activity android:name=".view.RegisterInFnsActivity" />
         <activity
-            android:name=".presenter.MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

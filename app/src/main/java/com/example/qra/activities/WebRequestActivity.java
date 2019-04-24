@@ -3,11 +3,13 @@ package com.example.qra.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.qra.R;
 import com.example.qra.data.QrData;
-import com.example.qra.data.UserDataForFns;
 import com.example.qra.data.WebRequestSender;
 
 import static com.example.qra.data.UserDataForFns.getInstanceDefault;
@@ -22,13 +24,33 @@ public class WebRequestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_request);
 
-        Intent previousIntent = getIntent();
-        QrData qrData = new QrData(previousIntent.getStringExtra(MainActivity.QR_DATA_EXTRA));
+        Button btn = findViewById(R.id.send_btn);
+        EditText fiscalNum = findViewById(R.id.fiscal_num);
+        EditText fiscalDoc = findViewById(R.id.fiscal_doc);
+        EditText fiscalSign = findViewById(R.id.fiscal_sign);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendRequest(new QrData(
+                        fiscalNum.getText().toString(),
+                        fiscalDoc.getText().toString(),
+                        fiscalSign.getText().toString()));
+            }
+        });
+
+        String qrDataStr = getIntent().getStringExtra(MainActivity.QR_DATA_EXTRA);
+        if (qrDataStr == null)
+            return;
+
+        sendRequest(new QrData(qrDataStr));
+    }
+
+    private void sendRequest(QrData qrData) {
 
         String response = null;
         try {
-            UserDataForFns userData = getInstanceDefault();
-            response = WebRequestSender.getWebRequestData(qrData, userData);
+            response = WebRequestSender.getWebRequestData(qrData, getInstanceDefault());
         } catch (Exception e) {
             Toast.makeText(WebRequestActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -39,5 +61,4 @@ public class WebRequestActivity extends AppCompatActivity {
         }
 
     }
-
 }

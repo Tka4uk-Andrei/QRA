@@ -1,4 +1,4 @@
-package com.example.qra.data;
+package com.example.qra.model.webRequests;
 
 /**
  * Class that creates messages for some web request exceptions \\

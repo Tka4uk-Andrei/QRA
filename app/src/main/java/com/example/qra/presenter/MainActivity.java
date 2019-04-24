@@ -1,4 +1,4 @@
-package com.example.qra.activities;
+package com.example.qra.presenter;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;

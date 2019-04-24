@@ -1,4 +1,4 @@
-package com.example.qra.activities;
+package com.example.qra.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.qra.R;
-import com.example.qra.data.QrData;
-import com.example.qra.data.WebRequestSender;
+import com.example.qra.model.qrCode.QrData;
+import com.example.qra.model.webRequests.WebRequestSender;
 
-import static com.example.qra.data.UserDataForFns.getInstanceDefault;
+import static com.example.qra.model.UserDataForFns.getInstanceDefault;
 
 
 public class WebRequestActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.example.qra.data;
+package com.example.qra.model.qrCode;
 
 public class QrData {
 

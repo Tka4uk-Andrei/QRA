@@ -1,4 +1,4 @@
-package com.example.qra.activities;
+package com.example.qra.presenter;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;

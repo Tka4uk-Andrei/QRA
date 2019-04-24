@@ -1,4 +1,7 @@
-package com.example.qra.data;
+package com.example.qra.model.webRequests;
+
+import com.example.qra.model.qrCode.QrData;
+import com.example.qra.model.UserDataForFns;
 
 import java.io.BufferedReader;
 import java.io.IOException;

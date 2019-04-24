@@ -2,9 +2,12 @@ package com.example.qra.model.qrCode;
 
 public class QrData {
 
+    private final static String SUM_SEQENCE = "";
+    private final static String TIME_SEQENCE = "";
     private final static String FISCAL_NUMBER_SEQENCE = "fn=";
     private final static String FISCAL_DOCUMENT_SEQENCE = "i=";
     private final static String FISCAL_SIGN_SEQENCE = "fp=";
+    private final static String FISCAL_TYPE_SEQENCE = "";
 
     private String fiscalNumber;
     private String fiscalDocument;

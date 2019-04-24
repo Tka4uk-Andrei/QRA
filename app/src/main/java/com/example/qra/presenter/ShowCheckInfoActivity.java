@@ -98,6 +98,8 @@ public class ShowCheckInfoActivity extends AppCompatActivity {
                 temp.rightMargin = 20;
 
                 textView.setLayoutParams(temp);
+                // format: 0xAARRGGBB
+                textView.setTextColor(0xFF000000);
                 return textView;
             };
 

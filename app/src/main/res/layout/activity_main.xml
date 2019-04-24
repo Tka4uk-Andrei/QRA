@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".activities.MainActivity">
+    tools:context=".presenter.MainActivity">
 
 
     <TextView
@@ -28,13 +28,6 @@
         android:text="Scan QR code" />
 
     <Button
-        android:id="@+id/json_parse_btn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Parse json text" />
-
-    <Button
         android:id="@+id/send_request_btn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -47,13 +40,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Settings" />
-
-    <Button
-        android:id="@+id/show_check_btn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Show check" />
 
 
 </android.widget.LinearLayout>

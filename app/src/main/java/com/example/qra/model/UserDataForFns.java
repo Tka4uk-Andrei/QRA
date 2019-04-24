@@ -1,4 +1,4 @@
-package com.example.qra.data;
+package com.example.qra.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;

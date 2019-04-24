@@ -1,6 +1,5 @@
-package com.example.qra.activities;
+package com.example.qra.presenter;
 
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.qra.R;
-import com.example.qra.data.UserDataForFns;
+import com.example.qra.model.UserDataForFns;
 
 public class RegisterInFnsActivity extends AppCompatActivity {
 

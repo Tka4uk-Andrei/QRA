@@ -1,6 +1,8 @@
 package com.example.qra.model.check;
 
 
+import com.example.qra.ItemCategories;
+
 /**
  * This class is responsible for storing information about the goods purchased
  * (the name of the product and its price of the product)

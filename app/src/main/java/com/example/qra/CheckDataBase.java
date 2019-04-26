@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.qra.model.check.BoughtItem;
+import com.example.qra.model.check.CheckInformationStorage;
+
 
 /**
  * class responsible for using of data base

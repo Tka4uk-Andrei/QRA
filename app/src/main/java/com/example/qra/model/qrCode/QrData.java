@@ -7,7 +7,7 @@ public class QrData {
     private final static String FISCAL_NUMBER_SEQUENCE = "fn=";
     private final static String FISCAL_DOCUMENT_SEQUENCE = "i=";
     private final static String FISCAL_SIGN_SEQUENCE = "fp=";
-    private final static String FISCAL_TYPE_SEQUENCE = "n=";
+    private final static String FISCAL_TYPE_SEQUENCE = "&n=";
 
     private String fiscalNumber;
     private String fiscalDocument;
@@ -29,6 +29,32 @@ public class QrData {
         totalCheckSum = getSubString(rawData, rawData.indexOf(SUM_SEQUENCE) + SUM_SEQUENCE.length());
         typeOfFiscalDocument = getSubString(rawData, rawData.indexOf(FISCAL_TYPE_SEQUENCE) + FISCAL_TYPE_SEQUENCE.length());
         buyTime = getSubString(rawData, rawData.indexOf(TIME_SEQUENCE) + TIME_SEQUENCE.length());
+
+        totalCheckSum = changeFormatTotalCheckSum();
+        buyTime = changeFormatBuyTime();
+    }
+
+    private String changeFormatBuyTime() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(buyTime.substring(0, 4)).append("-").append(buyTime.substring(4, 6));
+        sb.append("-").append(buyTime.substring(6, 11)).append(":").append(buyTime.substring(11, 13));
+        if (buyTime.length() == 13) {
+            return sb.toString();
+        } else {
+            sb.append(":").append(buyTime.substring(13));
+        }
+        return sb.toString();
+    }
+
+
+    private String changeFormatTotalCheckSum() {
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        while (totalCheckSum.charAt(i) != '.') {
+            i++;
+        }
+        sb.append(totalCheckSum.substring(0, i)).append(totalCheckSum.substring(i + 1));
+        return sb.toString();
     }
 
     /**
@@ -83,6 +109,7 @@ public class QrData {
 
     /**
      * Method returns total sum from check in format "ruble.kopeck"
+     *
      * @return check sum if fails throw NullPointerException
      */
     public String getTotalCheckSum() {
@@ -93,6 +120,7 @@ public class QrData {
 
     /**
      * Method returns type of fiscal document.
+     *
      * @return check sum if fails throw NullPointerException
      */
     public String getTypeOfFiscalDocument() {
@@ -103,6 +131,7 @@ public class QrData {
 
     /**
      * Method returns time then check get.
+     *
      * @return check sum if fails throw NullPointerException
      */
     public String getBuyTime() {

@@ -12,7 +12,186 @@ import java.net.URL;
 
 import static android.util.Base64.DEFAULT;
 
+import org.json.JSONObject;
+
+import java.io.DataOutputStream;
+import java.net.URLEncoder;
+import java.util.Scanner;
+
+
 public class WebRequestSender {
+
+    /**
+     * Method that send registration web request \\
+     *
+     * @autor : Ekaterina Novoselova
+     */
+    public static int registrationWebRequest(final UserDataForFns userData) throws Exception {
+        final WebRequestException[] exception = new WebRequestException[1];
+        final int[] responseCode = {0};
+        Thread t = new Thread(() -> {
+            HttpURLConnection connection = null;
+            String targetURL = "https://proverkacheka.nalog.ru:9999/v1/mobile/users/signup";
+            try {
+                JSONObject message = new JSONObject();
+                message.put("email", userData.getUserEmail());
+                message.put("name", userData.getUserName());
+                message.put("phone", userData.getPhoneNumber());
+
+                //Create connection
+                URL url = new URL(targetURL);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty("Host", "android.schoolportal.gr");
+                connection.setRequestProperty("charset", "UTF-8");
+                connection.setDoOutput(true);
+
+                connection.connect();
+
+                // Send POST output.
+                DataOutputStream printout;
+                printout = new DataOutputStream(connection.getOutputStream());
+                printout.writeBytes(URLEncoder.encode(message.toString(), "UTF-8"));
+                printout.flush();
+                printout.close();
+
+                responseCode[0] = connection.getResponseCode();
+                if (responseCode[0] != 204) {
+                    InputStream error = connection.getErrorStream();
+                    Scanner s = new Scanner(error).useDelimiter("\\A");
+                    String result = s.hasNext() ? s.next() : "";
+                    throw new WebRequestException(responseCode[0], targetURL);
+                }
+            } catch (Exception e) {
+                exception[0] = new WebRequestException(responseCode[0], e.getMessage());
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+            }
+        });
+        t.start();
+        t.join();
+        if (exception[0] != null) {
+            throw exception[0];
+        }
+        return responseCode[0];
+    }
+
+
+    /**
+     * Method that send user recovery web request \\
+     *
+     * @autor : Ekaterina Novoselova
+     */
+    public static int userRecoveryWebRequest(final UserDataForFns userData) throws Exception {
+        final WebRequestException[] exception = new WebRequestException[1];
+        final int[] responseCode = {0};
+        Thread t = new Thread(() -> {
+            HttpURLConnection connection = null;
+            String targetURL = "https://proverkacheka.nalog.ru:9999/v1/mobile/users/restore";
+            try {
+                JSONObject message = new JSONObject();
+                message.put("phone", userData.getPhoneNumber());
+
+                //Create connection
+                URL url = new URL(targetURL);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty("Host", "android.schoolportal.gr");
+                connection.setRequestProperty("charset", "UTF-8");
+                connection.setDoOutput(true);
+
+                connection.connect();
+
+                // Send POST output.
+                DataOutputStream printout;
+                printout = new DataOutputStream(connection.getOutputStream());
+                printout.writeBytes(URLEncoder.encode(message.toString(), "UTF-8"));
+                printout.flush();
+                printout.close();
+
+                responseCode[0] = connection.getResponseCode();
+                if (responseCode[0] != 204) {
+                    InputStream error = connection.getErrorStream();
+                    Scanner s = new Scanner(error).useDelimiter("\\A");
+                    String result = s.hasNext() ? s.next() : "";
+                    throw new WebRequestException(responseCode[0], targetURL);
+                }
+            } catch (Exception e) {
+                exception[0] = new WebRequestException(responseCode[0], e.getMessage());
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+            }
+        });
+        t.start();
+        t.join();
+        if (exception[0] != null) {
+            throw exception[0];
+        }
+        return responseCode[0];
+    }
+
+
+    /**
+     * Method that send web request to check the existence of a check \\
+     *
+     * @return the response to the http request \\
+     * @autor : Ekaterina Novoselova
+     */
+    public static boolean checkExistingWebRequestData(final QrData targetQr) throws Exception {
+        final WebRequestException[] exception = new WebRequestException[1];
+        final int[] responseCode = new int[1];
+        Thread t = new Thread(() -> {
+            HttpURLConnection connection = null;
+
+            StringBuilder urlSB = new StringBuilder();
+            urlSB.append("https://proverkacheka.nalog.ru:9999/v1/ofds/*/inns/*/fss/");
+            urlSB.append(targetQr.getFiscalNumber());
+            urlSB.append("/operations/");
+            urlSB.append(targetQr.getTypeOfFiscalDocument());
+            urlSB.append("/tickets/");
+            urlSB.append(targetQr.getFiscalDocument());
+            urlSB.append("?fiscalSign=");
+            urlSB.append(targetQr.getFiscalSignOfDocument());
+            urlSB.append("&date=");
+            urlSB.append(targetQr.getBuyTime());
+            urlSB.append("&sum=");
+            urlSB.append(targetQr.getTotalCheckSum());
+
+
+            String targetURL = urlSB.toString();
+            try {
+                //Create connection
+                URL url = new URL(targetURL);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("device-id", "192.168.211.72");
+                connection.setRequestProperty("device-os", "android, v.8.0.0");
+                if (connection != null) {
+                    responseCode[0] = connection.getResponseCode();
+                }
+            } catch (IOException e) {
+                exception[0] = new WebRequestException(responseCode[0], e.getMessage());
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+            }
+        });
+        t.start();
+        t.join();
+        if (exception[0] != null) {
+            throw exception[0];
+        }
+        return responseCode[0] == 204;
+    }
 
     /**
      * Method that send web request to receive check data \\
@@ -23,55 +202,53 @@ public class WebRequestSender {
     public static String getWebRequestData(final QrData targetQr, final UserDataForFns userData) throws Exception {
         final String[] response = new String[1];
         final WebRequestException[] exception = new WebRequestException[1];
-        Thread t = new Thread(new Runnable() {
-            public void run() {
-                HttpURLConnection connection = null;
+        Thread t = new Thread(() -> {
+            HttpURLConnection connection = null;
 
-                StringBuilder urlSB = new StringBuilder();
-                urlSB.append("https://proverkacheka.nalog.ru:9999/v1/inns/*/kkts/*/fss/");
-                urlSB.append(targetQr.getFiscalNumber());
-                urlSB.append("/tickets/");
-                urlSB.append(targetQr.getFiscalDocument());
-                urlSB.append("?fiscalSign=");
-                urlSB.append(targetQr.getFiscalSignOfDocument());
-                urlSB.append("&sendToEmail=no");
+            StringBuilder urlSB = new StringBuilder();
+            urlSB.append("https://proverkacheka.nalog.ru:9999/v1/inns/*/kkts/*/fss/");
+            urlSB.append(targetQr.getFiscalNumber());
+            urlSB.append("/tickets/");
+            urlSB.append(targetQr.getFiscalDocument());
+            urlSB.append("?fiscalSign=");
+            urlSB.append(targetQr.getFiscalSignOfDocument());
+            urlSB.append("&sendToEmail=no");
 
-                String targetURL = urlSB.toString();
+            String targetURL = urlSB.toString();
+            try {
+                //Create connection
+                URL url = new URL(targetURL);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("device-id", "192.168.211.72");
+                connection.setRequestProperty("device-os", "android, v.8.0.0");
+                connection.setRequestProperty("Authorization", base64Encode(userData.getPhoneNumber(),
+                        userData.getPassword()));
+
+                //Get Response
+                InputStream is = connection.getInputStream();
+                BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+                StringBuilder resp = new StringBuilder();
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    resp.append(line);
+                    resp.append('\r');
+                }
+                rd.close();
+                response[0] = resp.toString();
+            } catch (IOException e) {
                 try {
-                    //Create connection
-                    URL url = new URL(targetURL);
-                    connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
-                    connection.setRequestProperty("device-id", "192.168.211.72");
-                    connection.setRequestProperty("device-os", "android, v.8.0.0");
-                    connection.setRequestProperty("Authorization", base64Encode(userData.getPhoneNumber(),
-                            userData.getPassword()));
-
-                    //Get Response
-                    InputStream is = connection.getInputStream();
-                    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-                    StringBuilder resp = new StringBuilder();
-                    String line;
-                    while ((line = rd.readLine()) != null) {
-                        resp.append(line);
-                        resp.append('\r');
-                    }
-                    rd.close();
-                    response[0] = resp.toString();
-                } catch (IOException e) {
-                    try {
-                        int responseCode = 0;
-                        if (connection != null) {
-                            responseCode = connection.getResponseCode();
-                            exception[0] = new WebRequestException(responseCode, e.getMessage());
-                        }
-                    } catch (IOException ex) {
-                        exception[0] = new WebRequestException(ex.getMessage());
-                    }
-                } finally {
+                    int responseCode = 0;
                     if (connection != null) {
-                        connection.disconnect();
+                        responseCode = connection.getResponseCode();
+                        exception[0] = new WebRequestException(responseCode, e.getMessage());
                     }
+                } catch (IOException ex) {
+                    exception[0] = new WebRequestException(ex.getMessage());
+                }
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
                 }
             }
         });

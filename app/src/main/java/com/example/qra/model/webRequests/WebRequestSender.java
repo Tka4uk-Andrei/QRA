@@ -7,15 +7,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 import static android.util.Base64.DEFAULT;
 
 import org.json.JSONObject;
-
-import java.io.DataOutputStream;
-import java.net.URLEncoder;
 import java.util.Scanner;
 
 
@@ -43,19 +41,14 @@ public class WebRequestSender {
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
 
-                connection.setRequestProperty("Content-Type", "application/json");
-                connection.setRequestProperty("Host", "android.schoolportal.gr");
-                connection.setRequestProperty("charset", "UTF-8");
+                connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
                 connection.setDoOutput(true);
 
                 connection.connect();
 
                 // Send POST output.
-                DataOutputStream printout;
-                printout = new DataOutputStream(connection.getOutputStream());
-                printout.writeBytes(URLEncoder.encode(message.toString(), "UTF-8"));
-                printout.flush();
-                printout.close();
+                OutputStream os = connection.getOutputStream();
+                os.write(message.toString().getBytes("UTF-8"));
 
                 responseCode[0] = connection.getResponseCode();
                 if (responseCode[0] != 204) {
@@ -101,19 +94,16 @@ public class WebRequestSender {
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
 
-                connection.setRequestProperty("Content-Type", "application/json");
-                connection.setRequestProperty("Host", "android.schoolportal.gr");
-                connection.setRequestProperty("charset", "UTF-8");
+                connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                connection.setRequestProperty("Accept-Encoding", "gzip");
+                connection.setRequestProperty("ClientVersion", "1.4.4.4");
                 connection.setDoOutput(true);
 
                 connection.connect();
 
                 // Send POST output.
-                DataOutputStream printout;
-                printout = new DataOutputStream(connection.getOutputStream());
-                printout.writeBytes(URLEncoder.encode(message.toString(), "UTF-8"));
-                printout.flush();
-                printout.close();
+                OutputStream os = connection.getOutputStream();
+                os.write(message.toString().getBytes("UTF-8"));
 
                 responseCode[0] = connection.getResponseCode();
                 if (responseCode[0] != 204) {
@@ -174,6 +164,8 @@ public class WebRequestSender {
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("device-id", "192.168.211.72");
                 connection.setRequestProperty("device-os", "android, v.8.0.0");
+                connection.connect();
+
                 if (connection != null) {
                     responseCode[0] = connection.getResponseCode();
                 }
@@ -224,18 +216,23 @@ public class WebRequestSender {
                 connection.setRequestProperty("device-os", "android, v.8.0.0");
                 connection.setRequestProperty("Authorization", base64Encode(userData.getPhoneNumber(),
                         userData.getPassword()));
+                connection.connect();
 
                 //Get Response
                 InputStream is = connection.getInputStream();
-                BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-                StringBuilder resp = new StringBuilder();
-                String line;
-                while ((line = rd.readLine()) != null) {
-                    resp.append(line);
-                    resp.append('\r');
-                }
-                rd.close();
-                response[0] = resp.toString();
+                int l = 0;
+                //while (l == 0) {
+                    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+                    StringBuilder resp = new StringBuilder();
+                    String line;
+                    while ((line = rd.readLine()) != null) {
+                        resp.append(line);
+                        resp.append('\r');
+                    }
+                    rd.close();
+                    response[0] = resp.toString();
+                    l = response[0].length();
+               // }
             } catch (IOException e) {
                 try {
                     int responseCode = 0;

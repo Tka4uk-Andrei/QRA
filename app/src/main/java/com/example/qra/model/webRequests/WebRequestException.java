@@ -12,6 +12,9 @@ public class WebRequestException extends Exception {
     public static final String CHECK_NOT_FOUND_MESSAGE = "Check not found";
     public static final String AUTHORIZATION_ERROR_MESSAGE = "Authorization error";
     public static final String WRONG_LOGIN_OR_PASSWORD_MESSAGE = "Wrong login or password";
+    public static final String USER_EXISTS_MESSAGE = "User exists";
+    public static final String UNCORRECT_PHONE_MESSAGE = "Uncorrect phone";
+    public static final String USER_NOT_FOUND_MESSAGE = "User not found";
 
 
     private String message;
@@ -31,6 +34,12 @@ public class WebRequestException extends Exception {
             message = AUTHORIZATION_ERROR_MESSAGE;
         } else if (code == 403) {
             message = WRONG_LOGIN_OR_PASSWORD_MESSAGE;
+        } else if (code == 409) {
+            message = USER_EXISTS_MESSAGE;
+        } else if (code == 500) {
+            message = UNCORRECT_PHONE_MESSAGE;
+        } else if (code == 404) {
+            message = USER_NOT_FOUND_MESSAGE;
         } else message = msg;
     }
 

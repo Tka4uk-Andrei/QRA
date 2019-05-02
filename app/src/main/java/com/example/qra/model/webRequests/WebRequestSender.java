@@ -14,7 +14,6 @@ import java.net.URL;
 import static android.util.Base64.DEFAULT;
 
 import org.json.JSONObject;
-import java.util.Scanner;
 
 
 public class WebRequestSender {
@@ -52,9 +51,6 @@ public class WebRequestSender {
 
                 responseCode[0] = connection.getResponseCode();
                 if (responseCode[0] != 204) {
-                    InputStream error = connection.getErrorStream();
-                    Scanner s = new Scanner(error).useDelimiter("\\A");
-                    String result = s.hasNext() ? s.next() : "";
                     throw new WebRequestException(responseCode[0], targetURL);
                 }
             } catch (Exception e) {
@@ -107,9 +103,6 @@ public class WebRequestSender {
 
                 responseCode[0] = connection.getResponseCode();
                 if (responseCode[0] != 204) {
-                    InputStream error = connection.getErrorStream();
-                    Scanner s = new Scanner(error).useDelimiter("\\A");
-                    String result = s.hasNext() ? s.next() : "";
                     throw new WebRequestException(responseCode[0], targetURL);
                 }
             } catch (Exception e) {
@@ -166,9 +159,8 @@ public class WebRequestSender {
                 connection.setRequestProperty("device-os", "android, v.8.0.0");
                 connection.connect();
 
-                if (connection != null) {
-                    responseCode[0] = connection.getResponseCode();
-                }
+                responseCode[0] = connection.getResponseCode();
+
             } catch (IOException e) {
                 exception[0] = new WebRequestException(responseCode[0], e.getMessage());
             } finally {
@@ -194,7 +186,10 @@ public class WebRequestSender {
     public static String getWebRequestData(final QrData targetQr, final UserDataForFns userData) throws Exception {
         final String[] response = new String[1];
         final WebRequestException[] exception = new WebRequestException[1];
+        final int[] responseCode = new int[1];
         Thread t = new Thread(() -> {
+
+
             HttpURLConnection connection = null;
 
             StringBuilder urlSB = new StringBuilder();
@@ -216,33 +211,24 @@ public class WebRequestSender {
                 connection.setRequestProperty("device-os", "android, v.8.0.0");
                 connection.setRequestProperty("Authorization", base64Encode(userData.getPhoneNumber(),
                         userData.getPassword()));
-                connection.connect();
 
                 //Get Response
                 InputStream is = connection.getInputStream();
-                int l = 0;
-                //while (l == 0) {
-                    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-                    StringBuilder resp = new StringBuilder();
-                    String line;
-                    while ((line = rd.readLine()) != null) {
-                        resp.append(line);
-                        resp.append('\r');
-                    }
-                    rd.close();
-                    response[0] = resp.toString();
-                    l = response[0].length();
-               // }
-            } catch (IOException e) {
-                try {
-                    int responseCode = 0;
-                    if (connection != null) {
-                        responseCode = connection.getResponseCode();
-                        exception[0] = new WebRequestException(responseCode, e.getMessage());
-                    }
-                } catch (IOException ex) {
-                    exception[0] = new WebRequestException(ex.getMessage());
+                BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+                StringBuilder resp = new StringBuilder();
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    resp.append(line);
+                    resp.append('\r');
                 }
+                rd.close();
+                response[0] = resp.toString();
+                responseCode[0] = connection.getResponseCode();
+                if (responseCode[0] != 200) {
+                    throw new WebRequestException(responseCode[0], targetURL);
+                }
+            } catch (Exception e) {
+                exception[0] = new WebRequestException(responseCode[0], e.getMessage());
             } finally {
                 if (connection != null) {
                     connection.disconnect();

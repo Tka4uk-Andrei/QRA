@@ -27,6 +27,7 @@ public class ParsingJson {
     private static final String STRING_RECEIPT_JSON_FIELD = "receipt";
     private static final String STRING_TOTAL_SUM_JSON_FIELD = "totalSum";
     private static final String USER_INN_JSON_FIELD = "userInn";
+    private static final String STRING_NDS_20_JSON_FIELD = "nds20";
     private static final String STRING_NDS_18_JSON_FIELD = "nds18";
     private static final String STRING_NDS_10_JSON_FIELD = "nds10";
     private static final String STRING_RETAIL_PLACE_ADDRESS_JSON_FIELD = "retailPlaceAddress";
@@ -35,6 +36,11 @@ public class ParsingJson {
     private static final String STRING_QUANTITY_JSON_FIELD = "quantity";
     private static final String STRING_SUM_JSON_FIELD = "sum";
     private static final String STRING_NAME_JSON_FIELD = "name";
+    private static final String OBTAINING_METHOD = "FNS";
+
+    private static final String STRING_FISCAL_DOCUMENT_NUMBER_JSON_FIELD = "fiscalDocumentNumber";
+    private static final String STRING_FISCAL_DRIVE_NUMBER_JSON_FIELD = "fiscalDriveNumber";
+    private static final String STRING_FISCAL_SIGN_JSON_FIELD = "fiscalSign";
 
     /**
      * @param stringJSON
@@ -53,10 +59,27 @@ public class ParsingJson {
 
             tempObject.setTotalSum(receipt.getInt(STRING_TOTAL_SUM_JSON_FIELD));
             tempObject.setInn(receipt.getString(USER_INN_JSON_FIELD));
-            tempObject.setPaidNdsSum(receipt.getInt(STRING_NDS_18_JSON_FIELD) +
-                    receipt.getInt(STRING_NDS_10_JSON_FIELD));
+            int nds = 0;
+            try {
+                nds += receipt.getInt(STRING_NDS_20_JSON_FIELD);
+            } catch (JSONException e) {
+            }
+            try {
+                nds += receipt.getInt(STRING_NDS_18_JSON_FIELD);
+            } catch (JSONException e) {
+            }
+            try {
+                nds += receipt.getInt(STRING_NDS_10_JSON_FIELD);
+            } catch (JSONException e) {
+            }
+            //if!(receipt.getInt(STRING_NDS_18_JSON_FIELD))
+            tempObject.setPaidNdsSum(nds);
             tempObject.setAddressOfPurchase(receipt.getString(STRING_RETAIL_PLACE_ADDRESS_JSON_FIELD));
             tempObject.setBuyTime(receipt.getString(STRING_DATE_TIME_JSON_FIELD));
+
+            tempObject.setFiscalDocumentNumber(receipt.getInt(STRING_FISCAL_DOCUMENT_NUMBER_JSON_FIELD));
+            tempObject.setFiscalDriveNumber(receipt.getString(STRING_FISCAL_DRIVE_NUMBER_JSON_FIELD));
+            tempObject.setFiscalSign(receipt.getInt(STRING_FISCAL_SIGN_JSON_FIELD));
 
             JSONArray items = receipt.getJSONArray(STRING_ITEMS_JSON_FIELD);
 
@@ -71,6 +94,7 @@ public class ParsingJson {
             }
 
             tempObject.setShoppingList(shoppingList);
+            tempObject.setObtainingMethod(OBTAINING_METHOD);
 
         } catch (JSONException e) {
             e.printStackTrace();

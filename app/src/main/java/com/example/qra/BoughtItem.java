@@ -29,19 +29,70 @@ public class BoughtItem {
      */
     private String category;
 
+    /**
+     * product name for user
+     */
+    private String nameForUser;
+
+    /**
+     * tracking ID
+     */
+    private int id;
+
+
+    /**
+     * @return tracking ID
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @return product name for user
+     */
+    public String getNameForUser() {
+        return nameForUser;
+    }
+
+
+
+
+    /**
+     * This function sets product name for user
+     *
+     * @param nameForUser - product name for user
+     */
+    public void setNameForUser(String nameForUser) {
+        this.nameForUser = nameForUser;
+    }
+
     public BoughtItem(String name, int price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.category = ItemCategories.NOT_DISTRIBUTED;
+        this.nameForUser = name; //TODO возможно, здесь нужно выывать функцию, котрая сопоставит имя товара имени для пользователя
     }
 
-    public BoughtItem(String name, int price, int quantity, String category) {
+    /**
+     * на данный момент я еще не придумала, как можно устанавливать значение поля
+     * не конструктором и не функцией set
+     * @param id - tracking ID
+     * @param name
+     * @param nameForUser
+     * @param price
+     * @param quantity
+     * @param category
+     */
+    public BoughtItem(int id, String name, String nameForUser, int price, int quantity, String category) {
+        this.id = id;
         this.name = name;
+        this.nameForUser = nameForUser;
         this.price = price;
         this.quantity = quantity;
         this.category = category;
     }
+
 
     /**
      * This function sets quantity of goods with the given name

@@ -3,9 +3,10 @@ package com.example.qra;
 public class CheckEditingException extends Exception {
 
     private String errorMessage;
+    private final String DEFAULT_ERROR_MESSAGE = "this check from fns";
 
     public CheckEditingException() {
-        errorMessage = "this check from fns";
+        errorMessage = DEFAULT_ERROR_MESSAGE;
     }
 
     public void setErrorMessage(String errorMessage) {

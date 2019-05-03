@@ -362,8 +362,8 @@ public class CheckDataBase {
      * This method allows you to change store address
      * This method can be used by only user check
      *
-     * @param id      - tracking ID
-     * @param newAddress  - new store address
+     * @param id         - tracking ID
+     * @param newAddress - new store address
      * @param context
      * @throws CheckEditingException - this exception is thrown if passed to a function
      *                               the check is recognized from JSON
@@ -386,7 +386,7 @@ public class CheckDataBase {
      * This method can be used by only user check
      *
      * @param id      - tracking ID
-     * @param newTime  - new buying time
+     * @param newTime - new buying time
      * @param context
      * @throws CheckEditingException - this exception is thrown if passed to a function
      *                               the check is recognized from JSON
@@ -515,12 +515,12 @@ public class CheckDataBase {
         for (int i = 0; i < cursor.getCount(); i++) {
 
             shoppingList[i] = new BoughtItem(
-                    cursor.getInt(cursor.getColumnIndex("_id")),
                     cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME)),
                     cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME_FOR_USER)),
                     cursor.getInt(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_PRISE)),
                     cursor.getInt(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY)),
                     cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_CATEGORIES)));
+            shoppingList[i].setId(cursor.getInt(cursor.getColumnIndex("_id")));
 
             cursor.moveToNext();
         }
@@ -574,12 +574,12 @@ public class CheckDataBase {
                  j++) {
 
                 shoppingList[j] = new BoughtItem(
-                        cursorShop.getInt(cursorShop.getColumnIndex("_id")),
                         cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME)),
                         cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME_FOR_USER)),
                         cursorShop.getInt(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_PRISE)),
                         cursorShop.getInt(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY)),
                         cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_CATEGORIES)));
+                shoppingList[j].setId(cursorShop.getInt(cursorShop.getColumnIndex("_id")));
 
                 cursorShop.moveToNext();
             }

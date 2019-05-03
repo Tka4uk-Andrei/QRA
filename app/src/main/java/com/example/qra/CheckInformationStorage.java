@@ -51,7 +51,7 @@ public class CheckInformationStorage {
     /**
      * tracking ID
      */
-    private  int id;
+    private int id;
 
 
     /**
@@ -70,7 +70,6 @@ public class CheckInformationStorage {
     private int fiscalSign;
 
     /**
-     *
      * @return fiscal document number
      */
     public int getFiscalDocumentNumber() {
@@ -78,7 +77,6 @@ public class CheckInformationStorage {
     }
 
     /**
-     *
      * @return fiscal sign
      */
     public int getFiscalSign() {
@@ -86,7 +84,6 @@ public class CheckInformationStorage {
     }
 
     /**
-     *
      * @return fiscal drive number
      */
     public String getFiscalDriveNumber() {
@@ -95,6 +92,7 @@ public class CheckInformationStorage {
 
     /**
      * This method allows you to set fiscal document number
+     *
      * @param fiscalDocumentNumber
      */
     public void setFiscalDocumentNumber(int fiscalDocumentNumber) {
@@ -103,6 +101,7 @@ public class CheckInformationStorage {
 
     /**
      * This method allows you to set fiscal drive number
+     *
      * @param fiscalDriveNumber
      */
     public void setFiscalDriveNumber(String fiscalDriveNumber) {
@@ -111,6 +110,7 @@ public class CheckInformationStorage {
 
     /**
      * This method allows you to set fiscal sign
+     *
      * @param fiscalSign
      */
     public void setFiscalSign(int fiscalSign) {
@@ -119,8 +119,7 @@ public class CheckInformationStorage {
 
     /**
      * This method allows you to set tracking ID
-     * на данный момент я еще не придумала, как можно устанавливать значение поля
-     * не конструктором и не функцией set
+     *
      * @param id
      */
     public void setId(int id) {
@@ -128,7 +127,6 @@ public class CheckInformationStorage {
     }
 
     /**
-     *
      * @return tracking ID
      */
     public int getId() {
@@ -136,7 +134,7 @@ public class CheckInformationStorage {
     }
 
     /**
-     * @return  method of obtaining (FNS or user)
+     * @return method of obtaining (FNS or user)
      */
     public String getObtainingMethod() {
         return obtainingMethod;
@@ -144,7 +142,8 @@ public class CheckInformationStorage {
 
 
     /**
-     *  This method allows you to set method of obtaining
+     * This method allows you to set method of obtaining
+     *
      * @param obtainingMethod
      */
     public void setObtainingMethod(String obtainingMethod) {

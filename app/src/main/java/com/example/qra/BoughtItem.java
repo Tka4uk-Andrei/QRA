@@ -55,8 +55,6 @@ public class BoughtItem {
     }
 
 
-
-
     /**
      * This function sets product name for user
      *
@@ -66,6 +64,21 @@ public class BoughtItem {
         this.nameForUser = nameForUser;
     }
 
+    /**
+     * This method allows you to set tracking ID
+     *
+     * @param id
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    /**
+     * @param name     - product name
+     * @param price    -price of the this products
+     * @param quantity - number of goods with the given name
+     */
     public BoughtItem(String name, int price, int quantity) {
         this.name = name;
         this.price = price;
@@ -75,17 +88,13 @@ public class BoughtItem {
     }
 
     /**
-     * на данный момент я еще не придумала, как можно устанавливать значение поля
-     * не конструктором и не функцией set
-     * @param id - tracking ID
-     * @param name
-     * @param nameForUser
-     * @param price
-     * @param quantity
-     * @param category
+     * @param name        - product name
+     * @param nameForUser - product name for user
+     * @param price       -price of the this products
+     * @param quantity    - number of goods with the given name
+     * @param category    - what category does the product belong to
      */
-    public BoughtItem(int id, String name, String nameForUser, int price, int quantity, String category) {
-        this.id = id;
+    public BoughtItem(String name, String nameForUser, int price, int quantity, String category) {
         this.name = name;
         this.nameForUser = nameForUser;
         this.price = price;

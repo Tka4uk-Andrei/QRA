@@ -72,7 +72,7 @@ public class ParsingJson {
                 nds += receipt.getInt(STRING_NDS_10_JSON_FIELD);
             } catch (JSONException e) {
             }
-            //if!(receipt.getInt(STRING_NDS_18_JSON_FIELD))
+
             tempObject.setPaidNdsSum(nds);
             tempObject.setAddressOfPurchase(receipt.getString(STRING_RETAIL_PLACE_ADDRESS_JSON_FIELD));
             tempObject.setBuyTime(receipt.getString(STRING_DATE_TIME_JSON_FIELD));

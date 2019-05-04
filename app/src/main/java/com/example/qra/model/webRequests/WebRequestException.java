@@ -19,10 +19,6 @@ public class WebRequestException extends Exception {
 
     private String message;
 
-    public WebRequestException(String msg) {
-        message = msg;
-    }
-
     public WebRequestException(int code, String msg) {
         if (code == 451) {
             message = CHECK_DOES_NOT_EXIST_MESSAGE;

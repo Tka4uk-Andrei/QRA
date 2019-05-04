@@ -15,15 +15,20 @@ import static android.util.Base64.DEFAULT;
 
 import org.json.JSONObject;
 
-
+/**
+ * Class that creates web requests \\
+ *
+ * @autor : Ekaterina Novoselova
+ */
 public class WebRequestSender {
 
     /**
      * Method that send registration web request \\
      *
+     * @param userData current user data \\
      * @autor : Ekaterina Novoselova
      */
-    public static int registrationWebRequest(final UserDataForFns userData) throws Exception {
+    public static void registrationWebRequest(final UserDataForFns userData) throws Exception {
         final WebRequestException[] exception = new WebRequestException[1];
         final int[] responseCode = {0};
         Thread t = new Thread(() -> {
@@ -66,16 +71,16 @@ public class WebRequestSender {
         if (exception[0] != null) {
             throw exception[0];
         }
-        return responseCode[0];
     }
 
 
     /**
      * Method that send user recovery web request \\
      *
+     * @param userData current user data \\
      * @autor : Ekaterina Novoselova
      */
-    public static int userRecoveryWebRequest(final UserDataForFns userData) throws Exception {
+    public static void userRecoveryWebRequest(final UserDataForFns userData) throws Exception {
         final WebRequestException[] exception = new WebRequestException[1];
         final int[] responseCode = {0};
         Thread t = new Thread(() -> {
@@ -118,17 +123,17 @@ public class WebRequestSender {
         if (exception[0] != null) {
             throw exception[0];
         }
-        return responseCode[0];
     }
 
 
     /**
      * Method that send web request to check the existence of a check \\
      *
-     * @return the response to the http request \\
+     * @param targetQr target check data\\
+     * @return true if check exists, false if doesn't exist\\
      * @autor : Ekaterina Novoselova
      */
-    public static boolean checkExistingWebRequestData(final QrData targetQr) throws Exception {
+    public static boolean isCheckExistsWebRequest(final QrData targetQr) throws Exception {
         final WebRequestException[] exception = new WebRequestException[1];
         final int[] responseCode = new int[1];
         Thread t = new Thread(() -> {
@@ -180,10 +185,12 @@ public class WebRequestSender {
     /**
      * Method that send web request to receive check data \\
      *
+     * @param targetQr target check data \\
+     * @param userData current user data \\
      * @return the response to the http request \\
      * @autor : Ekaterina Novoselova
      */
-    public static String getWebRequestData(final QrData targetQr, final UserDataForFns userData) throws Exception {
+    public static String getCheckDataWebRequest(final QrData targetQr, final UserDataForFns userData) throws Exception {
         final String[] response = new String[1];
         final WebRequestException[] exception = new WebRequestException[1];
         final int[] responseCode = new int[1];

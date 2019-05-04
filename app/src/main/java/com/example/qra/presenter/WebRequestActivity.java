@@ -56,9 +56,8 @@ public class WebRequestActivity extends AppCompatActivity {
 
         String response = null;
         try {
-            //WebRequestSender.registrationWebRequest(getInstanceDefault());
-            if(WebRequestSender.checkExistingWebRequestData(qrData)) {
-                response = WebRequestSender.getWebRequestData(qrData, getInstanceDefault());
+            if(WebRequestSender.isCheckExistsWebRequest(qrData)) {
+                response = WebRequestSender.getCheckDataWebRequest(qrData, getInstanceDefault());
             }
         } catch (Exception e) {
             Toast.makeText(WebRequestActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();

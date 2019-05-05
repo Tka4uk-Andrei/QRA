@@ -1,4 +1,4 @@
-package com.example.qra.presenter;
+package com.example.qra.view;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -27,13 +27,8 @@ public class AppNotInstalledDialog extends DialogFragment {
                 .create();
     }
 
-    private DialogInterface.OnClickListener PositiveBtnClickListener = new DialogInterface.OnClickListener() {
-
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            final String URL = "https://play.google.com/store/search?q=com.google.zxing.client.android&c=apps";
-
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
-        }
+    private DialogInterface.OnClickListener PositiveBtnClickListener = (dialog, which) -> {
+        final String URL = "https://play.google.com/store/search?q=com.google.zxing.client.android&c=apps";
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(URL)));
     };
 }

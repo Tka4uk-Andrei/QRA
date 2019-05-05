@@ -2,9 +2,9 @@ package com.example.qra.presenter;
 
 import com.example.qra.presenter.interfaces.ILoginPresenter;
 
-public class EnterView implements ILoginPresenter {
+public class LogInPresenter implements ILoginPresenter {
 
-    public EnterView(){
+    public LogInPresenter(){
 
     }
 

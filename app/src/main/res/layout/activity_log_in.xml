@@ -44,6 +44,26 @@
         android:layout_height="wrap_content"
         android:text="Sing In"/>
 
+    <LinearLayout
+        android:gravity=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/register_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.618"
+            android:text="Register" />
+
+        <Button
+            android:id="@+id/restore_password_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.382"
+            android:text="I forgot password" />
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/login_progress_bar"

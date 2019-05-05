@@ -1,4 +1,4 @@
-package com.example.qra.view;
+package com.example.qra.view.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

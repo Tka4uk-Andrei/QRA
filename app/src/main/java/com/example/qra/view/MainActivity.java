@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.qra.R;
+import com.example.qra.view.dialogs.AppNotInstalledDialog;
 
 /**
  * MainActivity class using for display main info
@@ -20,8 +21,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String QR_DATA_EXTRA = "QR_DATA";
 
     private static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
-    private static final String FIRST_TIME_RUN = "First time";
-    private static final String IS_FIRST_TIME = "is first";
+
 
     private Button qrScanButton;
     private Button requestButton;
@@ -32,19 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences firstTimePreference = getApplicationContext().getSharedPreferences(FIRST_TIME_RUN, MODE_PRIVATE);
-        boolean isFirstLaunch = firstTimePreference.getBoolean(IS_FIRST_TIME, true);
 
-        if (isFirstLaunch) {
-            Toast.makeText(getApplicationContext(), "First Launch",
-                    Toast.LENGTH_SHORT).show();
-            SharedPreferences.Editor editor = firstTimePreference.edit();
-            editor.putBoolean(IS_FIRST_TIME, false);
-            editor.apply();
-        } else {
-            Toast.makeText(getApplicationContext(), "I was launched previously",
-                    Toast.LENGTH_SHORT).show();
-        }
 
         ConnectViewsWithCode();
         setViewListeners();

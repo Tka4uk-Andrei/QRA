@@ -1,10 +1,17 @@
 package com.example.qra.presenter.interfaces;
 
+import android.content.Context;
+
 public interface ILoginPresenter {
 
-    String ENTER_UNSUCCESSFUL = "wrong login or password";
-    String ENTER_SUCCESSFUL = "ok";
+    // TODO documentation
+    void onCreate();
 
-    String singIn(String password, String login);
-
+    /**
+     * Method that sing user in fns and save info in cache
+     *
+     * @param password password for FNS
+     * @param login    phone number for FNS
+     */
+    void singUp(String password, String login);
 }

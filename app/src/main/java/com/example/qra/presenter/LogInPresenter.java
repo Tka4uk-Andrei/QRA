@@ -1,9 +1,12 @@
 package com.example.qra.presenter;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.qra.model.UserDataForFns;
 import com.example.qra.presenter.interfaces.ILoginPresenter;
+import com.example.qra.view.MainActivity;
 import com.example.qra.view.interfaces.ILoginView;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -14,8 +17,12 @@ public class LogInPresenter implements ILoginPresenter {
     private static final String FIRST_TIME_RUN = "First time";
     private static final String IS_FIRST_TIME = "is first";
 
+    /**
+     *  access to view and it's also
+     */
     private ILoginView loginView;
 
+    // login view should be extend from AppCompatActivity
     public LogInPresenter(ILoginView loginView) {
         this.loginView = loginView;
     }
@@ -45,7 +52,15 @@ public class LogInPresenter implements ILoginPresenter {
             UserDataForFns.getInstance(loginView.getContext()).setPhoneNumber(login);
 
             loginView.showLoginSucceededMessage();
-            return;
+
+            if (!(loginView instanceof AppCompatActivity))
+            {
+                throw new ClassCastException("loginView field, that send from constructor " +
+                        "should be AppCompatActivity class");
+            }
+
+            ((AppCompatActivity)loginView).startActivity(new Intent(loginView.getContext(), MainActivity.class));
+            ((AppCompatActivity)loginView).finish();
         }
 
         loginView.showLoginNotSucceededMessage();

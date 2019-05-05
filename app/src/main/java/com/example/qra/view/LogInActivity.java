@@ -43,14 +43,6 @@ public class LogInActivity extends AppCompatActivity implements ILoginView {
     public void showLoginSucceededMessage() {
         findViewById(R.id.login_progress_bar).setVisibility(View.INVISIBLE);
         Toast.makeText(getApplicationContext(), "Вход успешен", Toast.LENGTH_SHORT).show();
-<<<<<<< HEAD
-
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        finish();
-        
-        Toast.makeText(getApplicationContext(), "Вход успешен", Toast.LENGTH_SHORT).show();
-=======
->>>>>>> develop
     }
 
     @Override

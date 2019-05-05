@@ -46,6 +46,8 @@ public class LogInActivity extends AppCompatActivity implements ILoginView {
 
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         finish();
+        
+        Toast.makeText(getApplicationContext(), "Вход успешен", Toast.LENGTH_SHORT).show();
     }
 
     @Override

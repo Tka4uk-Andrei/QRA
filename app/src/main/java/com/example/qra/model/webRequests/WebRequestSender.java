@@ -56,10 +56,19 @@ public class WebRequestSender {
 
                 responseCode[0] = connection.getResponseCode();
                 if (responseCode[0] != 204) {
-                    throw new WebRequestException(responseCode[0], targetURL);
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Error code is ").append(((Integer)responseCode[0]).toString());
+                    exception[0] = new WebRequestException(responseCode[0], sb.toString());
                 }
             } catch (Exception e) {
-                exception[0] = new WebRequestException(responseCode[0], e.getMessage());
+                if (exception[0] == null) {
+                    try {
+                        responseCode[0] = connection.getResponseCode();
+                    } catch (IOException e1) {
+                        exception[0] = new WebRequestException(0, e.getMessage());
+                    }
+                    exception[0] = new WebRequestException(responseCode[0], e.getMessage());
+                }
             } finally {
                 if (connection != null) {
                     connection.disconnect();
@@ -108,10 +117,19 @@ public class WebRequestSender {
 
                 responseCode[0] = connection.getResponseCode();
                 if (responseCode[0] != 204) {
-                    throw new WebRequestException(responseCode[0], targetURL);
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Error code is ").append(((Integer)responseCode[0]).toString());
+                    exception[0] = new WebRequestException(responseCode[0], sb.toString());
                 }
             } catch (Exception e) {
-                exception[0] = new WebRequestException(responseCode[0], e.getMessage());
+                if (exception[0] == null) {
+                    try {
+                        responseCode[0] = connection.getResponseCode();
+                    } catch (IOException e1) {
+                        exception[0] = new WebRequestException(0, e.getMessage());
+                    }
+                    exception[0] = new WebRequestException(responseCode[0], e.getMessage());
+                }
             } finally {
                 if (connection != null) {
                     connection.disconnect();
@@ -167,7 +185,14 @@ public class WebRequestSender {
                 responseCode[0] = connection.getResponseCode();
 
             } catch (IOException e) {
-                exception[0] = new WebRequestException(responseCode[0], e.getMessage());
+                if (exception[0] == null) {
+                    try {
+                        responseCode[0] = connection.getResponseCode();
+                    } catch (IOException e1) {
+                        exception[0] = new WebRequestException(0, e.getMessage());
+                    }
+                    exception[0] = new WebRequestException(responseCode[0], e.getMessage());
+                }
             } finally {
                 if (connection != null) {
                     connection.disconnect();
@@ -232,10 +257,19 @@ public class WebRequestSender {
                 response[0] = resp.toString();
                 responseCode[0] = connection.getResponseCode();
                 if (responseCode[0] != 200) {
-                    throw new WebRequestException(responseCode[0], targetURL);
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Error code is ").append(((Integer)responseCode[0]).toString());
+                    exception[0] = new WebRequestException(responseCode[0], sb.toString());
                 }
             } catch (Exception e) {
-                exception[0] = new WebRequestException(responseCode[0], e.getMessage());
+                if (exception[0] == null) {
+                    try {
+                        responseCode[0] = connection.getResponseCode();
+                    } catch (IOException e1) {
+                        exception[0] = new WebRequestException(0, e.getMessage());
+                    }
+                    exception[0] = new WebRequestException(responseCode[0], e.getMessage());
+                }
             } finally {
                 if (connection != null) {
                     connection.disconnect();

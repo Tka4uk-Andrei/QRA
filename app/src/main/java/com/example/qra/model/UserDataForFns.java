@@ -69,7 +69,7 @@ public class UserDataForFns {
     private UserDataForFns()
     {
         phoneNumber = "+79817987505";
-        password = "721363";
+        password = "385280";
         userName = "Kate";
         userEmail = "novoselova.ei@mail.ru";
     }

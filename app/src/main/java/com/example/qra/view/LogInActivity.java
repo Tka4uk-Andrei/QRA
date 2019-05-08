@@ -26,9 +26,12 @@ public class LogInActivity extends AppCompatActivity implements ILoginView {
         EditText passwordTxt = findViewById(R.id.password_text);
         EditText phoneNumberTxt = findViewById(R.id.phone_text);
         Button logInBtn = findViewById(R.id.sing_in_btn);
+        Button restoreBtn = findViewById(R.id.restore_password_btn);
+        Button registerBtn = findViewById(R.id.register_btn);
 
         // initialize presenter
-        ILoginPresenter loginPresenter = new LogInPresenter(this);
+        LogInPresenter loginPresenter = new LogInPresenter(this);
+
         logInBtn.setOnClickListener(action -> {
             findViewById(R.id.login_progress_bar).setVisibility(View.VISIBLE);
 
@@ -36,6 +39,13 @@ public class LogInActivity extends AppCompatActivity implements ILoginView {
                     passwordTxt.getText().toString(),
                     phoneNumberTxt.getText().toString());
         });
+        restoreBtn.setOnClickListener(action -> {
+            loginPresenter.restorePassword();
+        });
+        registerBtn.setOnClickListener(action -> {
+            loginPresenter.register();
+        });
+
         loginPresenter.onCreate();
     }
 

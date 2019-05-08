@@ -4,7 +4,9 @@ import android.content.Context;
 
 public interface ILoginPresenter {
 
-    // TODO documentation
+    /**
+     * Action that called, then activity created
+     */
     void onCreate();
 
     /**
@@ -14,4 +16,9 @@ public interface ILoginPresenter {
      * @param login    phone number for FNS
      */
     void singUp(String password, String login);
+
+    void register();
+
+    void restorePassword();
+
 }

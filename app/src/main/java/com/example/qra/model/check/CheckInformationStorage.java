@@ -10,6 +10,11 @@ public class CheckInformationStorage {
     //TODO iterator
 
     /**
+     * method of obtaining (FNS or user)
+     */
+    private String obtainingMethod;
+
+    /**
      * total sum your shopping
      */
     private int totalSum;
@@ -20,7 +25,7 @@ public class CheckInformationStorage {
     private String inn;
 
     /**
-     * paied nds sum (nds10% + nds18%)
+     * paied nds sum (nds10% + nds18% + nds20%)
      */
     private int paidNdsSum;
 
@@ -44,6 +49,108 @@ public class CheckInformationStorage {
      */
     private BoughtItem[] shoppingList;
 
+
+    /**
+     * tracking ID
+     */
+    private int id;
+
+
+    /**
+     * fiscal document number
+     */
+    private int fiscalDocumentNumber;
+
+    /**
+     * fiscal drive number
+     */
+    private String fiscalDriveNumber;
+
+    /**
+     * fiscal sign
+     */
+    private int fiscalSign;
+
+    /**
+     * @return fiscal document number
+     */
+    public int getFiscalDocumentNumber() {
+        return fiscalDocumentNumber;
+    }
+
+    /**
+     * @return fiscal sign
+     */
+    public int getFiscalSign() {
+        return fiscalSign;
+    }
+
+    /**
+     * @return fiscal drive number
+     */
+    public String getFiscalDriveNumber() {
+        return fiscalDriveNumber;
+    }
+
+    /**
+     * This method allows you to set fiscal document number
+     *
+     * @param fiscalDocumentNumber
+     */
+    public void setFiscalDocumentNumber(int fiscalDocumentNumber) {
+        this.fiscalDocumentNumber = fiscalDocumentNumber;
+    }
+
+    /**
+     * This method allows you to set fiscal drive number
+     *
+     * @param fiscalDriveNumber
+     */
+    public void setFiscalDriveNumber(String fiscalDriveNumber) {
+        this.fiscalDriveNumber = fiscalDriveNumber;
+    }
+
+    /**
+     * This method allows you to set fiscal sign
+     *
+     * @param fiscalSign
+     */
+    public void setFiscalSign(int fiscalSign) {
+        this.fiscalSign = fiscalSign;
+    }
+
+    /**
+     * This method allows you to set tracking ID
+     *
+     * @param id
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * @return tracking ID
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @return method of obtaining (FNS or user)
+     */
+    public String getObtainingMethod() {
+        return obtainingMethod;
+    }
+
+
+    /**
+     * This method allows you to set method of obtaining
+     *
+     * @param obtainingMethod
+     */
+    public void setObtainingMethod(String obtainingMethod) {
+        this.obtainingMethod = obtainingMethod;
+    }
 
     /**
      * @return total sum your shopping

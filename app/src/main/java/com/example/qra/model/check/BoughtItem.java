@@ -31,19 +31,79 @@ public class BoughtItem {
      */
     private String category;
 
+    /**
+     * product name for user
+     */
+    private String nameForUser;
+
+    /**
+     * tracking ID
+     */
+    private int id;
+
+
+    /**
+     * @return tracking ID
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @return product name for user
+     */
+    public String getNameForUser() {
+        return nameForUser;
+    }
+
+
+    /**
+     * This function sets product name for user
+     *
+     * @param nameForUser - product name for user
+     */
+    public void setNameForUser(String nameForUser) {
+        this.nameForUser = nameForUser;
+    }
+
+    /**
+     * This method allows you to set tracking ID
+     *
+     * @param id
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    /**
+     * @param name     - product name
+     * @param price    -price of the this products
+     * @param quantity - number of goods with the given name
+     */
     public BoughtItem(String name, int price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.category = ItemCategories.NOT_DISTRIBUTED;
+        this.nameForUser = name; //TODO возможно, здесь нужно выывать функцию, котрая сопоставит имя товара имени для пользователя
     }
 
-    public BoughtItem(String name, int price, int quantity, String category) {
+    /**
+     * @param name        - product name
+     * @param nameForUser - product name for user
+     * @param price       -price of the this products
+     * @param quantity    - number of goods with the given name
+     * @param category    - what category does the product belong to
+     */
+    public BoughtItem(String name, String nameForUser, int price, int quantity, String category) {
         this.name = name;
+        this.nameForUser = nameForUser;
         this.price = price;
         this.quantity = quantity;
         this.category = category;
     }
+
 
     /**
      * This function sets quantity of goods with the given name

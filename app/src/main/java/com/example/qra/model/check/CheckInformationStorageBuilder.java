@@ -1,12 +1,6 @@
 package com.example.qra.model.check;
 
-/**
- * this class is responsible for storing check information
- *
- * @author: Marina Alekseeva
- */
-public class CheckInformationStorage {
-
+public class CheckInformationStorageBuilder {
     /**
      * method of obtaining (FNS or user)
      */
@@ -51,7 +45,7 @@ public class CheckInformationStorage {
     /**
      * tracking ID
      */
-    private int id;
+    private int id = -1;
 
 
     /**
@@ -69,67 +63,49 @@ public class CheckInformationStorage {
      */
     private int fiscalSign;
 
-    /**
-     * @return fiscal document number
-     */
-    public int getFiscalDocumentNumber() {
-        return fiscalDocumentNumber;
-    }
-
-    /**
-     * @return fiscal sign
-     */
-    public int getFiscalSign() {
-        return fiscalSign;
-    }
-
-    /**
-     * @return fiscal drive number
-     */
-    public String getFiscalDriveNumber() {
-        return fiscalDriveNumber;
-    }
 
     /**
      * This method allows you to set fiscal document number
      *
      * @param fiscalDocumentNumber
+     * @return object with a filled field
      */
-    public void setFiscalDocumentNumber(int fiscalDocumentNumber) {
+    public CheckInformationStorageBuilder setFiscalDocumentNumber(int fiscalDocumentNumber) {
         this.fiscalDocumentNumber = fiscalDocumentNumber;
+        return this;
     }
 
     /**
      * This method allows you to set fiscal drive number
      *
      * @param fiscalDriveNumber
+     * @return object with a filled field
      */
-    public void setFiscalDriveNumber(String fiscalDriveNumber) {
+    public CheckInformationStorageBuilder setFiscalDriveNumber(String fiscalDriveNumber) {
         this.fiscalDriveNumber = fiscalDriveNumber;
+        return this;
     }
 
     /**
      * This method allows you to set fiscal sign
      *
      * @param fiscalSign
+     * @return object with a filled field
      */
-    public void setFiscalSign(int fiscalSign) {
+    public CheckInformationStorageBuilder setFiscalSign(int fiscalSign) {
         this.fiscalSign = fiscalSign;
-    }
-
-
-    /**
-     * @return tracking ID
-     */
-    public int getId() {
-        return id;
+        return this;
     }
 
     /**
-     * @return method of obtaining (FNS or user)
+     * This method allows you to set tracking ID
+     *
+     * @param id
+     * @return object with a filled field
      */
-    public String getObtainingMethod() {
-        return obtainingMethod;
+    public CheckInformationStorageBuilder setId(int id) {
+        this.id = id;
+        return this;
     }
 
 
@@ -137,59 +113,11 @@ public class CheckInformationStorage {
      * This method allows you to set method of obtaining
      *
      * @param obtainingMethod
+     * @return object with a filled field
      */
-    public void setObtainingMethod(String obtainingMethod) {
+    public CheckInformationStorageBuilder setObtainingMethod(String obtainingMethod) {
         this.obtainingMethod = obtainingMethod;
-    }
-
-    /**
-     * @return total sum your shopping
-     */
-    public int getTotalSum() {
-        return totalSum;
-    }
-
-    /**
-     * @return Tax Identification Number
-     */
-    public String getInn() {
-        return inn;
-    }
-
-    /**
-     * @return paied nds sum (nds10% + nds18%)
-     */
-    public int getPaidNdsSum() {
-        return paidNdsSum;
-    }
-
-    /**
-     * @return number of products which you bought
-     */
-    public int getQuantityPurchases() {
-        return quantityPurchases;
-    }
-
-    /**
-     * @return store address
-     */
-    public String getAddressOfPurchase() {
-        return addressOfPurchase;
-    }
-
-    /**
-     * @return buying time
-     */
-    public String getBuyTime() {
-        return buyTime;
-    }
-
-
-    /**
-     * @return array of your products list
-     */
-    public BoughtItem[] getShoppingList() {
-        return shoppingList;
+        return this;
     }
 
 
@@ -197,9 +125,11 @@ public class CheckInformationStorage {
      * This method allows you to set store address
      *
      * @param addressOfPurchase
+     * @return object with a filled field
      */
-    public void setAddressOfPurchase(String addressOfPurchase) {
+    public CheckInformationStorageBuilder setAddressOfPurchase(String addressOfPurchase) {
         this.addressOfPurchase = addressOfPurchase;
+        return this;
     }
 
 
@@ -207,27 +137,33 @@ public class CheckInformationStorage {
      * This method allows you to set buying time
      *
      * @param buyTime
+     * @return object with a filled field
      */
-    public void setBuyTime(String buyTime) {
+    public CheckInformationStorageBuilder setBuyTime(String buyTime) {
         this.buyTime = buyTime;
+        return this;
     }
 
     /**
      * This method allows you to set paied nds sum (nds10% + nds18%)
      *
      * @param paidNdsSum paied nds sum (nds10% + nds18%)
+     * @return object with a filled field
      */
-    public void setPaidNdsSum(int paidNdsSum) {
+    public CheckInformationStorageBuilder setPaidNdsSum(int paidNdsSum) {
         this.paidNdsSum = paidNdsSum;
+        return this;
     }
 
     /**
      * This method allows you to set number of products which you bought
      *
      * @param quantityPurchases number of products which you bought
+     * @return object with a filled field
      */
-    public void setQuantityPurchases(int quantityPurchases) {
+    public CheckInformationStorageBuilder setQuantityPurchases(int quantityPurchases) {
         this.quantityPurchases = quantityPurchases;
+        return this;
     }
 
 
@@ -235,33 +171,47 @@ public class CheckInformationStorage {
      * This method allows you to set array of your products list
      *
      * @param shoppingList array of your products list
+     * @return object with a filled field
      */
-    public void setShoppingList(BoughtItem[] shoppingList) {
+    public CheckInformationStorageBuilder setShoppingList(BoughtItem[] shoppingList) {
         this.shoppingList = shoppingList;
+        return this;
     }
 
     /**
      * This method allows you to set total sum your shopping
      *
      * @param totalSum total sum your shopping
+     * @return object with a filled field
      */
-    public void setTotalSum(int totalSum) {
+    public CheckInformationStorageBuilder setTotalSum(int totalSum) {
         this.totalSum = totalSum;
+        return this;
     }
 
     /**
      * @param inn Tax Identification Number
+     * @return object with a filled field
      */
-    public void setInn(String inn) {
+    public CheckInformationStorageBuilder setInn(String inn) {
         this.inn = inn;
+        return this;
     }
 
-    /**
-     * protected constructor
-     *
-     * @param id - tracking ID
-     */
-    CheckInformationStorage(int id) {
-        this.id = id;
+    public CheckInformationStorage build() {
+        CheckInformationStorage checkObject = new CheckInformationStorage(this.id);
+        checkObject.setTotalSum(this.totalSum);
+        checkObject.setInn(this.inn);
+        checkObject.setPaidNdsSum(this.paidNdsSum);
+        checkObject.setAddressOfPurchase(this.addressOfPurchase);
+        checkObject.setBuyTime(this.buyTime);
+        checkObject.setFiscalDocumentNumber(this.fiscalDocumentNumber);
+        checkObject.setFiscalDriveNumber(this.fiscalDriveNumber);
+        checkObject.setFiscalSign(this.fiscalSign);
+        checkObject.setQuantityPurchases(this.quantityPurchases);
+        checkObject.setShoppingList(this.shoppingList);
+        checkObject.setObtainingMethod(this.obtainingMethod);
+
+        return checkObject;
     }
 }

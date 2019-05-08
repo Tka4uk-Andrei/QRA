@@ -27,9 +27,15 @@ public class BoughtItem {
     private int quantity;
 
     /**
-     * What category does the product belong to
+     * What general category does the product belong to
      */
-    private String category;
+    private String generalCategory;
+
+    /**
+     * What subject category does the product belong to
+     */
+    private String subjectCategory;
+
 
     /**
      * product name for user
@@ -66,42 +72,39 @@ public class BoughtItem {
         this.nameForUser = nameForUser;
     }
 
-    /**
-     * This method allows you to set tracking ID
-     *
-     * @param id
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
 
     /**
      * @param name     - product name
-     * @param price    -price of the this products
+     * @param price    - price of the this products
      * @param quantity - number of goods with the given name
      */
     public BoughtItem(String name, int price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-        this.category = ItemCategories.NOT_DISTRIBUTED;
+        this.generalCategory = ItemCategories.NOT_DISTRIBUTED;
+        this.subjectCategory = ItemCategories.NOT_DISTRIBUTED;
         this.nameForUser = name; //TODO возможно, здесь нужно выывать функцию, котрая сопоставит имя товара имени для пользователя
     }
 
     /**
-     * @param name        - product name
-     * @param nameForUser - product name for user
-     * @param price       -price of the this products
-     * @param quantity    - number of goods with the given name
-     * @param category    - what category does the product belong to
+     * @param id              - tracking ID
+     * @param name            - product name
+     * @param nameForUser     - product name for user
+     * @param price           - price of the this products
+     * @param quantity        - number of goods with the given name
+     * @param generalCategory - what general category does the product belong to
+     * @param subjectCategory - what subject category does the product belong to
      */
-    public BoughtItem(String name, String nameForUser, int price, int quantity, String category) {
+    public BoughtItem(int id, String name, String nameForUser, int price, int quantity,
+                      String generalCategory, String subjectCategory) {
+        this.id = id;
         this.name = name;
         this.nameForUser = nameForUser;
         this.price = price;
         this.quantity = quantity;
-        this.category = category;
+        this.generalCategory = generalCategory;
+        this.subjectCategory = subjectCategory;
     }
 
 
@@ -156,19 +159,36 @@ public class BoughtItem {
 
 
     /**
-     * @return what category does the product belong to
+     * @return what general category does the product belong to
      */
-    public String getCategory() {
-        return category;
+    public String getGeneralCategory() {
+        return generalCategory;
     }
 
 
     /**
-     * This function sets what category does the product belong to
+     * This function sets what general category does the product belong to
      *
-     * @param category
+     * @param generalCategory
      */
-    public void setCategory(String category) {
-        this.category = category;
+    public void setGeneralCategory(String generalCategory) {
+        this.generalCategory = generalCategory;
+    }
+
+    /**
+     * @return what subject category does the product belong to
+     */
+    public String getSubjectCategory() {
+        return subjectCategory;
+    }
+
+
+    /**
+     * This function sets what subject category does the product belong to
+     *
+     * @param subjectCategory
+     */
+    public void setSubjectCategory(String subjectCategory) {
+        this.subjectCategory = subjectCategory;
     }
 }

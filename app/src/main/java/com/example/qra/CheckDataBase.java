@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.qra.model.check.BoughtItem;
 import com.example.qra.model.check.CheckInformationStorage;
+import com.example.qra.model.check.CheckInformationStorageBuilder;
 
 
 /**
@@ -27,6 +28,8 @@ public class CheckDataBase {
         public static final String COLUMN_NAME_NAME_FOR_USER = "nameForUser";
         public static final String COLUMN_NAME_PRISE = "prise";
         public static final String COLUMN_NAME_QUANTITY = "quantity";
+        public static final String COLUMN_NAME_GENERAL_CATEGORIES = "generalCategories";
+        public static final String COLUMN_NAME_SUBJECT_CATEGORIES = "subjectCategories";
 
 
         public static final String TABLE_NAME_CHECK_LIST = "checkList";
@@ -37,7 +40,6 @@ public class CheckDataBase {
         public static final String COLUMN_NAME_ADDRESS = "addressOfPurchase";
         public static final String COLUMN_NAME_TIME = "buyTime";
         public static final String COLUMN_NAME_QUANTITY_PURCHASES = "quantityPurchases";
-        public static final String COLUMN_NAME_CATEGORIES = "categories";
         public static final String COLUMN_NAME_FISCAL_DOCUMENT_NUMBER = "fiscalDocumentNumber";
         public static final String COLUMN_NAME_FISCAL_DRIVE_NUMBER = "fiscalDriveNumber";
         public static final String COLUMN_NAME_FISCAL_SIGN = "fiscalSign";
@@ -76,7 +78,8 @@ public class CheckDataBase {
                     + COLUMN_NAME_NAME_FOR_USER + " text, "
                     + COLUMN_NAME_QUANTITY + " integer, "
                     + COLUMN_NAME_PRISE + " integer,"
-                    + COLUMN_NAME_CATEGORIES + " text, "
+                    + COLUMN_NAME_GENERAL_CATEGORIES + " text, "
+                    + COLUMN_NAME_SUBJECT_CATEGORIES + " text, "
                     + "checkList_id integer,"
                     + " foreign key(checkList_id) references  checkList(_id)" + ")");
 
@@ -120,7 +123,8 @@ public class CheckDataBase {
     public static void insert(CheckInformationStorage checkObject, Context context) {
         initialization(context);
         //след строчка используется после изменения структуры бд, для создания таблиц
-        //dataBase.onUpgrade(sqLiteDatabase,1,1);
+        //  dataBase.onUpgrade(sqLiteDatabase,1,1);
+
         contentValues.put(StorageCheckDataBase.COLUMN_NAME_OBTAINING_METHOD, checkObject.getObtainingMethod());
         contentValues.put(StorageCheckDataBase.COLUMN_NAME_TOTAL_SUM, checkObject.getTotalSum());
         contentValues.put(StorageCheckDataBase.COLUMN_NAME_INN, checkObject.getInn());
@@ -151,7 +155,8 @@ public class CheckDataBase {
             contentValues.put(StorageCheckDataBase.COLUMN_NAME_NAME_FOR_USER, checkObject.getShoppingList()[i].getNameForUser());
             contentValues.put(StorageCheckDataBase.COLUMN_NAME_QUANTITY, checkObject.getShoppingList()[i].getQuantity());
             contentValues.put(StorageCheckDataBase.COLUMN_NAME_PRISE, checkObject.getShoppingList()[i].getPrice());
-            contentValues.put(StorageCheckDataBase.COLUMN_NAME_CATEGORIES, checkObject.getShoppingList()[i].getCategory());
+            contentValues.put(StorageCheckDataBase.COLUMN_NAME_GENERAL_CATEGORIES, checkObject.getShoppingList()[i].getGeneralCategory());
+            contentValues.put(StorageCheckDataBase.COLUMN_NAME_SUBJECT_CATEGORIES, checkObject.getShoppingList()[i].getSubjectCategory());
             contentValues.put("checkList_id", checkId);
 
             //второй аргумент используется для вставки пустой строки - это не нужно сейчас
@@ -314,19 +319,36 @@ public class CheckDataBase {
 
 
     /**
-     * This method allows you to change category which the product belong to
+     * This method allows you to change general category which the product belong to
      * This method can be used by products which belongs to all checks
      *
-     * @param id          - tracking ID
-     * @param newCategory - new category which the product belong to
+     * @param id                 - tracking ID
+     * @param newGeneralCategory - new general category which the product belong to
      * @param context
      */
-    public static void UpdateCategory(int id, String newCategory, Context context) {
+    public static void UpdateGeneralCategory(int id, String newGeneralCategory, Context context) {
 
         initialization(context);
         //Редактирование записи
         sqLiteDatabase.execSQL("UPDATE " + StorageCheckDataBase.TABLE_NAME_SHOP_LIST +
-                " SET " + StorageCheckDataBase.COLUMN_NAME_CATEGORIES + "='" + newCategory
+                " SET " + StorageCheckDataBase.COLUMN_NAME_GENERAL_CATEGORIES + "='" + newGeneralCategory
+                + "' where _id=" + id);
+    }
+
+    /**
+     * This method allows you to change subject category which the product belong to
+     * This method can be used by products which belongs to all checks
+     *
+     * @param id                 - tracking ID
+     * @param newSubjectCategory - new subjectCategory which the product belong to
+     * @param context
+     */
+    public static void UpdateCategory(int id, String newSubjectCategory, Context context) {
+
+        initialization(context);
+        //Редактирование записи
+        sqLiteDatabase.execSQL("UPDATE " + StorageCheckDataBase.TABLE_NAME_SHOP_LIST +
+                " SET " + StorageCheckDataBase.COLUMN_NAME_SUBJECT_CATEGORIES + "='" + newSubjectCategory
                 + "' where _id=" + id);
     }
 
@@ -518,12 +540,14 @@ public class CheckDataBase {
         for (int i = 0; i < cursor.getCount(); i++) {
 
             shoppingList[i] = new BoughtItem(
+                    cursor.getInt(cursor.getColumnIndex("_id")),
                     cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME)),
                     cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME_FOR_USER)),
                     cursor.getInt(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_PRISE)),
                     cursor.getInt(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY)),
-                    cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_CATEGORIES)));
-            shoppingList[i].setId(cursor.getInt(cursor.getColumnIndex("_id")));
+                    cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_GENERAL_CATEGORIES)),
+                    cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_SUBJECT_CATEGORIES)));
+
 
             cursor.moveToNext();
         }
@@ -552,41 +576,45 @@ public class CheckDataBase {
 
         for (int i = 0; i < cursorCheck.getCount(); i++) {
 
+            int quantityPurchases = cursorCheck.getInt(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY_PURCHASES));
 
-            checkList[i] = new CheckInformationStorage();
-            checkList[i].setId(cursorCheck.getInt(cursorCheck.getColumnIndex("_id")));
-            checkList[i].setObtainingMethod(cursorCheck.getString(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_OBTAINING_METHOD)));
-            checkList[i].setTotalSum(cursorCheck.getInt(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_TOTAL_SUM)));
-            checkList[i].setInn(cursorCheck.getString(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_INN)));
-            checkList[i].setPaidNdsSum(cursorCheck.getInt(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NDS)));
-            checkList[i].setAddressOfPurchase(cursorCheck.getString(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_ADDRESS)));
-            checkList[i].setBuyTime(cursorCheck.getString(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_TIME)));
-            checkList[i].setQuantityPurchases(cursorCheck.getInt(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY_PURCHASES)));
-
-            checkList[i].setFiscalDocumentNumber(cursorCheck.getInt(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_FISCAL_DOCUMENT_NUMBER)));
-            checkList[i].setFiscalDriveNumber(cursorCheck.getString(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_FISCAL_DRIVE_NUMBER)));
-            checkList[i].setFiscalSign(cursorCheck.getInt(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_FISCAL_SIGN)));
-
-            BoughtItem[] shoppingList = new BoughtItem[checkList[i].getQuantityPurchases()];
+            BoughtItem[] shoppingList = new BoughtItem[quantityPurchases];
 
             //второе условие - соответствие "_id" поля чека и поля товара "checkList_id",
             //привязанного к своему чеку
-            for (int j = 0; (j < checkList[i].getQuantityPurchases()) &&
+            for (int j = 0; (j < quantityPurchases) &&
                     (cursorShop.getInt(cursorShop.getColumnIndex("checkList_id")) ==
                             cursorCheck.getInt(cursorCheck.getColumnIndex("_id")));
                  j++) {
 
                 shoppingList[j] = new BoughtItem(
+                        cursorShop.getInt(cursorShop.getColumnIndex("_id")),
                         cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME)),
                         cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME_FOR_USER)),
                         cursorShop.getInt(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_PRISE)),
                         cursorShop.getInt(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY)),
-                        cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_CATEGORIES)));
-                shoppingList[j].setId(cursorShop.getInt(cursorShop.getColumnIndex("_id")));
+                        cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_GENERAL_CATEGORIES)),
+                        cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_SUBJECT_CATEGORIES)));
 
                 cursorShop.moveToNext();
             }
-            checkList[i].setShoppingList(shoppingList);
+
+
+            checkList[i] = new CheckInformationStorageBuilder()
+                    .setId(cursorCheck.getInt(cursorCheck.getColumnIndex("_id")))
+                    .setObtainingMethod(cursorCheck.getString(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_OBTAINING_METHOD)))
+                    .setTotalSum(cursorCheck.getInt(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_TOTAL_SUM)))
+                    .setInn(cursorCheck.getString(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_INN)))
+                    .setPaidNdsSum(cursorCheck.getInt(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NDS)))
+                    .setAddressOfPurchase(cursorCheck.getString(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_ADDRESS)))
+                    .setBuyTime(cursorCheck.getString(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_TIME)))
+                    .setQuantityPurchases(quantityPurchases)
+
+                    .setFiscalDocumentNumber(cursorCheck.getInt(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_FISCAL_DOCUMENT_NUMBER)))
+                    .setFiscalDriveNumber(cursorCheck.getString(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_FISCAL_DRIVE_NUMBER)))
+                    .setFiscalSign(cursorCheck.getInt(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_FISCAL_SIGN)))
+                    .setShoppingList(shoppingList)
+                    .build();
 
 
             cursorCheck.moveToNext();

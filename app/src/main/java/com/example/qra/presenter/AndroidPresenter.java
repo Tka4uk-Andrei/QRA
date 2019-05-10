@@ -14,8 +14,8 @@ public class AndroidPresenter {
 
     private Stack<Pair<String, String>> intentExtraStrings;
 
-    public AndroidPresenter(IView loginView) {
-        this.view = loginView;
+    public AndroidPresenter(IView view) {
+        this.view = view;
         intentExtraStrings = new Stack<>();
     }
 

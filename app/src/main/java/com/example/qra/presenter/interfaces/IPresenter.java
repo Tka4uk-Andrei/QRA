@@ -1,4 +1,4 @@
 package com.example.qra.presenter.interfaces;
 
-public interface IMainScreen {
+public interface IPresenter {
 }

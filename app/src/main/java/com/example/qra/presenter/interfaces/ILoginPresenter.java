@@ -2,7 +2,7 @@ package com.example.qra.presenter.interfaces;
 
 import android.content.Context;
 
-public interface ILoginPresenter {
+public interface ILoginPresenter extends IPresenter {
 
     /**
      * Action that called, then activity created

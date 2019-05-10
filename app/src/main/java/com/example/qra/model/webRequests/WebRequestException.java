@@ -13,8 +13,9 @@ public class WebRequestException extends Exception {
     public static final String AUTHORIZATION_ERROR_MESSAGE = "Authorization error";
     public static final String WRONG_LOGIN_OR_PASSWORD_MESSAGE = "Wrong login or password";
     public static final String USER_EXISTS_MESSAGE = "User exists";
-    public static final String UNCORRECT_PHONE_MESSAGE = "Uncorrect phone";
+    public static final String INCORRECT_PHONE_MESSAGE = "Uncorrect phone";
     public static final String USER_NOT_FOUND_MESSAGE = "User not found";
+    public static final String NO_INTERNET_CONNECTION_MESSAGE = "No internet connection";
 
 
     private String message;
@@ -33,10 +34,12 @@ public class WebRequestException extends Exception {
         } else if (code == 409) {
             message = USER_EXISTS_MESSAGE;
         } else if (code == 500) {
-            message = UNCORRECT_PHONE_MESSAGE;
+            message = INCORRECT_PHONE_MESSAGE;
         } else if (code == 404) {
             message = USER_NOT_FOUND_MESSAGE;
-        } else message = msg;
+        }else if (msg.equals("Unable to resolve host \"proverkacheka.nalog.ru\": No address associated with hostname")) {
+            message = NO_INTERNET_CONNECTION_MESSAGE;
+        }  else message = msg;
     }
 
     public String getMessage() {

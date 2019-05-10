@@ -143,6 +143,55 @@ public class WebRequestSender {
         }
     }
 
+    /**
+     * Method that log in user \\
+     *
+     * @param userData current user data \\
+     * @autor : Ekaterina Novoselova
+     */
+    public static void logInWebRequest(final UserDataForFns userData) throws Exception {
+        final WebRequestException[] exception = new WebRequestException[1];
+        final int[] responseCode = new int[1];
+        Thread t = new Thread(() -> {
+            HttpURLConnection connection = null;
+            String targetURL = new String("https://proverkacheka.nalog.ru:9999/v1/mobile/users/login");
+            try {
+                //Create connection
+                URL url = new URL(targetURL);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("device-id", "192.168.211.72");
+                connection.setRequestProperty("device-os", "android, v.8.0.0");
+                connection.setRequestProperty("Authorization", base64Encode(userData.getPhoneNumber(),
+                        userData.getPassword()));
+
+                responseCode[0] = connection.getResponseCode();
+                if (responseCode[0] != 200) {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Error code is ").append(((Integer)responseCode[0]).toString());
+                    exception[0] = new WebRequestException(responseCode[0], sb.toString());
+                }
+            } catch (Exception e) {
+                if (exception[0] == null) {
+                    try {
+                        responseCode[0] = connection.getResponseCode();
+                    } catch (IOException e1) {
+                        exception[0] = new WebRequestException(0, e.getMessage());
+                    }
+                    exception[0] = new WebRequestException(responseCode[0], e.getMessage());
+                }
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+            }
+        });
+        t.start();
+        t.join();
+        if (exception[0] != null) {
+            throw exception[0];
+        }
+    }
 
     /**
      * Method that send web request to check the existence of a check \\

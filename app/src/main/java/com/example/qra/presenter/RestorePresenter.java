@@ -1,12 +1,13 @@
 package com.example.qra.presenter;
 
 import com.example.qra.presenter.interfaces.IRestoreUserPresenter;
+import com.example.qra.view.LogInActivity;
 import com.example.qra.view.interfaces.IRestorePasswordView;
 
 // TODO doc
 public class RestorePresenter extends AndroidPresenter implements IRestoreUserPresenter {
 
-    IRestorePasswordView restorePasswordView;
+    private IRestorePasswordView restorePasswordView;
 
     public RestorePresenter (IRestorePasswordView restorePasswordView){
         super(restorePasswordView);
@@ -17,9 +18,11 @@ public class RestorePresenter extends AndroidPresenter implements IRestoreUserPr
     public void restorePassword(String phone) {
         // TODO restore request
 
-        if (true) {
+        if (phone.length() > 0) {
             restorePasswordView.showRestoreSucceeded();
-            startActivity(, false);
+            putStingExtra(LogInPresenter.STARTER_ACTIVITY, LogInPresenter.class.getName());
+            putStingExtra(LogInPresenter.PHONE_EXTRA, phone);
+            startActivity(LogInActivity.class, true);
         } else {
             restorePasswordView.showRestoreNotSucceeded();
         }

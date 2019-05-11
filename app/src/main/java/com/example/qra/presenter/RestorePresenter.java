@@ -27,4 +27,9 @@ public class RestorePresenter extends AndroidPresenter implements IRestoreUserPr
             restorePasswordView.showRestoreNotSucceeded();
         }
     }
+
+    @Override
+    public void onCreate() {
+        // nothing to do
+    }
 }

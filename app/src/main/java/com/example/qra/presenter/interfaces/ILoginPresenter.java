@@ -5,11 +5,6 @@ import android.content.Context;
 public interface ILoginPresenter extends IPresenter {
 
     /**
-     * Action that called, then activity created
-     */
-    void onCreate();
-
-    /**
      * Method that sing user in fns and save info in cache
      *
      * @param password password for FNS

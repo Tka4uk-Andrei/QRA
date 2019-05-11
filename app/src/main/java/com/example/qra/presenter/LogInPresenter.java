@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.example.qra.model.UserDataForFns;
 import com.example.qra.presenter.interfaces.ILoginPresenter;
 import com.example.qra.view.MainActivity;
+import com.example.qra.view.RegisterInFnsActivity;
 import com.example.qra.view.RestorePasswordActivity;
 import com.example.qra.view.interfaces.ILoginView;
 
@@ -41,8 +42,9 @@ public class LogInPresenter extends AndroidPresenter implements ILoginPresenter 
         // obtain launch Intent
         Intent launchIntent = loginView.getStarterIntent();
         if (launchIntent != null && launchIntent.getStringExtra(STARTER_ACTIVITY) != null) {
-            //check if activity launched from RestorePassword Activity
-            if (launchIntent.getStringExtra(STARTER_ACTIVITY).equals(LogInPresenter.class.getName()))
+            //check if activity launched from LogInPresenter or RegisterPresenter
+            if (launchIntent.getStringExtra(STARTER_ACTIVITY).equals(LogInPresenter.class.getName())
+            || launchIntent.getStringExtra(STARTER_ACTIVITY).equals(RegisterPresenter.class.getName()))
                 loginView.updatePhoneText(launchIntent.getStringExtra(PHONE_EXTRA));
         }
     }
@@ -54,8 +56,9 @@ public class LogInPresenter extends AndroidPresenter implements ILoginPresenter 
         // if login succeed
         if (password.length() != 0 && login.length() != 0) {
             // Set registration data
-            UserDataForFns.getInstance(getView().getContext()).setPassword(password);
-            UserDataForFns.getInstance(getView().getContext()).setPhoneNumber(login);
+            UserDataForFns.getInstance(loginView.getContext()).setPassword(password);
+            UserDataForFns.getInstance(null).setPhoneNumber(login);
+            UserDataForFns.getInstance(null).apply(loginView.getContext());
 
             // Update status. Now user logged in
             SharedPreferences.Editor editor = getView().getContext().getSharedPreferences(LOGIN, MODE_PRIVATE).edit();
@@ -72,7 +75,7 @@ public class LogInPresenter extends AndroidPresenter implements ILoginPresenter 
 
     @Override
     public void register() {
-
+        startActivity(RegisterInFnsActivity.class, false);
     }
 
     @Override

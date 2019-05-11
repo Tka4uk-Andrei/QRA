@@ -1,4 +1,8 @@
 package com.example.qra.presenter.interfaces;
 
-public interface IRestoreUserPresenter {
+// TODO doc
+public interface IRestoreUserPresenter extends IPresenter {
+
+    void restorePassword(String phone);
+
 }

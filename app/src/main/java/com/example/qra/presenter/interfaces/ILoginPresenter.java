@@ -2,10 +2,7 @@ package com.example.qra.presenter.interfaces;
 
 import android.content.Context;
 
-public interface ILoginPresenter {
-
-    // TODO documentation
-    void onCreate();
+public interface ILoginPresenter extends IPresenter {
 
     /**
      * Method that sing user in fns and save info in cache
@@ -14,4 +11,9 @@ public interface ILoginPresenter {
      * @param login    phone number for FNS
      */
     void singUp(String password, String login);
+
+    void register();
+
+    void restorePassword();
+
 }

@@ -1,7 +1,5 @@
 package com.example.qra.view.interfaces;
 
-import android.content.Context;
-
 public interface ILoginView extends IView {
 
     // TODO fill doc
@@ -9,4 +7,7 @@ public interface ILoginView extends IView {
 
     // TODO fill doc
     void showLoginNotSucceededMessage();
+
+    // TODO fill doc
+    void updatePhoneText(String phone);
 }

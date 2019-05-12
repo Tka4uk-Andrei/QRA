@@ -28,6 +28,9 @@ public class WebRequestActivity extends AppCompatActivity {
         EditText fiscalNum = findViewById(R.id.fiscal_num);
         EditText fiscalDoc = findViewById(R.id.fiscal_doc);
         EditText fiscalSign = findViewById(R.id.fiscal_sign);
+        EditText typeOfFiscalDoc = findViewById(R.id.type_of_fiscal_document);
+        EditText buyTime = findViewById(R.id.buy_time);
+        EditText totalCheckSum = findViewById(R.id.total_check_sum);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,7 +38,10 @@ public class WebRequestActivity extends AppCompatActivity {
                 sendRequest(new QrData(
                         fiscalNum.getText().toString(),
                         fiscalDoc.getText().toString(),
-                        fiscalSign.getText().toString()));
+                        fiscalSign.getText().toString(),
+                        totalCheckSum.getText().toString(),
+                        typeOfFiscalDoc.getText().toString(),
+                        buyTime.getText().toString()));
             }
         });
 
@@ -50,7 +56,9 @@ public class WebRequestActivity extends AppCompatActivity {
 
         String response = null;
         try {
-            response = WebRequestSender.getWebRequestData(qrData, getInstanceDefault());
+            if(WebRequestSender.isCheckExistsWebRequest(qrData)) {
+                response = WebRequestSender.getCheckDataWebRequest(qrData, getInstanceDefault());
+            }
         } catch (Exception e) {
             Toast.makeText(WebRequestActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }

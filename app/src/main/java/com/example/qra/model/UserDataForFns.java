@@ -68,10 +68,10 @@ public class UserDataForFns {
 
     private UserDataForFns()
     {
-        phoneNumber = "+79097984616";
-        password = "229963";
-        userName = "";
-        userEmail = "";
+        phoneNumber = "+79817987505";
+        password = "385280";
+        userName = "Kate";
+        userEmail = "novoselova.ei@mail.ru";
     }
 
     private UserDataForFns(Context context) {

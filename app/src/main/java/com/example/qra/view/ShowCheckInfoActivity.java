@@ -30,13 +30,16 @@ public class ShowCheckInfoActivity extends AppCompatActivity {
         try {
             checkInfo = ParsingJson.ParseJson(msg);
         } catch (ParsingJsonException e) {
-            Toast.makeText(getApplicationContext(), "json data corrupted", Toast.LENGTH_LONG).show();
+            ErrorDialog dialog = new ErrorDialog();
+            dialog.setMsg("json data corrupted. " + e.getErrorMessage());
+            dialog.show(getSupportFragmentManager(), "EXCEPTION");
         }
 
         if (checkInfo == null)
         {
-            Toast.makeText(getApplicationContext(), "check is empty", Toast.LENGTH_LONG).show();
-            finish();
+            ErrorDialog dialog = new ErrorDialog();
+            dialog.setMsg("check is empty");
+            dialog.show(getSupportFragmentManager(), "ERROR");
         } else {
 
             linearLayout.addView(new CardLayout(getApplicationContext(),

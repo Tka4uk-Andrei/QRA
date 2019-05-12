@@ -20,7 +20,7 @@ import org.json.JSONObject;
  *
  * @autor : Ekaterina Novoselova
  */
-public class WebRequestSender {
+public class WebRequests {
 
     /**
      * Method that send registration web request \\

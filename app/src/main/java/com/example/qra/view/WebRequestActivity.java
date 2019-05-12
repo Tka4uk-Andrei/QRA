@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.example.qra.R;
 import com.example.qra.model.qrCode.QrData;
-import com.example.qra.model.webRequests.WebRequestSender;
+import com.example.qra.model.webRequests.WebRequests;
 
 import static com.example.qra.model.UserDataForFns.getInstanceDefault;
 
@@ -56,8 +56,8 @@ public class WebRequestActivity extends AppCompatActivity {
 
         String response = null;
         try {
-            if(WebRequestSender.isCheckExistsWebRequest(qrData)) {
-                response = WebRequestSender.getCheckDataWebRequest(qrData, getInstanceDefault());
+            if(WebRequests.isCheckExistsWebRequest(qrData)) {
+                response = WebRequests.getCheckDataWebRequest(qrData, getInstanceDefault());
             }
         } catch (Exception e) {
             Toast.makeText(WebRequestActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();

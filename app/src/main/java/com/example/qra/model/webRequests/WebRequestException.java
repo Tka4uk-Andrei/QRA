@@ -1,11 +1,14 @@
 package com.example.qra.model.webRequests;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Class that creates messages for some web request exceptions \\
  *
  * @autor : Ekaterina Novoselova
  */
-public class WebRequestException extends Exception {
+public class WebRequestException extends Exception implements Parcelable {
 
     public static final String CHECK_DOES_NOT_EXIST_MESSAGE = "Check doesn't exist";
     public static final String BAD_REQUEST_MESSAGE = "Bad request";
@@ -37,12 +40,40 @@ public class WebRequestException extends Exception {
             message = INCORRECT_PHONE_MESSAGE;
         } else if (code == 404) {
             message = USER_NOT_FOUND_MESSAGE;
-        }else if (msg.equals("Unable to resolve host \"proverkacheka.nalog.ru\": No address associated with hostname")) {
+            // TODO string under may be bad
+        } else if (msg.equals("Unable to resolve host \"proverkacheka.nalog.ru\": No address associated with hostname")) {
             message = NO_INTERNET_CONNECTION_MESSAGE;
-        }  else message = msg;
+        } else message = msg;
+    }
+
+    protected WebRequestException(Parcel in) {
+        message = in.readString();
     }
 
     public String getMessage() {
         return message;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(message);
+    }
+
+    public static final Creator<WebRequestException> CREATOR = new Creator<WebRequestException>() {
+
+        @Override
+        public WebRequestException createFromParcel(Parcel in) {
+            return new WebRequestException(in);
+        }
+
+        @Override
+        public WebRequestException[] newArray(int size) {
+            return new WebRequestException[size];
+        }
+    };
 }

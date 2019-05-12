@@ -14,6 +14,7 @@ import com.example.qra.model.parser.ParsingJsonException;
 import com.example.qra.R;
 import com.example.qra.model.check.BoughtItem;
 import com.example.qra.model.check.CheckInformationStorage;
+import com.example.qra.presenter.ErrorDialog;
 
 public class ShowCheckInfoActivity extends AppCompatActivity {
 

@@ -6,6 +6,7 @@ import android.os.Message;
 
 import com.example.qra.model.UserDataForFns;
 import com.example.qra.model.webRequests.WebRequestException;
+import com.example.qra.model.webRequests.WebRequestUtilities;
 
 import org.json.JSONObject;
 
@@ -19,19 +20,9 @@ public class RegistrationWebRequest implements Runnable {
     private Handler exceptionHandler;
 
     // TODO documentation
-    public RegistrationWebRequest(UserDataForFns userData, Handler exceptionHandler){
+    public RegistrationWebRequest(UserDataForFns userData, Handler exceptionHandler) {
         this.userData = userData;
         this.exceptionHandler = exceptionHandler;
-    }
-
-    private Message getExceptionMessage(WebRequestException exception){
-        Message exceptionMessage = exceptionHandler.obtainMessage();
-
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("exception", exception);
-        exceptionMessage.setData(bundle);
-
-        return exceptionMessage;
     }
 
     @Override
@@ -64,11 +55,13 @@ public class RegistrationWebRequest implements Runnable {
             responseCode = connection.getResponseCode();
             if (responseCode != 204)
                 exceptionHandler.sendMessage(
-                        getExceptionMessage(new WebRequestException(responseCode, "")));
+                        WebRequestUtilities.getExceptionMessage(
+                                exceptionHandler, new WebRequestException(responseCode, "")));
         } catch (Exception e) {
             // Mostly if connection fails
             exceptionHandler.sendMessage(
-                    getExceptionMessage(new WebRequestException(responseCode, e.getMessage())));
+                    WebRequestUtilities.getExceptionMessage(
+                            exceptionHandler, new WebRequestException(responseCode, e.getMessage())));
         } finally {
             if (connection != null) {
                 connection.disconnect();

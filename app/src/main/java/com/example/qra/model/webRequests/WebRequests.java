@@ -351,9 +351,12 @@ public class WebRequests {
     }
 
     /**
+     * <em><b>Deprecated</b></em> moved to WebRequestUtilities class
+     *
      * @return the base64 code \\
      * @autor : Ekaterina Novoselova
      */
+    @Deprecated
     private static String base64Encode(String phone, String password) {
         StringBuilder authorizationSB = new StringBuilder();
         authorizationSB.append(phone);

@@ -21,7 +21,7 @@ public class CheckExistsWebRequest implements Runnable {
     private Handler responseHandler;
 
     public CheckExistsWebRequest(QrData qrData, UserDataForFns userData,
-                                 Handler responseHandler, Handler exceptionHandler) {
+                                 Handler exceptionHandler, Handler responseHandler) {
         this.qrData = qrData;
         this.userData = userData;
         this.responseHandler = responseHandler;

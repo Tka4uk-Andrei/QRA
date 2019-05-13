@@ -26,6 +26,8 @@
         </activity>
         <activity android:name=".view.ShowCheckInfoActivity" />
         <activity android:name=".view.WebRequestActivity" />
+        <activity android:name=".view.EditGoodsDataActivity" />
+        <activity android:name=".view.EditCheckDataActivity" />
         <activity android:name=".view.RegisterInFnsActivity" />
         <activity
             android:name=".view.MainActivity"

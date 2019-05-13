@@ -75,7 +75,7 @@ public class WebRequestService extends Service {
                     while (tempResponse == null) {
                         TimeUnit.HOURS.sleep(HOURS_SLEEP);
                         try {
-                            tempResponse = WebRequestSender.getWebRequestData(qrDataObject, userDataForFnsObject);
+                            tempResponse = WebRequests.getCheckDataWebRequest(qrDataObject, userDataForFnsObject);
                         } catch (Exception e) {
                             //TODO обработка исключения в отдельном потоке
                             //хотя, в этот catch мы будем выпадать каждый раз, когда не будем

@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button qrScanButton;
     private Button requestButton;
+    private Button editGoodsButton;
     private Button settingsButton;
 
     @Override
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     public void ConnectViewsWithCode() {
         qrScanButton = findViewById(R.id.qr_scan_btn);
         requestButton = findViewById(R.id.send_request_btn);
+        editGoodsButton = findViewById(R.id.edit_goods_btn);
         settingsButton = findViewById(R.id.settings_btn);
     }
 
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         qrScanButton.setOnClickListener(menuBtnClickListener);
         requestButton.setOnClickListener(menuBtnClickListener);
+        editGoodsButton.setOnClickListener(menuBtnClickListener);
         settingsButton.setOnClickListener(menuBtnClickListener);
 
     }
@@ -100,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 if (v == requestButton)
                     intent = new Intent(getApplicationContext(), WebRequestActivity.class);
+                else if (v == editGoodsButton)
+                    intent = new Intent(getApplicationContext(), EditGoodsDataActivity.class);
                 else if (v == settingsButton)
                     intent = new Intent(getApplicationContext(), RegisterInFnsActivity.class);
 

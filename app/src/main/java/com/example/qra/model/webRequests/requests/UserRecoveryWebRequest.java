@@ -15,12 +15,15 @@ import java.net.URL;
 
 public class UserRecoveryWebRequest implements Runnable {
 
-    UserDataForFns userData;
-    Handler exceptionHandler;
+    private UserDataForFns userData;
+    private Handler exceptionHandler;
+    private Handler returnHandler;
 
-    public UserRecoveryWebRequest(UserDataForFns userData, Handler exceptionHandler){
+    public UserRecoveryWebRequest(UserDataForFns userData,
+                                  Handler exceptionHandler, Handler returnHandler){
         this.exceptionHandler = exceptionHandler;
         this.userData = userData;
+        this.returnHandler = returnHandler;
     }
 
     @Override
@@ -68,5 +71,8 @@ public class UserRecoveryWebRequest implements Runnable {
                 connection.disconnect();
             }
         }
+
+        // if all good return
+        returnHandler.sendEmptyMessage(0);
     }
 }

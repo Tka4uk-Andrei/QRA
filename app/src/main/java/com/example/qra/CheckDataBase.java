@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.qra.model.check.BoughtItem;
 import com.example.qra.model.check.CheckInformationStorage;
-import com.example.qra.model.check.CheckInformationStorageBuilder;
 
 
 /**
@@ -181,7 +180,7 @@ public class CheckDataBase {
         String obtainingMethod = cursor.getString(cursor.getColumnIndex
                 (StorageCheckDataBase.COLUMN_NAME_OBTAINING_METHOD));
         cursor.close();
-        final String FNS = "FNS";
+        final String FNS = CheckInformationStorage.OBTAIN_METHOD_FNS;
         return (FNS.equals(obtainingMethod));
     }
 
@@ -210,7 +209,7 @@ public class CheckDataBase {
      * @param newNameForUser - new name product for user
      * @param context
      */
-    public static void UpdateNameForUser(int id, String newNameForUser, Context context) {
+    public static void updateNameForUser(int id, String newNameForUser, Context context) {
 
         initialization(context);
         //Редактирование записи
@@ -230,7 +229,7 @@ public class CheckDataBase {
      * @throws CheckEditingException - this exception is thrown if passed to a function
      *                               the products which belongs to check is recognized from JSON
      */
-    public static void UpdateName(int id, String newName, Context context) throws CheckEditingException {
+    public static void updateName(int id, String newName, Context context) throws CheckEditingException {
 
         initialization(context);
 
@@ -255,7 +254,7 @@ public class CheckDataBase {
      * @throws CheckEditingException - this exception is thrown if passed to a function
      *                               the products which belongs to check is recognized from JSON
      */
-    public static void UpdateQuantyty(int id, int newQuantity, Context context) throws CheckEditingException {
+    public static void updateQuantyty(int id, int newQuantity, Context context) throws CheckEditingException {
 
         initialization(context);
         if (checkObtainingMethodForBoughItem(id)) {
@@ -279,7 +278,7 @@ public class CheckDataBase {
      * @throws CheckEditingException - this exception is thrown if passed to a function
      *                               the products which belongs to check is recognized from JSON
      */
-    public static void UpdatePrise(int id, int newPrise, Context context) throws CheckEditingException {
+    public static void updatePrise(int id, int newPrise, Context context) throws CheckEditingException {
 
         initialization(context);
 
@@ -326,7 +325,7 @@ public class CheckDataBase {
      * @param newGeneralCategory - new general category which the product belong to
      * @param context
      */
-    public static void UpdateGeneralCategory(int id, String newGeneralCategory, Context context) {
+    public static void updateGeneralCategory(int id, String newGeneralCategory, Context context) {
 
         initialization(context);
         //Редактирование записи
@@ -343,7 +342,7 @@ public class CheckDataBase {
      * @param newSubjectCategory - new subjectCategory which the product belong to
      * @param context
      */
-    public static void UpdateCategory(int id, String newSubjectCategory, Context context) {
+    public static void updateSubjectCategory(int id, String newSubjectCategory, Context context) {
 
         initialization(context);
         //Редактирование записи
@@ -363,7 +362,7 @@ public class CheckDataBase {
      * @throws CheckEditingException - this exception is thrown if passed to a function
      *                               the check is recognized from JSON
      */
-    public static void UpdateInn(int id, String newInn, Context context) throws CheckEditingException {
+    public static void updateInn(int id, String newInn, Context context) throws CheckEditingException {
 
         initialization(context);
 
@@ -393,7 +392,7 @@ public class CheckDataBase {
      * @throws CheckEditingException - this exception is thrown if passed to a function
      *                               the check is recognized from JSON
      */
-    public static void UpdateAdress(int id, String newAddress, Context context) throws CheckEditingException {
+    public static void updateAdress(int id, String newAddress, Context context) throws CheckEditingException {
 
         initialization(context);
         if (checkObtainingMethodForCheck(id)) {
@@ -416,7 +415,7 @@ public class CheckDataBase {
      * @throws CheckEditingException - this exception is thrown if passed to a function
      *                               the check is recognized from JSON
      */
-    public static void UpdateTime(int id, String newTime, Context context) throws CheckEditingException {
+    public static void updateTime(int id, String newTime, Context context) throws CheckEditingException {
 
         initialization(context);
         if (checkObtainingMethodForCheck(id)) {
@@ -430,25 +429,102 @@ public class CheckDataBase {
 
 
     /**
-     * This method allows you to change paied nds sum
+     * This method allows you to change paid nds sum also change totalSum
      * This method can be used by only user check
      *
      * @param id      - tracking ID
-     * @param newNds  - new paied nds sum
+     * @param newNds  - new paid nds sum
      * @param context
      * @throws CheckEditingException - this exception is thrown if passed to a function
      *                               the check is recognized from JSON
      */
-    public static void UpdateNds(int id, int newNds, Context context) throws CheckEditingException {
+    public static void updateNds(int id, int newNds, Context context) throws CheckEditingException {
 
         initialization(context);
         if (checkObtainingMethodForCheck(id)) {
             throw new CheckEditingException();
         }
-        //Редактирование записи
+
+        //получение старого nds и старой итоговой суммы
+        Cursor cursor = sqLiteDatabase.query(StorageCheckDataBase.TABLE_NAME_CHECK_LIST,
+                null, "_id=" + id, null, null, null, null);
+        cursor.moveToFirst();
+        int oldTotalSum = cursor.getInt(cursor.getColumnIndex
+                (StorageCheckDataBase.COLUMN_NAME_TOTAL_SUM));
+        int oldNds = cursor.getInt(cursor.getColumnIndex
+                (StorageCheckDataBase.COLUMN_NAME_NDS));
+        cursor.close();
+
+        //Редактирование итоговой суммы
+        sqLiteDatabase.execSQL("UPDATE " + StorageCheckDataBase.TABLE_NAME_CHECK_LIST +
+                " SET " + StorageCheckDataBase.COLUMN_NAME_TOTAL_SUM + "='"
+                + (oldTotalSum + (newNds - oldNds)) + "' where _id=" + id);
+
+
+        //Редактирование записи nds
         sqLiteDatabase.execSQL("UPDATE " + StorageCheckDataBase.TABLE_NAME_CHECK_LIST +
                 " SET " + StorageCheckDataBase.COLUMN_NAME_NDS + "='" + newNds
                 + "' where _id=" + id);
+    }
+
+    /**
+     * This method update all position in check include all purchases
+     * This method can be used by only user check
+     *
+     * @param checkObject - check
+     * @param context
+     * @throws CheckEditingException - this exception is thrown if passed to a function
+     *                               the check is recognized from JSON
+     */
+    public static void updateAllUserCheck(Context context, CheckInformationStorage checkObject) throws CheckEditingException {
+        updateInn(checkObject.getId(), checkObject.getInn(), context);
+        updateAdress(checkObject.getId(), checkObject.getAddressOfPurchase(), context);
+        updateTime(checkObject.getId(), checkObject.getBuyTime(), context);
+        updateNds(checkObject.getId(), checkObject.getPaidNdsSum(), context);
+
+        for (int i = 0; i < checkObject.getQuantityPurchases(); i++) {
+
+            updateNameForUser(checkObject.getShoppingList()[i].getId(),
+                    checkObject.getShoppingList()[i].getNameForUser(), context);
+
+            updateName(checkObject.getShoppingList()[i].getId(),
+                    checkObject.getShoppingList()[i].getName(), context);
+
+            updateQuantyty(checkObject.getShoppingList()[i].getId(),
+                    checkObject.getShoppingList()[i].getQuantity(), context);
+
+            updatePrise(checkObject.getShoppingList()[i].getId(),
+                    checkObject.getShoppingList()[i].getPrice(), context);
+
+            updateGeneralCategory(checkObject.getShoppingList()[i].getId(),
+                    checkObject.getShoppingList()[i].getGeneralCategory(), context);
+
+            updateSubjectCategory(checkObject.getShoppingList()[i].getId(),
+                    checkObject.getShoppingList()[i].getSubjectCategory(), context);
+        }
+    }
+
+    /**
+     * This method update all position editable for FNS in check
+     * editable position: NameForUser, GeneralCategory and SubjectCategory
+     *
+     * This method can be used by all checks
+     *
+     * @param checkObject - check
+     * @param context
+     */
+    public static void updateAllFnsCheck(Context context, CheckInformationStorage checkObject){
+        for (int i = 0; i < checkObject.getQuantityPurchases(); i++) {
+
+            updateNameForUser(checkObject.getShoppingList()[i].getId(),
+                    checkObject.getShoppingList()[i].getNameForUser(), context);
+
+            updateGeneralCategory(checkObject.getShoppingList()[i].getId(),
+                    checkObject.getShoppingList()[i].getGeneralCategory(), context);
+
+            updateSubjectCategory(checkObject.getShoppingList()[i].getId(),
+                    checkObject.getShoppingList()[i].getSubjectCategory(), context);
+        }
     }
 
     /**
@@ -539,14 +615,15 @@ public class CheckDataBase {
         cursor.moveToFirst();
         for (int i = 0; i < cursor.getCount(); i++) {
 
-            shoppingList[i] = new BoughtItem(
-                    cursor.getInt(cursor.getColumnIndex("_id")),
-                    cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME)),
-                    cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME_FOR_USER)),
-                    cursor.getInt(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_PRISE)),
-                    cursor.getInt(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY)),
-                    cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_GENERAL_CATEGORIES)),
-                    cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_SUBJECT_CATEGORIES)));
+            shoppingList[i] = new BoughtItem.Builder()
+                    .setId(cursor.getInt(cursor.getColumnIndex("_id")))
+                    .setName(cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME)))
+                    .setNameForUser(cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME_FOR_USER)))
+                    .setPrice(cursor.getInt(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_PRISE)))
+                    .setQuantity(cursor.getInt(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY)))
+                    .setGeneralCategory(cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_GENERAL_CATEGORIES)))
+                    .setSubjectCategory(cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_SUBJECT_CATEGORIES)))
+                    .build();
 
 
             cursor.moveToNext();
@@ -587,20 +664,21 @@ public class CheckDataBase {
                             cursorCheck.getInt(cursorCheck.getColumnIndex("_id")));
                  j++) {
 
-                shoppingList[j] = new BoughtItem(
-                        cursorShop.getInt(cursorShop.getColumnIndex("_id")),
-                        cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME)),
-                        cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME_FOR_USER)),
-                        cursorShop.getInt(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_PRISE)),
-                        cursorShop.getInt(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY)),
-                        cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_GENERAL_CATEGORIES)),
-                        cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_SUBJECT_CATEGORIES)));
+                shoppingList[j] = new BoughtItem.Builder()
+                        .setId(cursorShop.getInt(cursorShop.getColumnIndex("_id")))
+                        .setName(cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME)))
+                        .setNameForUser(cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME_FOR_USER)))
+                        .setPrice(cursorShop.getInt(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_PRISE)))
+                        .setQuantity(cursorShop.getInt(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY)))
+                        .setGeneralCategory(cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_GENERAL_CATEGORIES)))
+                        .setSubjectCategory(cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_SUBJECT_CATEGORIES)))
+                        .build();
 
                 cursorShop.moveToNext();
             }
 
 
-            checkList[i] = new CheckInformationStorageBuilder()
+            checkList[i] = new CheckInformationStorage.Builder()
                     .setId(cursorCheck.getInt(cursorCheck.getColumnIndex("_id")))
                     .setObtainingMethod(cursorCheck.getString(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_OBTAINING_METHOD)))
                     .setTotalSum(cursorCheck.getInt(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_TOTAL_SUM)))
@@ -615,7 +693,6 @@ public class CheckDataBase {
                     .setFiscalSign(cursorCheck.getInt(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_FISCAL_SIGN)))
                     .setShoppingList(shoppingList)
                     .build();
-
 
             cursorCheck.moveToNext();
         }

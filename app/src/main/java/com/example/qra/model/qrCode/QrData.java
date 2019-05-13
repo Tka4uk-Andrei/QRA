@@ -15,6 +15,7 @@ public class QrData {
     private String totalCheckSum;
     private String typeOfFiscalDocument;
     private String buyTime;
+    private String rawData;
 
     /**
      * QrData constructor
@@ -29,6 +30,7 @@ public class QrData {
         totalCheckSum = getSubString(rawData, rawData.indexOf(SUM_SEQUENCE) + SUM_SEQUENCE.length());
         typeOfFiscalDocument = getSubString(rawData, rawData.indexOf(FISCAL_TYPE_SEQUENCE) + FISCAL_TYPE_SEQUENCE.length());
         buyTime = getSubString(rawData, rawData.indexOf(TIME_SEQUENCE) + TIME_SEQUENCE.length());
+        this.rawData = rawData;
     }
 
     /**
@@ -49,6 +51,7 @@ public class QrData {
         return ans.toString();
     }
 
+    @Deprecated
     public QrData(String fiscalNum, String fiscalDoc, String fiscalSignOfDoc) {
         this.fiscalNumber = fiscalNum;
         this.fiscalDocument = fiscalDoc;
@@ -57,6 +60,7 @@ public class QrData {
         this.typeOfFiscalDocument = null;
         this.totalCheckSum = null;
         this.buyTime = null;
+        this.rawData = null;
     }
 
     public QrData(String fiscalNum, String fiscalDoc, String fiscalSignOfDoc,
@@ -67,6 +71,13 @@ public class QrData {
         this.typeOfFiscalDocument = typeOfFiscalDocument;
         this.totalCheckSum = totalCheckSum;
         this.buyTime = buyTime;
+
+        this.rawData = TIME_SEQUENCE + buyTime +
+                '&' + SUM_SEQUENCE + totalCheckSum +
+                '&' + FISCAL_NUMBER_SEQUENCE + fiscalNum +
+                '&' + FISCAL_DOCUMENT_SEQUENCE + fiscalDoc +
+                '&' + FISCAL_SIGN_SEQUENCE + fiscalSignOfDoc +
+                '&' + FISCAL_TYPE_SEQUENCE + typeOfFiscalDocument;
     }
 
     public String getFiscalNumber() {
@@ -83,6 +94,7 @@ public class QrData {
 
     /**
      * Method returns total sum from check in format "ruble.kopeck"
+     *
      * @return check sum if fails throw NullPointerException
      */
     public String getTotalCheckSum() {
@@ -93,6 +105,7 @@ public class QrData {
 
     /**
      * Method returns type of fiscal document.
+     *
      * @return check sum if fails throw NullPointerException
      */
     public String getTypeOfFiscalDocument() {
@@ -103,11 +116,18 @@ public class QrData {
 
     /**
      * Method returns time then check get.
+     *
      * @return check sum if fails throw NullPointerException
      */
     public String getBuyTime() {
         if (buyTime == null)
             throw new NullPointerException("field buyTime is null");
         return buyTime;
+    }
+
+    public String getRawData() {
+        if (rawData == null)
+            throw new NullPointerException("raw data is null. QrData is not full filled");
+        return rawData;
     }
 }

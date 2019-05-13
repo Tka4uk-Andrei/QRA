@@ -3,7 +3,6 @@ package com.example.qra.model.parser;
 
 import com.example.qra.model.check.BoughtItem;
 import com.example.qra.model.check.CheckInformationStorage;
-import com.example.qra.model.check.CheckInformationStorageBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +39,6 @@ public class ParsingJson {
     private static final String STRING_QUANTITY_JSON_FIELD = "quantity";
     private static final String STRING_SUM_JSON_FIELD = "sum";
     private static final String STRING_NAME_JSON_FIELD = "name";
-    private static final String OBTAINING_METHOD = "FNS";
 
     private static final String STRING_FISCAL_DOCUMENT_NUMBER_JSON_FIELD = "fiscalDocumentNumber";
     private static final String STRING_FISCAL_DRIVE_NUMBER_JSON_FIELD = "fiscalDriveNumber";
@@ -64,10 +62,11 @@ public class ParsingJson {
             JSONArray items = receipt.getJSONArray(STRING_ITEMS_JSON_FIELD);
             BoughtItem[] shoppingList = new BoughtItem[items.length()];
             for (int i = 0; i < items.length(); i++) {
-                shoppingList[i] = new BoughtItem(
-                        items.getJSONObject(i).getString(STRING_NAME_JSON_FIELD),
-                        items.getJSONObject(i).getInt(STRING_SUM_JSON_FIELD),
-                        items.getJSONObject(i).getInt(STRING_QUANTITY_JSON_FIELD));
+                shoppingList[i] = new BoughtItem.Builder()
+                        .setName(items.getJSONObject(i).getString(STRING_NAME_JSON_FIELD))
+                        .setPrice(items.getJSONObject(i).getInt(STRING_SUM_JSON_FIELD))
+                        .setQuantity(items.getJSONObject(i).getInt(STRING_QUANTITY_JSON_FIELD))
+                .build();
             }
 
             int nds = 0;
@@ -84,7 +83,7 @@ public class ParsingJson {
             } catch (JSONException e) {
             }
 
-            tempObject = new CheckInformationStorageBuilder()
+            tempObject = new CheckInformationStorage.Builder()
                     .setTotalSum(receipt.getInt(STRING_TOTAL_SUM_JSON_FIELD))
                     .setInn(receipt.getString(USER_INN_JSON_FIELD))
                     .setPaidNdsSum(nds)
@@ -95,7 +94,7 @@ public class ParsingJson {
                     .setFiscalSign(receipt.getInt(STRING_FISCAL_SIGN_JSON_FIELD))
                     .setQuantityPurchases(items.length())
                     .setShoppingList(shoppingList)
-                    .setObtainingMethod(OBTAINING_METHOD)
+                    .setObtainingMethod(CheckInformationStorage.OBTAIN_METHOD_FNS)
                     .build();
 
         } catch (JSONException e) {

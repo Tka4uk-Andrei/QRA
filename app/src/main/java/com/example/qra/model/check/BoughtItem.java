@@ -73,38 +73,13 @@ public class BoughtItem {
     }
 
 
-    /**
-     * @param name     - product name
-     * @param price    - price of the this products
-     * @param quantity - number of goods with the given name
-     */
-    public BoughtItem(String name, int price, int quantity) {
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
-        this.generalCategory = ItemCategories.NOT_DISTRIBUTED;
-        this.subjectCategory = ItemCategories.NOT_DISTRIBUTED;
-        this.nameForUser = name; //TODO возможно, здесь нужно выывать функцию, котрая сопоставит имя товара имени для пользователя
-    }
 
     /**
      * @param id              - tracking ID
-     * @param name            - product name
-     * @param nameForUser     - product name for user
-     * @param price           - price of the this products
-     * @param quantity        - number of goods with the given name
-     * @param generalCategory - what general category does the product belong to
-     * @param subjectCategory - what subject category does the product belong to
      */
-    public BoughtItem(int id, String name, String nameForUser, int price, int quantity,
-                      String generalCategory, String subjectCategory) {
+    private BoughtItem(int id) {
         this.id = id;
-        this.name = name;
-        this.nameForUser = nameForUser;
-        this.price = price;
-        this.quantity = quantity;
-        this.generalCategory = generalCategory;
-        this.subjectCategory = subjectCategory;
+
     }
 
 
@@ -190,5 +165,139 @@ public class BoughtItem {
      */
     public void setSubjectCategory(String subjectCategory) {
         this.subjectCategory = subjectCategory;
+    }
+
+
+    public static class Builder {
+
+
+        /**
+         * name of the product
+         */
+        private String name;
+
+        /**
+         * price of the this products
+         */
+        private int price;
+
+        /**
+         * number of goods with the given name
+         */
+        private int quantity;
+
+        /**
+         * What general category does the product belong to
+         */
+        private String generalCategory = ItemCategories.NOT_DISTRIBUTED;;
+
+        /**
+         * What subject category does the product belong to
+         */
+        private String subjectCategory = ItemCategories.NOT_DISTRIBUTED;;
+
+
+        /**
+         * product name for user
+         */
+        private String nameForUser = "not distributed";
+
+        /**
+         * tracking ID
+         */
+        private int id = -1;
+
+
+        /**
+         * @param id - tracking ID
+         * @return object with a filled field
+         */
+        public Builder setId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
+         * This function sets product name for user
+         *
+         * @param nameForUser - product name for user
+         * @return object with a filled field
+         */
+        public Builder setNameForUser(String nameForUser) {
+            this.nameForUser = nameForUser;
+            return this;
+        }
+
+
+        /**
+         * This function sets quantity of goods with the given name
+         *
+         * @param quantity number items in the list of products in the order
+         * @return object with a filled field
+         */
+        public Builder setQuantity(int quantity) {
+            this.quantity = quantity;
+            return this;
+        }
+
+
+        /**
+         * This function sets the name of the product.
+         *
+         * @param name
+         * @return object with a filled field
+         */
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        /**
+         * This function sets the price of the this products
+         *
+         * @param price
+         * @return object with a filled field
+         */
+        public Builder setPrice(int price) {
+            this.price = price;
+            return this;
+        }
+
+
+        /**
+         * This function sets what general category does the product belong to
+         *
+         * @param generalCategory
+         * @return object with a filled field
+         */
+        public Builder setGeneralCategory(String generalCategory) {
+            this.generalCategory = generalCategory;
+            return this;
+        }
+
+
+        /**
+         * This function sets what subject category does the product belong to
+         *
+         * @param subjectCategory
+         * @return object with a filled field
+         */
+        public Builder setSubjectCategory(String subjectCategory) {
+            this.subjectCategory = subjectCategory;
+            return this;
+        }
+
+
+        public BoughtItem build() {
+            BoughtItem boughtItemObject = new BoughtItem(this.id);
+            boughtItemObject.setName(this.name);
+            boughtItemObject.setGeneralCategory(this.generalCategory);
+            boughtItemObject.setSubjectCategory(this.subjectCategory);
+            boughtItemObject.setNameForUser(this.nameForUser);
+            boughtItemObject.setPrice(this.price);
+            boughtItemObject.setQuantity(this.quantity);
+            return boughtItemObject;
+        }
+
     }
 }

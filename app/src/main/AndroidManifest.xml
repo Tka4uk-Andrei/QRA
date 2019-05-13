@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name=".model.webRequests.MyService"
+            android:name=".model.webRequests.WebRequestService"
             android:enabled="true"
             android:exported="true"
             android:process="my.PC"></service>

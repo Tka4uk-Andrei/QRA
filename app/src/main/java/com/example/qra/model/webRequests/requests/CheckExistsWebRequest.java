@@ -16,14 +16,12 @@ import java.net.URL;
 public class CheckExistsWebRequest implements Runnable {
 
     private QrData qrData;
-    private UserDataForFns userData;
     private Handler exceptionHandler;
     private Handler responseHandler;
 
-    public CheckExistsWebRequest(QrData qrData, UserDataForFns userData,
+    public CheckExistsWebRequest(QrData qrData,
                                  Handler exceptionHandler, Handler responseHandler) {
         this.qrData = qrData;
-        this.userData = userData;
         this.responseHandler = responseHandler;
         this.exceptionHandler = exceptionHandler;
     }

@@ -11,6 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".model.webRequests.WebRequestService"
+            android:enabled="true"
+            android:exported="true"
+            android:process="my.PC"></service>
         <activity android:name=".view.RestorePasswordActivity"></activity>
         <activity android:name=".view.LogInActivity">
             <intent-filter>
@@ -29,6 +34,9 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+
+
+
     </application>
 
 </manifest>

@@ -15,12 +15,14 @@ public class QrData {
     private String totalCheckSum;
     private String typeOfFiscalDocument;
     private String buyTime;
+    private String rawData;
 
     /**
      * Set time to required format
      * @param date time in some format
      * @return formatted date
      */
+     
     private String changeFormatBuyTime(String date) {
         StringBuilder sb = new StringBuilder();
         sb.append(date.substring(0, 4)).append("-").append(date.substring(4, 6));
@@ -81,7 +83,8 @@ public class QrData {
         typeOfFiscalDocument = getSubString(rawData, rawData.indexOf(FISCAL_TYPE_SEQUENCE) + FISCAL_TYPE_SEQUENCE.length());
         buyTime = changeFormatBuyTime(getSubString(rawData, rawData.indexOf(TIME_SEQUENCE) + TIME_SEQUENCE.length()));
     }
-
+    
+    @Deprecated
     public QrData(String fiscalNum, String fiscalDoc, String fiscalSignOfDoc) {
         this.fiscalNumber = fiscalNum;
         this.fiscalDocument = fiscalDoc;
@@ -90,6 +93,7 @@ public class QrData {
         this.typeOfFiscalDocument = null;
         this.totalCheckSum = null;
         this.buyTime = null;
+        this.rawData = null;
     }
 
     public QrData(String fiscalNum, String fiscalDoc, String fiscalSignOfDoc,
@@ -100,6 +104,13 @@ public class QrData {
         this.typeOfFiscalDocument = typeOfFiscalDocument;
         this.totalCheckSum = totalCheckSum;
         this.buyTime = buyTime;
+
+        this.rawData = TIME_SEQUENCE + buyTime +
+                '&' + SUM_SEQUENCE + totalCheckSum +
+                '&' + FISCAL_NUMBER_SEQUENCE + fiscalNum +
+                '&' + FISCAL_DOCUMENT_SEQUENCE + fiscalDoc +
+                '&' + FISCAL_SIGN_SEQUENCE + fiscalSignOfDoc +
+                '&' + FISCAL_TYPE_SEQUENCE + typeOfFiscalDocument;
     }
 
     public String getFiscalNumber() {
@@ -145,5 +156,11 @@ public class QrData {
         if (buyTime == null)
             throw new NullPointerException("field buyTime is null");
         return buyTime;
+    }
+
+    public String getRawData() {
+        if (rawData == null)
+            throw new NullPointerException("raw data is null. QrData is not full filled");
+        return rawData;
     }
 }

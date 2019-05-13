@@ -17,10 +17,8 @@ import com.example.qra.model.webRequests.WebRequestException;
 import com.example.qra.model.webRequests.WebRequests;
 import com.example.qra.model.webRequests.requests.CheckExistsWebRequest;
 import com.example.qra.model.webRequests.requests.GetCheckDataWebRequest;
-
-import static com.example.qra.model.UserDataForFns.getInstanceDefault;
-
 // todo refactor
+
 public class WebRequestActivity extends AppCompatActivity {
 
     public static final String JSON_DATA = "JSON_DATA";
@@ -34,9 +32,6 @@ public class WebRequestActivity extends AppCompatActivity {
         EditText fiscalNum = findViewById(R.id.fiscal_num);
         EditText fiscalDoc = findViewById(R.id.fiscal_doc);
         EditText fiscalSign = findViewById(R.id.fiscal_sign);
-        EditText typeOfFiscalDoc = findViewById(R.id.type_of_fiscal_document);
-        EditText buyTime = findViewById(R.id.buy_time);
-        EditText totalCheckSum = findViewById(R.id.total_check_sum);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,10 +39,7 @@ public class WebRequestActivity extends AppCompatActivity {
                 sendRequest(new QrData(
                         fiscalNum.getText().toString(),
                         fiscalDoc.getText().toString(),
-                        fiscalSign.getText().toString(),
-                        totalCheckSum.getText().toString(),
-                        typeOfFiscalDoc.getText().toString(),
-                        buyTime.getText().toString()));
+                        fiscalSign.getText().toString()));
             }
         });
 
@@ -56,7 +48,52 @@ public class WebRequestActivity extends AppCompatActivity {
             return;
 
         sendRequest(new QrData(qrDataStr));
+//        try {
+//            qrDataStr = WebRequestSender.getWebRequestData(new QrData(qrDataStr), getInstanceDefault());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        int y = 0;
+//        String response = data.getStringExtra("JSON_DATA");
+//        Intent intent = new Intent(this, ShowCheckInfoActivity.class);
+//        intent.putExtra(JSON_DATA, response);
+//        showNotiication(this,intent); // там
+//        startActivity(intent);
+//
+//
+//        Button btn = findViewById(R.id.send_btn);
+//        EditText fiscalNum = findViewById(R.id.fiscal_num);
+//        EditText fiscalDoc = findViewById(R.id.fiscal_doc);
+//        EditText fiscalSign = findViewById(R.id.fiscal_sign);
+//        EditText typeOfFiscalDoc = findViewById(R.id.type_of_fiscal_document);
+//        EditText buyTime = findViewById(R.id.buy_time);
+//        EditText totalCheckSum = findViewById(R.id.total_check_sum);
+//
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                sendRequest(new QrData(
+//                        fiscalNum.getText().toString(),
+//                        fiscalDoc.getText().toString(),
+//                        fiscalSign.getText().toString(),
+//                        totalCheckSum.getText().toString(),
+//                        typeOfFiscalDoc.getText().toString(),
+//                        buyTime.getText().toString()));
+//            }
+//        });
+//
+//        String qrDataStr = getIntent().getStringExtra(MainActivity.QR_DATA_EXTRA);
+//        if (qrDataStr == null)
+//            return;
+//
+//        sendRequest(new QrData(qrDataStr));
+//    }
 
     private void sendRequest(QrData qrData) {
         (new Thread(new CheckExistsWebRequest(qrData,
@@ -64,6 +101,7 @@ public class WebRequestActivity extends AppCompatActivity {
                 new CheckExistingReturnHandler(this, qrData)))).start();
     }
 
+<<<<<<< HEAD
     private void showQuickMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
@@ -75,11 +113,22 @@ public class WebRequestActivity extends AppCompatActivity {
     }
 
     private void showCheck(String str) {
+=======
+        String response = null;
+        try {
+            if(WebRequests.isCheckExistsWebRequest(qrData)) {
+                response = WebRequests.getCheckDataWebRequest(qrData, UserDataForFns.getInstanceDefault());
+            }
+        } catch (Exception e) {
+            Toast.makeText(WebRequestActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+>>>>>>> develop
         Intent intent = new Intent(getApplicationContext(), ShowCheckInfoActivity.class);
         if (str != null) {
             intent.putExtra(JSON_DATA, str);
             startActivity(intent);
         }
+<<<<<<< HEAD
     }
 
     class CheckExistingExceptionHandler extends Handler {
@@ -136,5 +185,7 @@ public class WebRequestActivity extends AppCompatActivity {
 
             activity.showCheck(str);
         }
+=======
+>>>>>>> develop
     }
 }

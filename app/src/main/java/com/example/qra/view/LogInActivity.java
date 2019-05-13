@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.qra.R;
-import com.example.qra.presenter.LogInPresenter;
+import com.example.qra.presenter.login.LogInPresenter;
 import com.example.qra.view.dialogs.LoginNotSucceededMessage;
 import com.example.qra.view.interfaces.ILoginView;
 

@@ -10,7 +10,9 @@ import com.example.qra.model.webRequests.WebRequestUtilities;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -52,8 +54,16 @@ public class LoginWebRequest implements Runnable {
                                 new WebRequestException(responseCode, "")));
             } else {
                 //if status code OK -> get Response
-                String response = connection.getResponseMessage();
-                JSONObject json = new JSONObject(response);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                    response.append('\r');
+                }
+                reader.close();
+
+                JSONObject json = new JSONObject(response.toString());
 
                 // send return message
                 Message message = returnHandler.obtainMessage();

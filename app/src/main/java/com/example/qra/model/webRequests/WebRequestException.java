@@ -23,6 +23,8 @@ public class WebRequestException extends Exception implements Parcelable {
 
     private String message;
 
+    // TODO documentation
+
     public WebRequestException(int code, String msg) {
         if (code == 451) {
             message = CHECK_DOES_NOT_EXIST_MESSAGE;
@@ -40,6 +42,9 @@ public class WebRequestException extends Exception implements Parcelable {
             message = INCORRECT_PHONE_MESSAGE;
         } else if (code == 404) {
             message = USER_NOT_FOUND_MESSAGE;
+        // if code not recognized
+        } else if (code > 0) {
+            message = "Error code is " + code;
             // TODO string under may be bad
         } else if (msg.equals("Unable to resolve host \"proverkacheka.nalog.ru\": No address associated with hostname")) {
             message = NO_INTERNET_CONNECTION_MESSAGE;

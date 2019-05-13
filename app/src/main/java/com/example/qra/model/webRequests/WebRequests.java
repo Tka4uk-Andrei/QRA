@@ -20,14 +20,17 @@ import org.json.JSONObject;
  *
  * @autor : Ekaterina Novoselova
  */
+@Deprecated
 public class WebRequests {
 
     /**
-     * Method that send registration web request \\
+     * Method that send registration web request. \\
+     * <em><b>Deprecated</b></em> use RegistrationWebRequest class instead
      *
      * @param userData current user data \\
      * @autor : Ekaterina Novoselova
      */
+    @Deprecated
     public static void registrationWebRequest(final UserDataForFns userData) throws Exception {
         final WebRequestException[] exception = new WebRequestException[1];
         final int[] responseCode = {0};
@@ -57,7 +60,7 @@ public class WebRequests {
                 responseCode[0] = connection.getResponseCode();
                 if (responseCode[0] != 204) {
                     StringBuilder sb = new StringBuilder();
-                    sb.append("Error code is ").append(((Integer)responseCode[0]).toString());
+                    sb.append("Error code is ").append(((Integer) responseCode[0]).toString());
                     exception[0] = new WebRequestException(responseCode[0], sb.toString());
                 }
             } catch (Exception e) {
@@ -85,10 +88,12 @@ public class WebRequests {
 
     /**
      * Method that send user recovery web request \\
+     * <em><b>Deprecated</b></em> use UserRecoveryWebRequest class instead
      *
      * @param userData current user data \\
      * @autor : Ekaterina Novoselova
      */
+    @Deprecated
     public static void userRecoveryWebRequest(final UserDataForFns userData) throws Exception {
         final WebRequestException[] exception = new WebRequestException[1];
         final int[] responseCode = {0};
@@ -118,7 +123,7 @@ public class WebRequests {
                 responseCode[0] = connection.getResponseCode();
                 if (responseCode[0] != 204) {
                     StringBuilder sb = new StringBuilder();
-                    sb.append("Error code is ").append(((Integer)responseCode[0]).toString());
+                    sb.append("Error code is ").append(((Integer) responseCode[0]).toString());
                     exception[0] = new WebRequestException(responseCode[0], sb.toString());
                 }
             } catch (Exception e) {
@@ -145,10 +150,12 @@ public class WebRequests {
 
     /**
      * Method that log in user and updates registration data like email and name \\
+     * <em><b>Deprecated</b></em> use LogInWebRequest class instead
      *
      * @param userData current user data \\
      * @autor : Ekaterina Novoselova
      */
+    @Deprecated
     public static void logInWebRequest(final UserDataForFns userData) throws Exception {
         final WebRequestException[] exception = new WebRequestException[1];
         final int[] responseCode = new int[1];
@@ -168,14 +175,14 @@ public class WebRequests {
                 responseCode[0] = connection.getResponseCode();
                 if (responseCode[0] != 200) {
                     StringBuilder sb = new StringBuilder();
-                    sb.append("Error code is ").append(((Integer)responseCode[0]).toString());
+                    sb.append("Error code is ").append(((Integer) responseCode[0]).toString());
                     exception[0] = new WebRequestException(responseCode[0], sb.toString());
                 } else {
                     String msg = connection.getResponseMessage();
                     JSONObject json = new JSONObject(msg);
 
-                    userData.setUserName(json.getString("email"));
-                    userData.setUserEmail(json.getString("name"));
+                    userData.setUserEmail(json.getString("email"));
+                    userData.setUserName(json.getString("name"));
                 }
             } catch (Exception e) {
                 if (exception[0] == null) {
@@ -201,11 +208,13 @@ public class WebRequests {
 
     /**
      * Method that send web request to check the existence of a check \\
+     * <em><b>Deprecated</b></em> use CheckExistsWebRequest class instead
      *
      * @param targetQr target check data\\
      * @return true if check exists, false if doesn't exist\\
      * @autor : Ekaterina Novoselova
      */
+    @Deprecated
     public static boolean isCheckExistsWebRequest(final QrData targetQr) throws Exception {
         final WebRequestException[] exception = new WebRequestException[1];
         final int[] responseCode = new int[1];
@@ -264,12 +273,14 @@ public class WebRequests {
 
     /**
      * Method that send web request to receive check data \\
+     * <em><b>Deprecated</b></em> use GetCheckDataWebRequest class instead
      *
      * @param targetQr target check data \\
      * @param userData current user data \\
      * @return the response to the http request \\
      * @autor : Ekaterina Novoselova
      */
+    @Deprecated
     public static String getCheckDataWebRequest(final QrData targetQr, final UserDataForFns userData) throws Exception {
         final String[] response = new String[1];
         final WebRequestException[] exception = new WebRequestException[1];
@@ -313,7 +324,7 @@ public class WebRequests {
                 responseCode[0] = connection.getResponseCode();
                 if (responseCode[0] != 200) {
                     StringBuilder sb = new StringBuilder();
-                    sb.append("Error code is ").append(((Integer)responseCode[0]).toString());
+                    sb.append("Error code is ").append(((Integer) responseCode[0]).toString());
                     exception[0] = new WebRequestException(responseCode[0], sb.toString());
                 }
             } catch (Exception e) {
@@ -340,9 +351,12 @@ public class WebRequests {
     }
 
     /**
+     * <em><b>Deprecated</b></em> moved to WebRequestUtilities class
+     *
      * @return the base64 code \\
      * @autor : Ekaterina Novoselova
      */
+    @Deprecated
     private static String base64Encode(String phone, String password) {
         StringBuilder authorizationSB = new StringBuilder();
         authorizationSB.append(phone);

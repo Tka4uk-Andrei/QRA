@@ -2,43 +2,50 @@ package com.example.qra.presenter;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 
 import com.example.qra.model.UserDataForFns;
 import com.example.qra.presenter.interfaces.ILoginPresenter;
 import com.example.qra.view.MainActivity;
+import com.example.qra.view.RegisterInFnsActivity;
+import com.example.qra.view.RestorePasswordActivity;
 import com.example.qra.view.interfaces.ILoginView;
 
 import static android.content.Context.MODE_PRIVATE;
 
 // TODO documentation
-public class LogInPresenter implements ILoginPresenter {
+public class LogInPresenter extends AndroidPresenter implements ILoginPresenter {
 
-    private static final String FIRST_TIME_RUN = "First time";
-    private static final String IS_FIRST_TIME = "is first";
+    static String STARTER_ACTIVITY = "ACTIVITY";
+    static String PHONE_EXTRA = "PHONE_EXTRA";
 
-    /**
-     *  access to view and it's also
-     */
+    private static final String LOGIN = "login";
+    private static final String IS_LOGGED = "is_login_succeeded";
+
     private ILoginView loginView;
 
     // login view should be extend from AppCompatActivity
     public LogInPresenter(ILoginView loginView) {
+        super(loginView);
         this.loginView = loginView;
     }
 
     @Override
     public void onCreate() {
-
-        SharedPreferences firstTimePreference = loginView.getContext().getSharedPreferences(FIRST_TIME_RUN, MODE_PRIVATE);
-        boolean isFirstLaunch = firstTimePreference.getBoolean(IS_FIRST_TIME, true);
-
-        if (isFirstLaunch) {
-            SharedPreferences.Editor editor = firstTimePreference.edit();
-            editor.putBoolean(IS_FIRST_TIME, false);
-            editor.apply();
-        } else {
+        // check if user not logged in
+        SharedPreferences firstTimePreference = getView().getContext().getSharedPreferences(LOGIN, MODE_PRIVATE);
+        boolean loggedFlag = firstTimePreference.getBoolean(IS_LOGGED, false);
+        if (loggedFlag) {
             loginView.showLoginSucceededMessage();
+            startActivity(MainActivity.class, true);
+        }
+
+        // obtain launch Intent
+        Intent launchIntent = loginView.getStarterIntent();
+        if (launchIntent != null && launchIntent.getStringExtra(STARTER_ACTIVITY) != null) {
+            //check if activity launched from LogInPresenter or RegisterPresenter
+            if (launchIntent.getStringExtra(STARTER_ACTIVITY).equals(LogInPresenter.class.getName())
+            || launchIntent.getStringExtra(STARTER_ACTIVITY).equals(RegisterPresenter.class.getName()))
+                loginView.updatePhoneText(launchIntent.getStringExtra(PHONE_EXTRA));
         }
     }
 
@@ -48,22 +55,31 @@ public class LogInPresenter implements ILoginPresenter {
 
         // if login succeed
         if (password.length() != 0 && login.length() != 0) {
+            // Set registration data
             UserDataForFns.getInstance(loginView.getContext()).setPassword(password);
-            UserDataForFns.getInstance(loginView.getContext()).setPhoneNumber(login);
+            UserDataForFns.getInstance(null).setPhoneNumber(login);
+            UserDataForFns.getInstance(null).apply(loginView.getContext());
 
+            // Update status. Now user logged in
+            SharedPreferences.Editor editor = getView().getContext().getSharedPreferences(LOGIN, MODE_PRIVATE).edit();
+            editor.putBoolean(IS_LOGGED, false);
+            editor.apply();
+
+            // Show success message and launch main screen
             loginView.showLoginSucceededMessage();
-
-            if (!(loginView instanceof AppCompatActivity))
-            {
-                throw new ClassCastException("loginView field, that send from constructor " +
-                        "should be AppCompatActivity class");
-            }
-
-            ((AppCompatActivity)loginView).startActivity(new Intent(loginView.getContext(), MainActivity.class));
-            ((AppCompatActivity)loginView).finish();
+            startActivity(MainActivity.class, true);
         }
 
         loginView.showLoginNotSucceededMessage();
     }
 
+    @Override
+    public void register() {
+        startActivity(RegisterInFnsActivity.class, false);
+    }
+
+    @Override
+    public void restorePassword() {
+        startActivity(RestorePasswordActivity.class, false);
+    }
 }

@@ -54,6 +54,7 @@ public class CheckExistsWebRequest implements Runnable {
             responseCode = connection.getResponseCode();
             bundle.putBoolean("return", responseCode == 204);
             responseMessage.setData(bundle);
+            responseHandler.sendMessage(responseMessage);
 
         } catch (IOException e) {
             exceptionHandler.sendMessage(

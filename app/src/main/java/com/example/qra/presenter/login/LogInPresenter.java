@@ -74,7 +74,7 @@ public class LogInPresenter extends AndroidPresenter implements ILoginPresenter 
     private void singUpSucceeded() {
         // Update status. Now user logged in
         SharedPreferences.Editor editor = getView().getContext().getSharedPreferences(LOGIN, MODE_PRIVATE).edit();
-        editor.putBoolean(IS_LOGGED, false);
+        editor.putBoolean(IS_LOGGED, true);
         editor.apply();
 
         // Show success message and launch main screen

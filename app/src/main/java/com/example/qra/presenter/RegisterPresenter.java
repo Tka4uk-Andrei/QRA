@@ -17,9 +17,18 @@ public class RegisterPresenter extends AndroidPresenter implements IRegisterPres
 
     @Override
     public void registerUser(String name, String email, String phone) {
+        // update registration data
+        UserDataForFns.getInstance(getView().getContext()).setPhoneNumber();
+        UserDataForFns.getInstance(getView().getContext()).setUserEmail();
+        UserDataForFns.getInstance(getView().getContext()).setUserName();
+        UserDataForFns.getInstance(getView().getContext()).apply();
 
         // TODO request
-        // if succeeded
+    }
+
+    private void registrationSucceeded(){
+
+
         if (name.length() != 0 && email.length() != 0
                 && phone.length() != 0) {
 
@@ -39,5 +48,6 @@ public class RegisterPresenter extends AndroidPresenter implements IRegisterPres
     @Override
     public void onCreate() {
         // nothing to do
+
     }
 }

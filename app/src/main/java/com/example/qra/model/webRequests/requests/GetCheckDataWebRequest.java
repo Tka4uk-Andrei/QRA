@@ -80,7 +80,7 @@ public class GetCheckDataWebRequest implements Runnable {
         } catch (Exception e) {
             exceptionHandler.sendMessage(WebRequestUtilities.getExceptionMessage(
                     exceptionHandler,
-                    new WebRequestException(responseCode, "")));
+                    new WebRequestException(responseCode, e.getMessage())));
         } finally {
             if (connection != null) {
                 connection.disconnect();

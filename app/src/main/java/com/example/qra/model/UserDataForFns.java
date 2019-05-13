@@ -59,6 +59,7 @@ public class UserDataForFns {
      * Method that provides access to {@link UserDataForFns} class
      * @return default {@link UserDataForFns} class (Tkachuk Andrey credentials)
      */
+    @Deprecated
     public static UserDataForFns getInstanceDefault() {
         if (ourDefaultInstance == null)
             ourDefaultInstance = new UserDataForFns();
@@ -68,8 +69,11 @@ public class UserDataForFns {
 
     private UserDataForFns()
     {
-        phoneNumber = "+79817987505";
-        password = "385280";
+        phoneNumber = "+79097984616";
+        password = "229963";
+        // if requests fails use this credentials
+//        phoneNumber = "+79817987505";
+//        password = "385280";
         userName = "Kate";
         userEmail = "novoselova.ei@mail.ru";
     }

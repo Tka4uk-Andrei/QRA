@@ -324,7 +324,7 @@ public class WebRequests {
                 responseCode[0] = connection.getResponseCode();
                 if (responseCode[0] != 200) {
                     StringBuilder sb = new StringBuilder();
-                    sb.append("Error code is ").append(((Integer) responseCode[0]).toString());
+                    sb.append("Error code is ").append(((Integer)responseCode[0]).toString());
                     exception[0] = new WebRequestException(responseCode[0], sb.toString());
                 }
             } catch (Exception e) {

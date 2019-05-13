@@ -181,8 +181,8 @@ public class WebRequests {
                     String msg = connection.getResponseMessage();
                     JSONObject json = new JSONObject(msg);
 
-                    userData.setUserName(json.getString("email"));
-                    userData.setUserEmail(json.getString("name"));
+                    userData.setUserEmail(json.getString("email"));
+                    userData.setUserName(json.getString("name"));
                 }
             } catch (Exception e) {
                 if (exception[0] == null) {

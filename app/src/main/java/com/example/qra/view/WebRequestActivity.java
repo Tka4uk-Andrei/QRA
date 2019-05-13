@@ -101,7 +101,6 @@ public class WebRequestActivity extends AppCompatActivity {
                 new CheckExistingReturnHandler(this, qrData)))).start();
     }
 
-<<<<<<< HEAD
     private void showQuickMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
@@ -113,22 +112,11 @@ public class WebRequestActivity extends AppCompatActivity {
     }
 
     private void showCheck(String str) {
-=======
-        String response = null;
-        try {
-            if(WebRequests.isCheckExistsWebRequest(qrData)) {
-                response = WebRequests.getCheckDataWebRequest(qrData, UserDataForFns.getInstanceDefault());
-            }
-        } catch (Exception e) {
-            Toast.makeText(WebRequestActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
->>>>>>> develop
         Intent intent = new Intent(getApplicationContext(), ShowCheckInfoActivity.class);
         if (str != null) {
             intent.putExtra(JSON_DATA, str);
             startActivity(intent);
         }
-<<<<<<< HEAD
     }
 
     class CheckExistingExceptionHandler extends Handler {
@@ -185,7 +173,5 @@ public class WebRequestActivity extends AppCompatActivity {
 
             activity.showCheck(str);
         }
-=======
->>>>>>> develop
     }
 }

@@ -1,7 +1,13 @@
 package com.example.qra.presenter;
 
+import android.os.Handler;
+import android.os.Message;
+
 import com.example.qra.model.UserDataForFns;
+import com.example.qra.model.webRequests.WebRequestException;
+import com.example.qra.model.webRequests.requests.RegistrationWebRequest;
 import com.example.qra.presenter.interfaces.IRegisterPresenter;
+import com.example.qra.presenter.login.LogInPresenter;
 import com.example.qra.view.LogInActivity;
 import com.example.qra.view.interfaces.IRegisterView;
 
@@ -16,27 +22,63 @@ public class RegisterPresenter extends AndroidPresenter implements IRegisterPres
 
     @Override
     public void registerUser(String name, String email, String phone) {
+        // update registration data
+        UserDataForFns.getInstance(getView().getContext()).setPhoneNumber(phone);
+        UserDataForFns.getInstance(getView().getContext()).setUserEmail(email);
+        UserDataForFns.getInstance(getView().getContext()).setUserName(name);
+        UserDataForFns.getInstance(getView().getContext()).apply(getView().getContext());
 
-        // TODO request
-        // if succeeded
-        if (name.length() != 0 && email.length() != 0
-                && phone.length() != 0) {
+        // send request with fail handler
+        (new Thread(new RegistrationWebRequest(
+                UserDataForFns.getInstance(getView().getContext()),
+                new RegisterNotSucceededHandler(this),
+                new RegisterSucceededHandler(this)))).start();
+    }
 
-            // save data in cache
-            UserDataForFns.getInstance(registerView.getContext()).setPhoneNumber(phone);
-            UserDataForFns.getInstance(null).setUserEmail(email);
-            UserDataForFns.getInstance(null).setUserName(name);
-            UserDataForFns.getInstance(null).apply(registerView.getContext());
+    private void registrationSucceeded() {
+        // start login activity with entered phone
+        putStingExtra(LogInPresenter.STARTER_ACTIVITY, RegisterPresenter.class.getName());
+        putStingExtra(LogInPresenter.PHONE_EXTRA, UserDataForFns.getInstance(getView().getContext()).getPhoneNumber());
+        startActivity(LogInActivity.class, true);
+    }
 
-            // start login activity
-            putStingExtra(LogInPresenter.STARTER_ACTIVITY, RegisterPresenter.class.getName());
-            putStingExtra(LogInPresenter.PHONE_EXTRA, phone);
-            startActivity(LogInActivity.class, true);
-        }
+    private void registrationFailed(WebRequestException exception){
+        registerView.showFailMessage(exception.getMessage());
     }
 
     @Override
     public void onCreate() {
         // nothing to do
+    }
+
+
+    private static class RegisterSucceededHandler extends Handler {
+
+        private RegisterPresenter registerPresenter;
+
+        RegisterSucceededHandler(RegisterPresenter registerPresenter) {
+            this.registerPresenter = registerPresenter;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            registerPresenter.registrationSucceeded();
+        }
+    }
+
+
+    private static class RegisterNotSucceededHandler extends Handler {
+
+        private RegisterPresenter registerPresenter;
+
+        RegisterNotSucceededHandler(RegisterPresenter registerPresenter) {
+            this.registerPresenter = registerPresenter;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            // todo refactor
+            registerPresenter.registrationFailed(msg.getData().getParcelable("exception"));
+        }
     }
 }

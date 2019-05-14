@@ -6,6 +6,7 @@ import android.os.Message;
 
 import static android.util.Base64.DEFAULT;
 
+// TODO refactor
 public class WebRequestUtilities {
 
     /**

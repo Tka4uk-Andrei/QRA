@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 
+@Deprecated
 public class AppNotInstalledDialog extends DialogFragment {
 
     @NonNull

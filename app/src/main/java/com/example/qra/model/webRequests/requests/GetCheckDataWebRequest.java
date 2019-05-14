@@ -17,6 +17,8 @@ import java.net.URL;
 
 public class GetCheckDataWebRequest implements Runnable {
 
+    public static final String HANDLE_RETURN_KEY_RETURN = "return";
+
     private QrData qrData;
     private UserDataForFns userData;
     private Handler exceptionHandler;
@@ -73,7 +75,7 @@ public class GetCheckDataWebRequest implements Runnable {
                 // send return message
                 Message message = returnHandler.obtainMessage();
                 Bundle bundle = new Bundle();
-                bundle.putString("return", response.toString());
+                bundle.putString(HANDLE_RETURN_KEY_RETURN, response.toString());
                 message.setData(bundle);
                 returnHandler.sendMessage(message);
             }

@@ -10,15 +10,20 @@ import com.example.qra.model.webRequests.WebRequestUtilities;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class LoginWebRequest implements Runnable {
 
-    UserDataForFns userData;
-    Handler exceptionHandler;
-    Handler returnHandler;
+    public static final String HANDLE_RETURN_KEY_EMAIL = "email";
+    public static final String HANDLE_RETURN_KEY_NAME = "name";
+
+    private UserDataForFns userData;
+    private Handler exceptionHandler;
+    private Handler returnHandler;
 
     public LoginWebRequest(UserDataForFns userData,
                            Handler exceptionHandler, Handler returnHandler) {
@@ -52,14 +57,22 @@ public class LoginWebRequest implements Runnable {
                                 new WebRequestException(responseCode, "")));
             } else {
                 //if status code OK -> get Response
-                String response = connection.getResponseMessage();
-                JSONObject json = new JSONObject(response);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                    response.append('\r');
+                }
+                reader.close();
+
+                JSONObject json = new JSONObject(response.toString());
 
                 // send return message
                 Message message = returnHandler.obtainMessage();
                 Bundle bundle = new Bundle();
-                bundle.putString("email", json.getString("email"));
-                bundle.putString("name", json.getString("name"));
+                bundle.putString(HANDLE_RETURN_KEY_EMAIL, json.getString("email"));
+                bundle.putString(HANDLE_RETURN_KEY_NAME, json.getString("name"));
                 message.setData(bundle);
                 returnHandler.sendMessage(message);
             }

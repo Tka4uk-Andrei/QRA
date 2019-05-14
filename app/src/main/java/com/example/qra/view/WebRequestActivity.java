@@ -2,6 +2,8 @@ package com.example.qra.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -11,8 +13,11 @@ import android.widget.Toast;
 import com.example.qra.R;
 import com.example.qra.model.UserDataForFns;
 import com.example.qra.model.qrCode.QrData;
+import com.example.qra.model.webRequests.WebRequestException;
 import com.example.qra.model.webRequests.WebRequests;
-
+import com.example.qra.model.webRequests.requests.CheckExistsWebRequest;
+import com.example.qra.model.webRequests.requests.GetCheckDataWebRequest;
+// todo refactor
 
 public class WebRequestActivity extends AppCompatActivity {
 
@@ -91,19 +96,79 @@ public class WebRequestActivity extends AppCompatActivity {
 //    }
 
     private void sendRequest(QrData qrData) {
+        (new Thread(new CheckExistsWebRequest(qrData,
+                new CheckExistingExceptionHandler(this),
+                new CheckExistingReturnHandler(this, qrData)))).start();
+    }
 
-        String response = null;
-        try {
-            if(WebRequests.isCheckExistsWebRequest(qrData)) {
-                response = WebRequests.getCheckDataWebRequest(qrData, UserDataForFns.getInstanceDefault());
-            }
-        } catch (Exception e) {
-            Toast.makeText(WebRequestActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+    private void showQuickMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    private void getCheck(QrData qrData) {
+        (new Thread(new GetCheckDataWebRequest(qrData, UserDataForFns.getInstance(this),
+                new CheckExistingExceptionHandler(this),
+                new GetCheckReturnHandler(this)))).start();
+    }
+
+    private void showCheck(String str) {
         Intent intent = new Intent(getApplicationContext(), ShowCheckInfoActivity.class);
-        if (response != null) {
-            intent.putExtra(JSON_DATA, response);
+        if (str != null) {
+            intent.putExtra(JSON_DATA, str);
             startActivity(intent);
+        }
+    }
+
+    class CheckExistingExceptionHandler extends Handler {
+
+        private WebRequestActivity activity;
+
+        public CheckExistingExceptionHandler(WebRequestActivity activity) {
+            this.activity = activity;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            Bundle bundle = msg.getData();
+            String str = ((WebRequestException) bundle.getParcelable("exception")).getMessage();
+            activity.showQuickMessage(str);
+        }
+    }
+
+    class CheckExistingReturnHandler extends Handler {
+
+        private WebRequestActivity activity;
+        private QrData qrData;
+
+        public CheckExistingReturnHandler(WebRequestActivity activity, QrData qrData) {
+            this.activity = activity;
+            this.qrData = qrData;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            Bundle bundle = msg.getData();
+            boolean flag = bundle.getBoolean("return");
+
+            if (flag) {
+                activity.getCheck(qrData);
+            } else {
+                activity.showQuickMessage("Check doesn\'t exist");
+            }
+        }
+    }
+
+    class GetCheckReturnHandler extends Handler {
+
+        private WebRequestActivity activity;
+
+        public GetCheckReturnHandler(WebRequestActivity activity) {
+            this.activity = activity;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            activity.showCheck(msg.getData().getString(GetCheckDataWebRequest.HANDLE_RETURN_KEY_RETURN));
         }
     }
 }

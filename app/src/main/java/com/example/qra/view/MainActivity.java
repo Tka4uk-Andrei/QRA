@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         editGoodsButton.setOnClickListener(menuBtnClickListener);
         settingsButton.setOnClickListener(menuBtnClickListener);
 
+
     }
 
     @Override
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 else if (v == editGoodsButton)
                     intent = new Intent(getApplicationContext(), EditBoughtDataActivity.class);
                 else if (v == settingsButton)
-                    intent = new Intent(getApplicationContext(), RegisterInFnsActivity.class);
+                    intent = new Intent(getApplicationContext(), SettingsActivity.class);
 
                 if (intent != null)
                     startActivity(intent);

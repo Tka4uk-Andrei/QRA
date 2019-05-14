@@ -32,7 +32,7 @@ public class AndroidPresenter {
     }
 
     // TODO documentation
-    void startActivity(Class activityName, boolean finishFlag) {
+    protected void startActivity(Class activityName, boolean finishFlag) {
         if (!(view instanceof AppCompatActivity)) {
             throw new ClassCastException("view field, that send from constructor " +
                     "should be AppCompatActivity class");

@@ -18,11 +18,13 @@ public class RegistrationWebRequest implements Runnable {
 
     private UserDataForFns userData;
     private Handler exceptionHandler;
+    private Handler returnHandler;
 
     // TODO documentation
-    public RegistrationWebRequest(UserDataForFns userData, Handler exceptionHandler) {
+    public RegistrationWebRequest(UserDataForFns userData, Handler exceptionHandler, Handler returnHandler) {
         this.userData = userData;
         this.exceptionHandler = exceptionHandler;
+        this.returnHandler = returnHandler;
     }
 
     @Override
@@ -67,5 +69,8 @@ public class RegistrationWebRequest implements Runnable {
                 connection.disconnect();
             }
         }
+
+        // if all good return
+        returnHandler.sendEmptyMessage(0);
     }
 }

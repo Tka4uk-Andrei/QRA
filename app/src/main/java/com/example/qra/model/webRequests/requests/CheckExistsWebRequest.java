@@ -15,15 +15,15 @@ import java.net.URL;
 
 public class CheckExistsWebRequest implements Runnable {
 
+    public static final String HANDLE_RETURN_KEY_RETURN = "return";
+
     private QrData qrData;
-    private UserDataForFns userData;
     private Handler exceptionHandler;
     private Handler responseHandler;
 
-    public CheckExistsWebRequest(QrData qrData, UserDataForFns userData,
-                                 Handler responseHandler, Handler exceptionHandler) {
+    public CheckExistsWebRequest(QrData qrData,
+                                 Handler exceptionHandler, Handler responseHandler) {
         this.qrData = qrData;
-        this.userData = userData;
         this.responseHandler = responseHandler;
         this.exceptionHandler = exceptionHandler;
     }
@@ -54,8 +54,9 @@ public class CheckExistsWebRequest implements Runnable {
             Message responseMessage = responseHandler.obtainMessage();
             Bundle bundle = new Bundle();
             responseCode = connection.getResponseCode();
-            bundle.putBoolean("return", responseCode == 204);
+            bundle.putBoolean(HANDLE_RETURN_KEY_RETURN, responseCode == 204);
             responseMessage.setData(bundle);
+            responseHandler.sendMessage(responseMessage);
 
         } catch (IOException e) {
             exceptionHandler.sendMessage(

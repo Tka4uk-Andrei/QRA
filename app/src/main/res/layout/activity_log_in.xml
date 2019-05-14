@@ -1,77 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.LogInActivity"
-    android:orientation="vertical"
-    android:padding="10dp">
+    xmlns:tools="http://schemas.android.com/tools"
 
-    <android.support.design.widget.TextInputLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
         android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:src="@drawable/cat"
+        android:scaleType="centerCrop"
+        android:id="@+id/image"/>
+
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_below="@+id/image"
+        android:layout_width="365dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        app:passwordToggleEnabled="true">
+        android:layout_marginTop="28dp"
+        android:backgroundTint="#30B9B1"
+        android:ems="10"
+        android:hint="Номер мобильного телефона"
+        android:inputType="phone"
+        android:paddingBottom="12dp"
+        android:textColor="#2a2a2a"
+        android:layout_centerHorizontal="true"/>
 
-        <EditText
-            android:id="@+id/phone_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Phone"
-            android:inputType="phone" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="365dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        app:passwordToggleEnabled="true">
-
-        <EditText
-            android:id="@+id/password_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberPassword"
-            android:hint="Password" />
-
-    </android.support.design.widget.TextInputLayout>
+        android:layout_below="@+id/phone"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:backgroundTint="#30B9B1"
+        android:ems="10"
+        android:hint="Пароль"
+        android:inputType="numberPassword"
+        android:paddingBottom="12dp"
+        android:textColor="#2a2a2a" />
 
     <Button
-        android:id="@+id/sing_in_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sing In"/>
-
-    <LinearLayout
-        android:gravity=""
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/register_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.618"
-            android:text="Register" />
-
-        <Button
-            android:id="@+id/restore_password_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.382"
-            android:text="I forgot password" />
-    </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/login_progress_bar"
-        android:visibility="invisible"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/enter"
+        android:layout_width="181dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/password"
+        android:layout_marginTop="33dp"
+        android:background="@drawable/buttonshape"
+        android:elevation="4dp"
+        android:stateListAnimator="@null"
+        android:text="ВОЙТИ"
+        android:textColor="#FFFFFF"
+        android:translationZ="2dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="17sp"
         />
 
-</android.widget.LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/registration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_null"
+            android:text="РЕГИСТРАЦИЯ"
+            android:textColor="#1A7670"
+            />
+
+        <Button
+            android:id="@+id/remember_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_null"
+            android:text="ВСПОМНИТЬ ПАРОЛЬ"
+            android:textColor="#1A7670" />
+    </LinearLayout>
+</RelativeLayout>

@@ -2,7 +2,6 @@ package com.example.qra.view;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button qrScanButton;
     private Button requestButton;
+    private Button editGoodsButton;
     private Button settingsButton;
 
     @Override
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public void ConnectViewsWithCode() {
         qrScanButton = findViewById(R.id.qr_scan_btn);
         requestButton = findViewById(R.id.send_request_btn);
+        editGoodsButton = findViewById(R.id.edit_goods_btn);
         settingsButton = findViewById(R.id.settings_btn);
     }
 
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         qrScanButton.setOnClickListener(menuBtnClickListener);
         requestButton.setOnClickListener(menuBtnClickListener);
+        editGoodsButton.setOnClickListener(menuBtnClickListener);
         settingsButton.setOnClickListener(menuBtnClickListener);
 
 
@@ -101,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 if (v == requestButton)
                     intent = new Intent(getApplicationContext(), WebRequestActivity.class);
+                else if (v == editGoodsButton)
+                    intent = new Intent(getApplicationContext(), EditBoughtDataActivity.class);
                 else if (v == settingsButton)
                     intent = new Intent(getApplicationContext(), SettingsActivity.class);
 

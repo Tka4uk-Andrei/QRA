@@ -121,6 +121,9 @@ public class BoughtItem {
      */
     public void setName(String name) {
         this.name = name;
+        if(this.nameForUser == null){
+            this.nameForUser = name;
+        }
     }
 
     /**
@@ -189,18 +192,18 @@ public class BoughtItem {
         /**
          * What general category does the product belong to
          */
-        private String generalCategory = ItemCategories.NOT_DISTRIBUTED;;
+        private String generalCategory = ItemCategories.NOT_DISTRIBUTED;
 
         /**
          * What subject category does the product belong to
          */
-        private String subjectCategory = ItemCategories.NOT_DISTRIBUTED;;
+        private String subjectCategory = ItemCategories.NOT_DISTRIBUTED;
 
 
         /**
          * product name for user
          */
-        private String nameForUser = "not distributed";
+        private String nameForUser;
 
         /**
          * tracking ID
@@ -249,6 +252,9 @@ public class BoughtItem {
          */
         public Builder setName(String name) {
             this.name = name;
+            if(this.nameForUser == null){
+                this.nameForUser = name;
+            }
             return this;
         }
 

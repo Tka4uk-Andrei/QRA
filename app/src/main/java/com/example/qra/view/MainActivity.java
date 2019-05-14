@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         requestButton.setOnClickListener(menuBtnClickListener);
         settingsButton.setOnClickListener(menuBtnClickListener);
 
+
     }
 
     @Override
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 if (v == requestButton)
                     intent = new Intent(getApplicationContext(), WebRequestActivity.class);
                 else if (v == settingsButton)
-                    intent = new Intent(getApplicationContext(), RegisterInFnsActivity.class);
+                    intent = new Intent(getApplicationContext(), SettingsActivity.class);
 
                 if (intent != null)
                     startActivity(intent);

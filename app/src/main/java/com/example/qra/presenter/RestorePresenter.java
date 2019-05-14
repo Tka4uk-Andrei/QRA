@@ -1,10 +1,12 @@
 package com.example.qra.presenter;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
 import com.example.qra.model.UserDataForFns;
 import com.example.qra.model.webRequests.requests.RegistrationWebRequest;
+import com.example.qra.model.webRequests.requests.UserRecoveryWebRequest;
 import com.example.qra.presenter.interfaces.IRestoreUserPresenter;
 import com.example.qra.presenter.login.LogInPresenter;
 import com.example.qra.view.LogInActivity;
@@ -26,7 +28,7 @@ public class RestorePresenter extends AndroidPresenter implements IRestoreUserPr
         UserDataForFns.getInstance(getView().getContext()).setPhoneNumber(phone);
         UserDataForFns.getInstance(getView().getContext()).apply(getView().getContext());
 
-        (new Thread(new RegistrationWebRequest(UserDataForFns.getInstance(getView().getContext()),
+        (new Thread(new UserRecoveryWebRequest(UserDataForFns.getInstance(getView().getContext()),
                 new RestoreNotSucceededHandler(this),
                 new RestoreSucceededHandler(this)))).start();
     }

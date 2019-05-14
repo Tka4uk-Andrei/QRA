@@ -18,9 +18,12 @@ import java.net.URL;
 
 public class LoginWebRequest implements Runnable {
 
-    UserDataForFns userData;
-    Handler exceptionHandler;
-    Handler returnHandler;
+    public static final String HANDLE_RETURN_KEY_EMAIL = "email";
+    public static final String HANDLE_RETURN_KEY_NAME = "name";
+
+    private UserDataForFns userData;
+    private Handler exceptionHandler;
+    private Handler returnHandler;
 
     public LoginWebRequest(UserDataForFns userData,
                            Handler exceptionHandler, Handler returnHandler) {
@@ -68,8 +71,8 @@ public class LoginWebRequest implements Runnable {
                 // send return message
                 Message message = returnHandler.obtainMessage();
                 Bundle bundle = new Bundle();
-                bundle.putString("email", json.getString("email"));
-                bundle.putString("name", json.getString("name"));
+                bundle.putString(HANDLE_RETURN_KEY_EMAIL, json.getString("email"));
+                bundle.putString(HANDLE_RETURN_KEY_NAME, json.getString("name"));
                 message.setData(bundle);
                 returnHandler.sendMessage(message);
             }

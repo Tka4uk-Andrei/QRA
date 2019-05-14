@@ -168,10 +168,7 @@ public class WebRequestActivity extends AppCompatActivity {
 
         @Override
         public void handleMessage(Message msg) {
-            Bundle bundle = msg.getData();
-            String str = bundle.getString("return");
-
-            activity.showCheck(str);
+            activity.showCheck(msg.getData().getString(GetCheckDataWebRequest.HANDLE_RETURN_KEY_RETURN));
         }
     }
 }

@@ -15,6 +15,8 @@ import java.net.URL;
 
 public class CheckExistsWebRequest implements Runnable {
 
+    public static final String HANDLE_RETURN_KEY_RETURN = "return";
+
     private QrData qrData;
     private Handler exceptionHandler;
     private Handler responseHandler;
@@ -52,7 +54,7 @@ public class CheckExistsWebRequest implements Runnable {
             Message responseMessage = responseHandler.obtainMessage();
             Bundle bundle = new Bundle();
             responseCode = connection.getResponseCode();
-            bundle.putBoolean("return", responseCode == 204);
+            bundle.putBoolean(HANDLE_RETURN_KEY_RETURN, responseCode == 204);
             responseMessage.setData(bundle);
             responseHandler.sendMessage(responseMessage);
 

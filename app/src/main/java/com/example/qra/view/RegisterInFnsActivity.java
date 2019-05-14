@@ -37,7 +37,6 @@ public class RegisterInFnsActivity extends AppCompatActivity implements IRegiste
         presenter.onCreate();
 
         registerBtn.setOnClickListener(action -> {
-            Toast.makeText(getApplicationContext(), "Registration couldn't be started now, but I'm saving data", Toast.LENGTH_SHORT).show();
             presenter.registerUser(
                     userNameText.getText().toString(),
                     emailText.getText().toString(),
@@ -69,5 +68,10 @@ public class RegisterInFnsActivity extends AppCompatActivity implements IRegiste
     @Override
     public void setEmailText(String email) {
         emailText.setText(email);
+    }
+
+    @Override
+    public void showFailMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }

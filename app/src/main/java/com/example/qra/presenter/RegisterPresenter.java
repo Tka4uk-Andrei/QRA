@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.example.qra.model.UserDataForFns;
+import com.example.qra.model.webRequests.WebRequestException;
 import com.example.qra.model.webRequests.requests.RegistrationWebRequest;
 import com.example.qra.presenter.interfaces.IRegisterPresenter;
 import com.example.qra.presenter.login.LogInPresenter;
@@ -41,8 +42,8 @@ public class RegisterPresenter extends AndroidPresenter implements IRegisterPres
         startActivity(LogInActivity.class, true);
     }
 
-    private void registrationFailed(){
-        // todo reaction
+    private void registrationFailed(WebRequestException exception){
+        registerView.showFailMessage(exception.getMessage());
     }
 
     @Override
@@ -76,7 +77,8 @@ public class RegisterPresenter extends AndroidPresenter implements IRegisterPres
 
         @Override
         public void handleMessage(Message msg) {
-            registerPresenter.registrationFailed();
+            // todo refactor
+            registerPresenter.registrationFailed(msg.getData().getParcelable("exception"));
         }
     }
 }

@@ -4,7 +4,7 @@ android:orientation="vertical" android:layout_width="match_parent"
 android:layout_height="match_parent">
 
 <TextView
-    android:id="@+id/txtmessage"
+    android:id="@+id/message_text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
@@ -13,20 +13,27 @@ android:layout_height="match_parent">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_gravity="center_horizontal"
     >
     <EditText
-        android:id="@+id/txtinput"
+        android:id="@+id/input_text"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
         />
     <Button
-        android:id="@+id/btdone"
+        android:id="@+id/done_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Done"
+        android:layout_weight="1"
+        />
+    <Button
+        android:id="@+id/delete_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
         android:layout_weight="1"
         />
 

@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qra.CheckDataBase;
@@ -26,6 +24,8 @@ public class EditCheckDataActivity extends AppCompatActivity {
     private CheckInformationStorage check;
 
     private ArrayAdapter<String> arrayAdapter;
+    private int position;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,60 +33,29 @@ public class EditCheckDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_check_data);
 
         Intent intent = getIntent();
-        int position = intent.getIntExtra("checkNumber", 0);
+        position = intent.getIntExtra("checkNumber", 0);
 
-        ListView listView = findViewById(R.id.check_data);
-        final CheckInformationStorage checkList[] = CheckDataBase.getCheckList(getApplicationContext());
-        check = checkList[position];
-
-        boughtItems = check.getShoppingList();
-        itemNames = new String[boughtItems.length];
-        for (int i = 0; i < boughtItems.length; i++) {
-            itemNames[i] = boughtItems[i].getName();
-        }
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, itemNames);
-        listView.setAdapter(arrayAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                showInputBox(itemNames[i], i);
-            }
-        });
+        listView = findViewById(R.id.check_data);
+        update();
+        listView.setOnItemClickListener((adapterView, view, i, l) -> showInputBox(itemNames[i], i));
 
         Button addGoodButton = findViewById(R.id.add_good_btn);
-        addGoodButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BoughtItem[] newList = new BoughtItem[boughtItems.length + 1];
-                for (int i = 0; i < boughtItems.length; i++) {
-                    newList[i] = boughtItems[i];
-                }
-                BoughtItem newItem = new BoughtItem.Builder().build();
-                newList[newList.length - 1] = newItem;
-                check.setShoppingList(newList);
-                try {
-                    CheckDataBase.updateAllPositionUserCheck(getApplicationContext(), check);
-                } catch (CheckEditingException e) {
-                    Toast.makeText(EditCheckDataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    //e.printStackTrace();
-                }
-            }
+        addGoodButton.setOnClickListener(v -> {
+            Intent intent1 = new Intent(getApplicationContext(), AddGoodInCheckActivity.class);
+            intent1.putExtra("checkNumber", position);
+            startActivity(intent1);
+        });
+
+        Button deleteCheckButton = findViewById(R.id.delete_check_btn);
+        deleteCheckButton.setOnClickListener(v -> {
+            CheckDataBase.deleteCheck(check.getId(), getApplicationContext());
+            finish();
         });
 
         if (check.getObtainingMethod().equals("FNS")) {
             addGoodButton.setVisibility(View.INVISIBLE);
         }
 
-        Button deleteCheckButton = findViewById(R.id.delete_check_btn);
-        deleteCheckButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CheckDataBase.deleteCheck(check.getId(), getApplicationContext());
-                Intent intent = new Intent(getApplicationContext(), EditGoodsDataActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 
@@ -94,22 +63,47 @@ public class EditCheckDataActivity extends AppCompatActivity {
         final Dialog dialog = new Dialog(EditCheckDataActivity.this);
         dialog.setTitle("Input Box");
         dialog.setContentView(R.layout.input_box);
-        TextView txtMessage = (TextView) dialog.findViewById(R.id.txtmessage);
-        final EditText editText = (EditText) dialog.findViewById(R.id.txtinput);
+        dialog.findViewById(R.id.message_text);
+        final EditText editText = dialog.findViewById(R.id.input_text);
         editText.setText(oldItem);
-        Button bt = (Button) dialog.findViewById(R.id.btdone);
-        bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String newText = editText.getText().toString();
-                itemNames[index] = newText;
-                check.getShoppingList()[index].setName(newText);
+        Button doneBtn = dialog.findViewById(R.id.done_btn);
+        doneBtn.setOnClickListener(v -> {
+            String newText = editText.getText().toString();
+            itemNames[index] = newText;
+            check.getShoppingList()[index].setNameForUser(newText);
 
-                CheckDataBase.updateNameForUser(check.getShoppingList()[index].getId(), newText, getApplicationContext());
-                arrayAdapter.notifyDataSetChanged();
-                dialog.dismiss();
-            }
+            CheckDataBase.updateNameForUser(check.getShoppingList()[index].getId(), newText, getApplicationContext());
+            arrayAdapter.notifyDataSetChanged();
+            dialog.dismiss();
         });
+
+        Button deleteBtn = dialog.findViewById(R.id.delete_btn);
+        deleteBtn.setOnClickListener(v -> {
+            try {
+                CheckDataBase.deleteItem(boughtItems[index].getId(),getApplicationContext());
+            } catch (CheckEditingException e) {
+                Toast.makeText(EditCheckDataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+            update();
+            dialog.dismiss();
+        });
+        if (check.getObtainingMethod().equals("FNS")) {
+            deleteBtn.setVisibility(View.INVISIBLE);
+        }
         dialog.show();
+    }
+
+    private void update(){
+        final CheckInformationStorage checkList[] = CheckDataBase.getCheckList(getApplicationContext());
+        check = checkList[position];
+
+        boughtItems = check.getShoppingList();
+        itemNames = new String[boughtItems.length];
+        for (int i = 0; i < boughtItems.length; i++) {
+            itemNames[i] = boughtItems[i].getNameForUser();
+        }
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, itemNames);
+        listView.setAdapter(arrayAdapter);
+
     }
 }

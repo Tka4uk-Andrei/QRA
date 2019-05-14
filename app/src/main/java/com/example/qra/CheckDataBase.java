@@ -205,7 +205,7 @@ public class CheckDataBase {
      * This method allows you to change name product for user
      * This method can be used by products which belongs to all checks
      *
-     * @param id             - tracking ID
+     * @param id             - tracking ID of boughItem
      * @param newNameForUser - new name product for user
      * @param context
      */
@@ -223,7 +223,7 @@ public class CheckDataBase {
      * This method allows you to change name the product
      * This method can be used by products which belongs to only user check
      *
-     * @param id      - tracking ID
+     * @param id      - tracking ID of boughItem
      * @param newName - new name the product
      * @param context
      * @throws CheckEditingException - this exception is thrown if passed to a function
@@ -248,7 +248,7 @@ public class CheckDataBase {
      * This method allows you to change number of goods with the given name
      * This method can be used by products which belongs to only user check
      *
-     * @param id          - tracking ID
+     * @param id          - tracking ID of boughItem
      * @param newQuantity - new number of goods with the given name
      * @param context
      * @throws CheckEditingException - this exception is thrown if passed to a function
@@ -272,7 +272,7 @@ public class CheckDataBase {
      * This method allows you to change price of the products also change total sum
      * This method can be used by products which belongs to only user check
      *
-     * @param id       - tracking ID
+     * @param id       - tracking ID of boughItem
      * @param newPrise - new price of the products
      * @param context
      * @throws CheckEditingException - this exception is thrown if passed to a function
@@ -321,7 +321,7 @@ public class CheckDataBase {
      * This method allows you to change general category which the product belong to
      * This method can be used by products which belongs to all checks
      *
-     * @param id                 - tracking ID
+     * @param id                 - tracking ID of boughItem
      * @param newGeneralCategory - new general category which the product belong to
      * @param context
      */
@@ -338,7 +338,7 @@ public class CheckDataBase {
      * This method allows you to change subject category which the product belong to
      * This method can be used by products which belongs to all checks
      *
-     * @param id                 - tracking ID
+     * @param id                 - tracking ID of boughItem
      * @param newSubjectCategory - new subjectCategory which the product belong to
      * @param context
      */
@@ -356,7 +356,7 @@ public class CheckDataBase {
      * This method allows you to change tax Identification Number
      * This method can be used by only user check
      *
-     * @param id      - tracking ID
+     * @param id      - tracking ID of check
      * @param newInn  - new tax Identification Number
      * @param context
      * @throws CheckEditingException - this exception is thrown if passed to a function
@@ -373,12 +373,7 @@ public class CheckDataBase {
         sqLiteDatabase.execSQL("UPDATE " + StorageCheckDataBase.TABLE_NAME_CHECK_LIST +
                 " SET " + StorageCheckDataBase.COLUMN_NAME_INN + "='" + newInn
                 + "' where _id=" + id);
-//                + "' where " +
-//                StorageCheckDataBase.COLUMN_NAME_FISCAL_DOCUMENT_NUMBER + "=" + fiscalDocumentNumber
-//                + " and where "
-//                + StorageCheckDataBase.COLUMN_NAME_FISCAL_DRIVE_NUMBER + "=" + fiscalDriveNumber
-//                + " and where "
-//                + StorageCheckDataBase.COLUMN_NAME_FISCAL_SIGN + "=" + fiscalSign);
+
     }
 
 
@@ -386,7 +381,7 @@ public class CheckDataBase {
      * This method allows you to change store address
      * This method can be used by only user check
      *
-     * @param id         - tracking ID
+     * @param id         - tracking ID of check
      * @param newAddress - new store address
      * @param context
      * @throws CheckEditingException - this exception is thrown if passed to a function
@@ -409,7 +404,7 @@ public class CheckDataBase {
      * This method allows you to change buying time
      * This method can be used by only user check
      *
-     * @param id      - tracking ID
+     * @param id      - tracking ID of check
      * @param newTime - new buying time
      * @param context
      * @throws CheckEditingException - this exception is thrown if passed to a function
@@ -432,7 +427,7 @@ public class CheckDataBase {
      * This method allows you to change paid nds sum also change totalSum
      * This method can be used by only user check
      *
-     * @param id      - tracking ID
+     * @param id      - tracking ID of check
      * @param newNds  - new paid nds sum
      * @param context
      * @throws CheckEditingException - this exception is thrown if passed to a function
@@ -471,12 +466,14 @@ public class CheckDataBase {
      * This method update all position in check include all purchases
      * This method can be used by only user check
      *
+     * will not add new products and will not remove
+     *
      * @param checkObject - check
      * @param context
      * @throws CheckEditingException - this exception is thrown if passed to a function
      *                               the check is recognized from JSON
      */
-    public static void updateAllUserCheck(Context context, CheckInformationStorage checkObject) throws CheckEditingException {
+    public static void updateAllPositionUserCheck(Context context, CheckInformationStorage checkObject) throws CheckEditingException {
         updateInn(checkObject.getId(), checkObject.getInn(), context);
         updateAdress(checkObject.getId(), checkObject.getAddressOfPurchase(), context);
         updateTime(checkObject.getId(), checkObject.getBuyTime(), context);
@@ -508,12 +505,14 @@ public class CheckDataBase {
      * This method update all position editable for FNS in check
      * editable position: NameForUser, GeneralCategory and SubjectCategory
      *
+     * will not add new products and will not remove
+     *
      * This method can be used by all checks
      *
      * @param checkObject - check
      * @param context
      */
-    public static void updateAllFnsCheck(Context context, CheckInformationStorage checkObject){
+    public static void updateAllPositionFnsCheck(Context context, CheckInformationStorage checkObject){
         for (int i = 0; i < checkObject.getQuantityPurchases(); i++) {
 
             updateNameForUser(checkObject.getShoppingList()[i].getId(),
@@ -531,7 +530,7 @@ public class CheckDataBase {
      * This method allows you to delete item also change number of products which you bought
      * This method can be used by only user check
      *
-     * @param id      - tracking ID
+     * @param id      - tracking ID of boughItem
      * @param context
      * @throws CheckEditingException - this exception is thrown if passed to a function
      *                               the products which belongs to check is recognized from JSON
@@ -571,10 +570,58 @@ public class CheckDataBase {
 
 
     /**
+     * This method allows you to delete item also change number of products which you bought
+     * This method can be used by only user check
+     *
+     * @param id      - tracking ID of check
+     * @param context
+     * @throws CheckEditingException - this exception is thrown if passed to a function
+     *                               the products which belongs to check is recognized from JSON
+     */
+    public static void addItem(int id, BoughtItem item, Context context) throws CheckEditingException {
+
+        initialization(context);
+        if (checkObtainingMethodForCheck(id)) {
+            throw new CheckEditingException();
+        }
+
+        //получение старого кол-ва покупок и увеличение на 1
+        Cursor cursor = sqLiteDatabase.query(StorageCheckDataBase.TABLE_NAME_CHECK_LIST,
+                null, "_id=" + id, null, null, null, null);
+        cursor.moveToFirst();
+        int newQuantityPurchases = cursor.getInt(cursor.getColumnIndex
+                (StorageCheckDataBase.COLUMN_NAME_QUANTITY_PURCHASES)) + 1;
+        cursor.close();
+
+        //Редактирование кол-во покупок
+        sqLiteDatabase.execSQL("UPDATE " + StorageCheckDataBase.TABLE_NAME_CHECK_LIST +
+                " SET " + StorageCheckDataBase.COLUMN_NAME_QUANTITY_PURCHASES + "='" + newQuantityPurchases
+                + "' where _id=" + id);
+
+        //Удаление записи добавление в бд
+        contentValues.put(StorageCheckDataBase.COLUMN_NAME_NAME, item.getName());
+        contentValues.put(StorageCheckDataBase.COLUMN_NAME_NAME_FOR_USER, item.getNameForUser());
+        contentValues.put(StorageCheckDataBase.COLUMN_NAME_QUANTITY, item.getQuantity());
+        contentValues.put(StorageCheckDataBase.COLUMN_NAME_PRISE, item.getPrice());
+        contentValues.put(StorageCheckDataBase.COLUMN_NAME_GENERAL_CATEGORIES, item.getGeneralCategory());
+        contentValues.put(StorageCheckDataBase.COLUMN_NAME_SUBJECT_CATEGORIES, item.getSubjectCategory());
+        contentValues.put("checkList_id", id);
+
+        //второй аргумент используется для вставки пустой строки - это не нужно сейчас
+        sqLiteDatabase.insert(StorageCheckDataBase.TABLE_NAME_SHOP_LIST, null, contentValues);
+        contentValues.clear();
+
+
+
+
+    }
+
+
+    /**
      * This method allows you to delete the check
      * This method can be used by all checks
      *
-     * @param id      - tracking ID
+     * @param id      - tracking ID of check
      * @param context
      */
     public static void deleteCheck(int id, Context context) {
@@ -647,22 +694,27 @@ public class CheckDataBase {
         CheckInformationStorage[] checkList = new CheckInformationStorage[cursorCheck.getCount()];
         cursorCheck.moveToFirst();
 
-        Cursor cursorShop = sqLiteDatabase.query(StorageCheckDataBase.TABLE_NAME_SHOP_LIST, null,
-                null, null, null, null, null);
-        cursorShop.moveToFirst();
+
 
         for (int i = 0; i < cursorCheck.getCount(); i++) {
 
             int quantityPurchases = cursorCheck.getInt(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY_PURCHASES));
+            int checkId = cursorCheck.getInt(cursorCheck.getColumnIndex("_id"));
+
 
             BoughtItem[] shoppingList = new BoughtItem[quantityPurchases];
 
             //второе условие - соответствие "_id" поля чека и поля товара "checkList_id",
             //привязанного к своему чеку
-            for (int j = 0; (j < quantityPurchases) &&
-                    (cursorShop.getInt(cursorShop.getColumnIndex("checkList_id")) ==
-                            cursorCheck.getInt(cursorCheck.getColumnIndex("_id")));
-                 j++) {
+            Cursor cursorShop = sqLiteDatabase.query(StorageCheckDataBase.TABLE_NAME_SHOP_LIST, null,
+                    "checkList_id="+checkId, null, null, null, null);
+            cursorShop.moveToFirst();
+
+            for (int j = 0; (j < quantityPurchases) //&&
+                //  (cursorShop.getInt(cursorShop.getColumnIndex("checkList_id")) ==
+                //        cursorCheck.getInt(cursorCheck.getColumnIndex("_id")));
+                    ;j++) {
+
 
                 shoppingList[j] = new BoughtItem.Builder()
                         .setId(cursorShop.getInt(cursorShop.getColumnIndex("_id")))
@@ -676,10 +728,11 @@ public class CheckDataBase {
 
                 cursorShop.moveToNext();
             }
+            cursorShop.close();
 
 
             checkList[i] = new CheckInformationStorage.Builder()
-                    .setId(cursorCheck.getInt(cursorCheck.getColumnIndex("_id")))
+                    .setId(checkId)
                     .setObtainingMethod(cursorCheck.getString(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_OBTAINING_METHOD)))
                     .setTotalSum(cursorCheck.getInt(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_TOTAL_SUM)))
                     .setInn(cursorCheck.getString(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_INN)))
@@ -698,7 +751,7 @@ public class CheckDataBase {
         }
 
         cursorCheck.close();
-        cursorShop.close();
+
 
         return checkList;
     }

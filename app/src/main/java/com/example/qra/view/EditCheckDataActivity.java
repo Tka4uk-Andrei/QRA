@@ -11,8 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.qra.CheckDataBase;
+import com.example.qra.CheckEditingException;
 import com.example.qra.R;
 import com.example.qra.model.check.BoughtItem;
 import com.example.qra.model.check.CheckInformationStorage;
@@ -63,12 +65,29 @@ public class EditCheckDataActivity extends AppCompatActivity {
                 BoughtItem newItem = new BoughtItem.Builder().build();
                 newList[newList.length - 1] = newItem;
                 check.setShoppingList(newList);
+                try {
+                    CheckDataBase.updateAllPositionUserCheck(getApplicationContext(), check);
+                } catch (CheckEditingException e) {
+                    Toast.makeText(EditCheckDataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    //e.printStackTrace();
+                }
             }
         });
 
-        if (check.getObtainingMethod().equals("user")) {
+        if (check.getObtainingMethod().equals("FNS")) {
             addGoodButton.setVisibility(View.INVISIBLE);
         }
+
+        Button deleteCheckButton = findViewById(R.id.delete_check_btn);
+        deleteCheckButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckDataBase.deleteCheck(check.getId(), getApplicationContext());
+                Intent intent = new Intent(getApplicationContext(), EditGoodsDataActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void showInputBox(String oldItem, final int index) {
@@ -84,7 +103,6 @@ public class EditCheckDataActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String newText = editText.getText().toString();
                 itemNames[index] = newText;
-
                 check.getShoppingList()[index].setName(newText);
 
                 CheckDataBase.updateNameForUser(check.getShoppingList()[index].getId(), newText, getApplicationContext());

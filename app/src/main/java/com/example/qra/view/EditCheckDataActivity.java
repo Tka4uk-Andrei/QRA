@@ -17,6 +17,11 @@ import com.example.qra.R;
 import com.example.qra.model.check.BoughtItem;
 import com.example.qra.model.check.CheckInformationStorage;
 
+/**
+ * Class that show all items in current check and allows to change them \\
+ *
+ * @autor : Ekaterina Novoselova
+ */
 public class EditCheckDataActivity extends AppCompatActivity {
 
     private BoughtItem boughtItems[];
@@ -43,7 +48,7 @@ public class EditCheckDataActivity extends AppCompatActivity {
         addGoodButton.setOnClickListener(v -> {
             Intent intent1 = new Intent(getApplicationContext(), AddGoodInCheckActivity.class);
             intent1.putExtra("checkNumber", position);
-            startActivity(intent1);
+            startActivityForResult(intent1, 1);
         });
 
         Button deleteCheckButton = findViewById(R.id.delete_check_btn);
@@ -59,6 +64,13 @@ public class EditCheckDataActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method that allows to change the item's name \\
+     *
+     * @param oldItem old item's name \\
+     * @param index position of item in check\\
+     * @autor : Ekaterina Novoselova
+     */
     public void showInputBox(String oldItem, final int index) {
         final Dialog dialog = new Dialog(EditCheckDataActivity.this);
         dialog.setTitle("Input Box");
@@ -82,7 +94,7 @@ public class EditCheckDataActivity extends AppCompatActivity {
             try {
                 CheckDataBase.deleteItem(boughtItems[index].getId(),getApplicationContext());
             } catch (CheckEditingException e) {
-                Toast.makeText(EditCheckDataActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditCheckDataActivity.this, e.getErrorMessage(), Toast.LENGTH_SHORT).show();
             }
             update();
             dialog.dismiss();
@@ -93,6 +105,11 @@ public class EditCheckDataActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Method that update information on the screen \\
+     *
+     * @autor : Ekaterina Novoselova
+     */
     private void update(){
         final CheckInformationStorage checkList[] = CheckDataBase.getCheckList(getApplicationContext());
         check = checkList[position];
@@ -105,5 +122,15 @@ public class EditCheckDataActivity extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, itemNames);
         listView.setAdapter(arrayAdapter);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1)
+        {
+            update();
+        }
     }
 }

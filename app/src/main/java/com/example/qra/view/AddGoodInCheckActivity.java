@@ -3,10 +3,8 @@ package com.example.qra.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.qra.CheckDataBase;
@@ -15,15 +13,20 @@ import com.example.qra.R;
 import com.example.qra.model.check.BoughtItem;
 import com.example.qra.model.check.CheckInformationStorage;
 
+/**
+ * Class that allows to set new item \\
+ *
+ * @autor : Ekaterina Novoselova
+ */
 public class AddGoodInCheckActivity extends AppCompatActivity {
-
-    private BoughtItem boughtItems[];
-    private CheckInformationStorage check;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_good_in_check);
+
+        BoughtItem boughtItems[];
+        CheckInformationStorage check;
 
         EditText nameTxt = findViewById(R.id.name_text);
         EditText quantityTxt = findViewById(R.id.quantity_text);
@@ -49,16 +52,16 @@ public class AddGoodInCheckActivity extends AppCompatActivity {
                     .setQuantity(Integer.parseInt(quantityTxt.getText().toString()))
                     .setPrice(Integer.parseInt(priceTxt.getText().toString()))
                     .build();
-            newList[newList.length - 1] = newItem;
-            check.setShoppingList(newList);
+
             try {
+                newItem = CheckDataBase.addItem(check.getId(),newItem,getApplicationContext());
+                newList[newList.length - 1] = newItem;
+                check.setShoppingList(newList);
                 CheckDataBase.updateAllPositionUserCheck(getApplicationContext(), check);
             } catch (CheckEditingException e) {
-                Toast.makeText(AddGoodInCheckActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddGoodInCheckActivity.this, e.getErrorMessage(), Toast.LENGTH_SHORT).show();
             }
-
-            Intent newIntent = new Intent(getApplicationContext(), EditCheckDataActivity.class);
-            startActivity(newIntent);
+            finish();
 
         });
     }

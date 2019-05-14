@@ -14,7 +14,12 @@ import com.example.qra.model.check.CheckInformationStorage;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class EditGoodsDataActivity extends AppCompatActivity {
+/**
+ * Class that show all checks and allows to change them \\
+ *
+ * @autor : Ekaterina Novoselova
+ */
+public class EditBoughtDataActivity extends AppCompatActivity {
 
     private CheckInformationStorage checkList[];
     private String checkBuyTimes[];
@@ -50,6 +55,11 @@ public class EditGoodsDataActivity extends AppCompatActivity {
             });
     }
 
+    /**
+     * Method that update information on the screen \\
+     *
+     * @autor : Ekaterina Novoselova
+     */
     private void update(){
         checkList = CheckDataBase.getCheckList(getApplicationContext());
         checkBuyTimes = new String[checkList.length];

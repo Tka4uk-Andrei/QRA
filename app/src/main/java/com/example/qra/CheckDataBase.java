@@ -465,7 +465,7 @@ public class CheckDataBase {
     /**
      * This method update all position in check include all purchases
      * This method can be used by only user check
-     *
+     * <p>
      * will not add new products and will not remove
      *
      * @param checkObject - check
@@ -504,15 +504,15 @@ public class CheckDataBase {
     /**
      * This method update all position editable for FNS in check
      * editable position: NameForUser, GeneralCategory and SubjectCategory
-     *
+     * <p>
      * will not add new products and will not remove
-     *
+     * <p>
      * This method can be used by all checks
      *
      * @param checkObject - check
      * @param context
      */
-    public static void updateAllPositionFnsCheck(Context context, CheckInformationStorage checkObject){
+    public static void updateAllPositionFnsCheck(Context context, CheckInformationStorage checkObject) {
         for (int i = 0; i < checkObject.getQuantityPurchases(); i++) {
 
             updateNameForUser(checkObject.getShoppingList()[i].getId(),
@@ -569,16 +569,22 @@ public class CheckDataBase {
     }
 
 
+    private void getOneItem(int id) {
+
+    }
+
+
     /**
      * This method allows you to delete item also change number of products which you bought
      * This method can be used by only user check
      *
      * @param id      - tracking ID of check
      * @param context
+     * @return BoughtItem - which can be further edited
      * @throws CheckEditingException - this exception is thrown if passed to a function
      *                               the products which belongs to check is recognized from JSON
      */
-    public static void addItem(int id, BoughtItem item, Context context) throws CheckEditingException {
+    public static BoughtItem addItem(int id, BoughtItem item, Context context) throws CheckEditingException {
 
         initialization(context);
         if (checkObtainingMethodForCheck(id)) {
@@ -611,7 +617,20 @@ public class CheckDataBase {
         sqLiteDatabase.insert(StorageCheckDataBase.TABLE_NAME_SHOP_LIST, null, contentValues);
         contentValues.clear();
 
+        Cursor cursorShop = sqLiteDatabase.query(StorageCheckDataBase.TABLE_NAME_SHOP_LIST,
+                null, "checkList_id=" + id, null, null, null, null);
+        cursorShop.moveToLast();
 
+        BoughtItem tempItem = new BoughtItem.Builder()
+                .setId(cursorShop.getInt(cursorShop.getColumnIndex("_id")))
+                .setName(cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME)))
+                .setNameForUser(cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_NAME_FOR_USER)))
+                .setPrice(cursorShop.getInt(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_PRISE)))
+                .setQuantity(cursorShop.getInt(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY)))
+                .setGeneralCategory(cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_GENERAL_CATEGORIES)))
+                .setSubjectCategory(cursorShop.getString(cursorShop.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_SUBJECT_CATEGORIES)))
+                .build();
+        return tempItem;
 
 
     }
@@ -695,7 +714,6 @@ public class CheckDataBase {
         cursorCheck.moveToFirst();
 
 
-
         for (int i = 0; i < cursorCheck.getCount(); i++) {
 
             int quantityPurchases = cursorCheck.getInt(cursorCheck.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_QUANTITY_PURCHASES));
@@ -707,13 +725,13 @@ public class CheckDataBase {
             //второе условие - соответствие "_id" поля чека и поля товара "checkList_id",
             //привязанного к своему чеку
             Cursor cursorShop = sqLiteDatabase.query(StorageCheckDataBase.TABLE_NAME_SHOP_LIST, null,
-                    "checkList_id="+checkId, null, null, null, null);
+                    "checkList_id=" + checkId, null, null, null, null);
             cursorShop.moveToFirst();
 
             for (int j = 0; (j < quantityPurchases) //&&
                 //  (cursorShop.getInt(cursorShop.getColumnIndex("checkList_id")) ==
                 //        cursorCheck.getInt(cursorCheck.getColumnIndex("_id")));
-                    ;j++) {
+                    ; j++) {
 
 
                 shoppingList[j] = new BoughtItem.Builder()

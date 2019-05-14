@@ -2,7 +2,6 @@ package com.example.qra.view;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -104,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 if (v == requestButton)
                     intent = new Intent(getApplicationContext(), WebRequestActivity.class);
                 else if (v == editGoodsButton)
-                    intent = new Intent(getApplicationContext(), EditGoodsDataActivity.class);
+                    intent = new Intent(getApplicationContext(), EditBoughtDataActivity.class);
                 else if (v == settingsButton)
                     intent = new Intent(getApplicationContext(), RegisterInFnsActivity.class);
 

@@ -99,7 +99,7 @@ public class EditCheckDataActivity extends AppCompatActivity {
             update();
             dialog.dismiss();
         });
-        if (check.getObtainingMethod().equals("FNS")) {
+        if (check.getObtainingMethod().equals(CheckInformationStorage.OBTAIN_METHOD_FNS)) {
             deleteBtn.setVisibility(View.INVISIBLE);
         }
         dialog.show();

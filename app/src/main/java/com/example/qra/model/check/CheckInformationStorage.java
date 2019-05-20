@@ -241,6 +241,9 @@ public class CheckInformationStorage {
      */
     public void setShoppingList(BoughtItem[] shoppingList) {
         this.shoppingList = shoppingList;
+        if (shoppingList != null) {
+            this.quantityPurchases = shoppingList.length;
+        }
     }
 
     /**
@@ -442,6 +445,9 @@ public class CheckInformationStorage {
          */
         public Builder setShoppingList(BoughtItem[] shoppingList) {
             this.shoppingList = shoppingList;
+            if (shoppingList != null) {
+                this.quantityPurchases = shoppingList.length;
+            }
             return this;
         }
 

@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
 
 
-    private Button qrScanButton;
+    private FloatingActionButton qrScanButton;
     private Button requestButton;
     private Button editGoodsButton;
     private Button settingsButton;

@@ -21,13 +21,6 @@
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/qr_scan_btn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Scan QR code" />
-
-    <Button
         android:id="@+id/send_request_btn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -48,5 +41,14 @@
         android:layout_gravity="center"
         android:text="Settings" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/qr_scan_btn"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
+        android:src="@drawable/logo5"
+        android:backgroundTint="#37DCD2"
+        android:layout_margin="16dp"
+        tools:targetApi="lollipop" />
 
 </android.widget.LinearLayout>

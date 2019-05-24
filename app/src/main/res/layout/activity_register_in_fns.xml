@@ -55,39 +55,40 @@
 
     <EditText
         android:id="@+id/user_name"
+        style="@style/EditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
         android:hint="Как к Вам обращаться" />
 
 
     <EditText
         android:id="@+id/email"
+        style="@style/EditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
         android:hint="Электронная почта (e-mail)"
         android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/phone_number"
+        style="@style/EditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
         android:hint="Номер мобильного телефона *"
         android:inputType="phone" />
-
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Укажите номер телефона, на котором установленно приложение. На указанный номер будет отправленно СМС с паралем"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="12sp"
+        android:text="* Укажите номер телефона, на котором установленно приложение. На указанный номер будет отправленно СМС с паралем" />
 
     <Button
         android:id="@+id/register_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/ButtonStyle"
         android:layout_gravity="center"
         android:text="Продолжить" />
 

@@ -25,49 +25,25 @@
 
             <EditText
                 android:id="@+id/phone_text"
+                style="@style/EditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="20dp"
-                android:backgroundTint="#30B9B1"
-                android:ems="10"
                 android:hint="Номер мобильного телефона"
-                android:inputType="phone"
-                android:textColor="#2a2a2a"
-                tools:targetApi="lollipop" />
+                android:inputType="phone" />
 
             <EditText
                 android:id="@+id/password_text"
+                style="@style/EditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="20dp"
-                android:backgroundTint="#30B9B1"
-                android:ems="10"
                 android:hint="Пароль"
-                android:inputType="numberPassword"
-                android:textColor="#2a2a2a"
-                tools:targetApi="lollipop" />
+                android:inputType="numberPassword" />
 
             <Button
                 android:id="@+id/sing_in_btn"
-                android:layout_width="181dp"
-                android:layout_height="40dp"
+                style="@style/ButtonStyle"
                 android:layout_gravity="center"
-                android:layout_marginTop="33dp"
-                android:background="@drawable/buttonshape"
-                android:elevation="4dp"
-                android:stateListAnimator="@null"
-                android:text="ВОЙТИ"
-                android:textColor="#FFFFFF"
-                android:textSize="17sp"
-                android:translationZ="2dp"
-                tools:targetApi="lollipop" />
+                android:text="ВОЙТИ" />
 
             <ProgressBar
                 android:id="@+id/login_progress_bar"
@@ -81,11 +57,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|center"
-        android:layout_weight="1"
         android:gravity="center|bottom"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/register_btn"

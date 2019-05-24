@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 if (v == requestButton)
                     intent = new Intent(getApplicationContext(), WebRequestActivity.class);
                 else if (v == editGoodsButton)
-                    intent = new Intent(getApplicationContext(), EditBoughtDataActivity.class);
+                    intent = new Intent(getApplicationContext(), ShowAllChecksActivity.class);
                 else if (v == settingsButton)
                     intent = new Intent(getApplicationContext(), SettingsActivity.class);
 

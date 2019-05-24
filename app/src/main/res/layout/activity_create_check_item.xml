@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.AddGoodInCheckActivity"
+    tools:context=".view.CreateCheckItemActivity"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -30,10 +30,25 @@
         app:passwordToggleEnabled="true">
 
         <EditText
+            android:id="@+id/category_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Category"
+            android:inputType="textEmailAddress" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        app:passwordToggleEnabled="true">
+
+        <EditText
             android:id="@+id/quantity_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="phone"
+            android:inputType="number"
             android:hint="Quantity" />
 
     </android.support.design.widget.TextInputLayout>
@@ -49,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Price"
-            android:inputType="phone"/>
+            android:inputType="numberDecimal"/>
 
     </android.support.design.widget.TextInputLayout>
 

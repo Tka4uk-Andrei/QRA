@@ -19,12 +19,18 @@ public class WebRequestException extends Exception implements Parcelable {
     public static final String INCORRECT_PHONE_MESSAGE = "Uncorrect phone";
     public static final String USER_NOT_FOUND_MESSAGE = "User not found";
     public static final String NO_INTERNET_CONNECTION_MESSAGE = "No internet connection";
+    public static final String SMTH_WENT_WRONG_MESSAGE = "Something went wrong. Try again";
 
 
     private String message;
 
-    // TODO documentation
-
+    /**
+     * Assigns the correct message \\
+     *
+     * @param code the code that returned the web request \\
+     * @param msg message from caught exception \\
+     * @autor : Ekaterina Novoselova
+     */
     public WebRequestException(int code, String msg) {
         if (code == 451) {
             message = CHECK_DOES_NOT_EXIST_MESSAGE;
@@ -42,7 +48,9 @@ public class WebRequestException extends Exception implements Parcelable {
             message = INCORRECT_PHONE_MESSAGE;
         } else if (code == 404) {
             message = USER_NOT_FOUND_MESSAGE;
-        // if code not recognized
+        } else if (code == 202) {
+            message = SMTH_WENT_WRONG_MESSAGE;
+            // if code not recognized
         } else if (code > 0) {
             message = "Error code is " + code;
             // TODO string under may be bad
@@ -55,6 +63,7 @@ public class WebRequestException extends Exception implements Parcelable {
         message = in.readString();
     }
 
+    @Override
     public String getMessage() {
         return message;
     }

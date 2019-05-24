@@ -3,6 +3,7 @@ package com.example.qra.view;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,9 @@ public class RestorePasswordActivity extends AppCompatActivity implements IResto
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restore_password);
+
+        ActionBar bar = getSupportActionBar();
+        bar.setTitle("Восстановление пароля");
 
         EditText phoneNumber = findViewById(R.id.phone_number);
         Button restoreBtn = findViewById(R.id.restore_password_btn);

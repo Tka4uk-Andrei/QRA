@@ -2,6 +2,7 @@ package com.example.qra.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +27,9 @@ public class RegisterInFnsActivity extends AppCompatActivity implements IRegiste
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_in_fns);
+
+        ActionBar bar = getSupportActionBar();
+        bar.setTitle("Регистрация");
 
         // initialize views
         telephoneText = findViewById(R.id.phone_number);

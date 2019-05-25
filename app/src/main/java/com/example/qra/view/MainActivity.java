@@ -1,6 +1,5 @@
 package com.example.qra.view;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,9 +16,7 @@ import com.example.qra.presenter.interfaces.INavigationBarPresenter;
 import com.example.qra.view.dialogs.AppNotInstalledDialog;
 import com.example.qra.view.interfaces.IMainView;
 
-/**
- * MainActivity class using for display main info
- */
+// TODO documentation
 public class MainActivity extends AppCompatActivity implements IMainView {
 
     public static final String QR_DATA_EXTRA = "QR_DATA";

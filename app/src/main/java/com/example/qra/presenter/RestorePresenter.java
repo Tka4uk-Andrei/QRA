@@ -1,14 +1,11 @@
 package com.example.qra.presenter;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
 import com.example.qra.model.UserDataForFns;
-import com.example.qra.model.webRequests.requests.RegistrationWebRequest;
 import com.example.qra.model.webRequests.requests.UserRecoveryWebRequest;
 import com.example.qra.presenter.interfaces.IRestoreUserPresenter;
-import com.example.qra.presenter.login.LogInPresenter;
 import com.example.qra.view.LogInActivity;
 import com.example.qra.view.interfaces.IRestorePasswordView;
 

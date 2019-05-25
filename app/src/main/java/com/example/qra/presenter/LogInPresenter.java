@@ -1,4 +1,4 @@
-package com.example.qra.presenter.login;
+package com.example.qra.presenter;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,9 +8,6 @@ import android.os.Message;
 
 import com.example.qra.model.UserDataForFns;
 import com.example.qra.model.webRequests.requests.LoginWebRequest;
-import com.example.qra.presenter.AndroidPresenter;
-import com.example.qra.presenter.RegisterPresenter;
-import com.example.qra.presenter.SettingsPresenter;
 import com.example.qra.presenter.interfaces.ILoginPresenter;
 import com.example.qra.view.MainActivity;
 import com.example.qra.view.RegisterInFnsActivity;
@@ -38,6 +35,7 @@ public class LogInPresenter extends AndroidPresenter implements ILoginPresenter 
 
     @Override
     public void onCreate() {
+
         // obtain launch Intent
         Intent launchIntent = loginView.getStarterIntent();
         if (launchIntent != null && launchIntent.getStringExtra(STARTER_ACTIVITY) != null) {
@@ -61,7 +59,7 @@ public class LogInPresenter extends AndroidPresenter implements ILoginPresenter 
             }
         }
 
-        // check if user not logged in
+        // check if user logged in
         SharedPreferences firstTimePreference = getView().getContext().getSharedPreferences(LOGIN, MODE_PRIVATE);
         boolean loggedFlag = firstTimePreference.getBoolean(IS_LOGGED, false);
         if (loggedFlag) {

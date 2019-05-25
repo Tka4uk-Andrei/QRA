@@ -7,7 +7,6 @@ import com.example.qra.model.UserDataForFns;
 import com.example.qra.model.webRequests.WebRequestException;
 import com.example.qra.model.webRequests.requests.RegistrationWebRequest;
 import com.example.qra.presenter.interfaces.IRegisterPresenter;
-import com.example.qra.presenter.login.LogInPresenter;
 import com.example.qra.view.LogInActivity;
 import com.example.qra.view.interfaces.IRegisterView;
 

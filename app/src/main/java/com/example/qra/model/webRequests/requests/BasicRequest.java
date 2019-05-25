@@ -1,22 +1,19 @@
-package com.example.qra.model.webRequests;
+package com.example.qra.model.webRequests.requests;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.example.qra.model.webRequests.WebRequestException;
+
 import static android.util.Base64.DEFAULT;
 
-/**
- * Class what provides additional functionality to do web requests
- */
-@Deprecated
-public class WebRequestUtilities {
+public class BasicRequest {
 
     /**
      * @return the base64 code \\
      * @autor : Ekaterina Novoselova
      */
-    @Deprecated
     public static String base64Encode(String phone, String password) {
         StringBuilder authorizationSB = new StringBuilder();
         authorizationSB.append(phone);
@@ -34,13 +31,7 @@ public class WebRequestUtilities {
         return base64Code;
     }
 
-    /**
-     * Method that forms Message with WebRequestException
-     * @param exceptionHandler where user forms WebRequestException
-     * @param exception Exception that we send
-     * @return formed Message with WebRequestException
-     */
-    @Deprecated
+    // todo documentation
     public static Message getExceptionMessage(Handler exceptionHandler, WebRequestException exception){
         Message exceptionMessage = exceptionHandler.obtainMessage();
 

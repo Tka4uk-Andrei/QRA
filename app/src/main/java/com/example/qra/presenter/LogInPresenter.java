@@ -35,6 +35,7 @@ public class LogInPresenter extends AndroidPresenter implements ILoginPresenter 
 
     @Override
     public void onCreate() {
+
         // obtain launch Intent
         Intent launchIntent = loginView.getStarterIntent();
         if (launchIntent != null && launchIntent.getStringExtra(STARTER_ACTIVITY) != null) {
@@ -58,7 +59,7 @@ public class LogInPresenter extends AndroidPresenter implements ILoginPresenter 
             }
         }
 
-        // check if user not logged in
+        // check if user logged in
         SharedPreferences firstTimePreference = getView().getContext().getSharedPreferences(LOGIN, MODE_PRIVATE);
         boolean loggedFlag = firstTimePreference.getBoolean(IS_LOGGED, false);
         if (loggedFlag) {

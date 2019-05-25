@@ -10,7 +10,6 @@
         <item name="android:layout_marginTop">23dp</item>
         <item name="android:elevation">4dp</item>
         <item name="android:translationZ">2dp</item>
-        <item name="android:stateListAnimator">@null</item>
     </style>
 
     <style name="EditTextStyle">

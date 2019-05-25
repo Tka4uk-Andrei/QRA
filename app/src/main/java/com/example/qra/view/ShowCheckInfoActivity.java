@@ -16,6 +16,7 @@ import com.example.qra.model.check.BoughtItem;
 import com.example.qra.model.check.CheckInformationStorage;
 import com.example.qra.view.dialogs.ErrorDialog;
 
+@Deprecated
 public class ShowCheckInfoActivity extends AppCompatActivity {
 
     @Override

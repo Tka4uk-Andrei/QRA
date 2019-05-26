@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     public static final String QR_DATA_EXTRA = "QR_DATA";
 
-    private FloatingActionButton qrScanButton;
+//    private FloatingActionButton qrScanButton;
+    private Button qrScanButton;
     private Button requestButton;
     private Button editGoodsButton;
     private Button settingsButton;

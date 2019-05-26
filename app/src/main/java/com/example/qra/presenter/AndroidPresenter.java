@@ -61,4 +61,13 @@ public class AndroidPresenter {
     protected void startActivityForResult(Intent intent, int requestCode){
         ((AppCompatActivity) view).startActivityForResult(intent, requestCode);
     }
+
+    protected void finish(){
+        if (!(view instanceof AppCompatActivity)) {
+            throw new ClassCastException("view field, that send from constructor " +
+                    "should be AppCompatActivity class");
+        }
+
+        ((AppCompatActivity) view).finish();
+    }
 }

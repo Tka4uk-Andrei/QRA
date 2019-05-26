@@ -3,6 +3,8 @@ package com.example.qra.view;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     public static final String QR_DATA_EXTRA = "QR_DATA";
 
-    private Button qrScanButton;
+    private FloatingActionButton qrScanButton;
     private Button requestButton;
     private Button editGoodsButton;
     private Button settingsButton;

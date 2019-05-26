@@ -1,4 +1,4 @@
-package com.example.qra.presenter;
+package com.example.qra.view.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 /**
  * Class for showing errors
  */
+@Deprecated
 public class ErrorDialog extends DialogFragment {
 
     private String str = "exception called";

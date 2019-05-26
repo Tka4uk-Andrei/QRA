@@ -1,9 +1,9 @@
 package com.example.qra.view.interfaces;
 
-import com.example.qra.view.dialogs.IYesNoAction;
+import com.example.qra.view.dialogs.YesNoDialog;
 
 public interface ISettingsView extends IView {
 
-    void askUserConfirmToSingOut(IYesNoAction action);
+    void askUserConfirmToSingOut(YesNoDialog.IYesNoAction action);
 
 }

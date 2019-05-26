@@ -31,8 +31,7 @@ public class AndroidPresenter {
         intentExtraStrings.push(new Pair<>(key, value));
     }
 
-    // TODO documentation
-    protected void startActivity(Class activityName, boolean finishFlag) {
+    private Intent formStarterIntent(Class activityName){
         if (!(view instanceof AppCompatActivity)) {
             throw new ClassCastException("view field, that send from constructor " +
                     "should be AppCompatActivity class");
@@ -45,12 +44,30 @@ public class AndroidPresenter {
             intentExtraStrings.pop();
         }
 
-        ((AppCompatActivity) view).startActivity(intent);
+        return intent;
+    }
+
+    // TODO documentation
+    protected void startActivity(Class activityName, boolean finishFlag) {
+
+        ((AppCompatActivity) view).startActivity(formStarterIntent(activityName));
 
         // if we want exclude return to this presenter
         if (finishFlag)
             ((AppCompatActivity) view).finish();
     }
 
+    // TODO documentation
+    protected void startActivityForResult(Intent intent, int requestCode){
+        ((AppCompatActivity) view).startActivityForResult(intent, requestCode);
+    }
 
+    protected void finish(){
+        if (!(view instanceof AppCompatActivity)) {
+            throw new ClassCastException("view field, that send from constructor " +
+                    "should be AppCompatActivity class");
+        }
+
+        ((AppCompatActivity) view).finish();
+    }
 }

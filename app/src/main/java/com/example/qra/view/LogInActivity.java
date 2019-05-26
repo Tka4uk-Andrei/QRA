@@ -10,13 +10,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.qra.R;
-import com.example.qra.presenter.login.LogInPresenter;
+import com.example.qra.presenter.LogInPresenter;
 import com.example.qra.view.dialogs.LoginNotSucceededMessage;
 import com.example.qra.view.interfaces.ILoginView;
 
 public class LogInActivity extends AppCompatActivity implements ILoginView {
 
     private EditText phoneNumberTxt;
+    private EditText passwordTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public class LogInActivity extends AppCompatActivity implements ILoginView {
         setContentView(R.layout.activity_log_in);
 
         // initialize views
-        EditText passwordTxt = findViewById(R.id.password_text);
+        passwordTxt = findViewById(R.id.password_text);
         phoneNumberTxt = findViewById(R.id.phone_text);
         Button logInBtn = findViewById(R.id.sing_in_btn);
         Button restoreBtn = findViewById(R.id.restore_password_btn);

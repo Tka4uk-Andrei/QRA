@@ -1,13 +1,10 @@
 package com.example.qra.presenter;
 
-import android.content.Intent;
 import android.os.Parcel;
 
-import com.example.qra.model.webRequests.WebRequestException;
 import com.example.qra.presenter.interfaces.ISettingsPresenter;
-import com.example.qra.presenter.login.LogInPresenter;
 import com.example.qra.view.LogInActivity;
-import com.example.qra.view.dialogs.IYesNoAction;
+import com.example.qra.view.dialogs.YesNoDialog;
 import com.example.qra.view.interfaces.ISettingsView;
 
 public class SettingsPresenter extends AndroidPresenter implements ISettingsPresenter {
@@ -37,7 +34,7 @@ public class SettingsPresenter extends AndroidPresenter implements ISettingsPres
         // nothing to do
     }
 
-    class YesNoSingOutConfirm implements IYesNoAction {
+    class YesNoSingOutConfirm implements YesNoDialog.IYesNoAction {
 
         private SettingsPresenter presenter;
 

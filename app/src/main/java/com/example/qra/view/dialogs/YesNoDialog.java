@@ -3,6 +3,7 @@ package com.example.qra.view.dialogs;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -42,5 +43,13 @@ public class YesNoDialog extends DialogFragment {
                 .setPositiveButton("Да", (dialog, which) -> action.runYes())
                 .setNegativeButton("Нет", (dialog, which) -> action.runNo())
                 .create();
+    }
+
+    // todo documentation
+    public interface IYesNoAction extends Parcelable {
+
+        void runYes();
+
+        void runNo();
     }
 }

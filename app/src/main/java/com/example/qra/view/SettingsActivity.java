@@ -4,12 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import com.example.qra.R;
 import com.example.qra.presenter.SettingsPresenter;
-import com.example.qra.view.dialogs.IYesNoAction;
 import com.example.qra.view.dialogs.YesNoDialog;
 import com.example.qra.view.interfaces.ISettingsView;
 
@@ -37,7 +34,7 @@ public class SettingsActivity extends AppCompatActivity implements ISettingsView
     }
 
     @Override
-    public void askUserConfirmToSingOut(IYesNoAction action) {
+    public void askUserConfirmToSingOut(YesNoDialog.IYesNoAction action) {
         YesNoDialog.getInstance("Вы точно хотите выйти?", action)
                 .show(getSupportFragmentManager(), "singOutConfirm");
     }

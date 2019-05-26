@@ -7,7 +7,6 @@ import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.qra.CheckDataBase;
 import com.example.qra.model.parser.ParsingJson;
@@ -15,8 +14,9 @@ import com.example.qra.model.parser.ParsingJsonException;
 import com.example.qra.R;
 import com.example.qra.model.check.BoughtItem;
 import com.example.qra.model.check.CheckInformationStorage;
-import com.example.qra.presenter.ErrorDialog;
+import com.example.qra.view.dialogs.ErrorDialog;
 
+@Deprecated
 public class ShowCheckInfoActivity extends AppCompatActivity {
 
     @Override

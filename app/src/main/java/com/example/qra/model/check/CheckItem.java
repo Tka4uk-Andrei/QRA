@@ -1,7 +1,10 @@
 package com.example.qra.model.check;
 
 
+import com.example.qra.CategoryDefinition;
 import com.example.qra.ItemCategories;
+
+import java.util.Objects;
 
 /**
  * This class is responsible for storing information about the goods purchased
@@ -9,7 +12,7 @@ import com.example.qra.ItemCategories;
  *
  * @author: Marina Alekseeva
  */
-public class BoughtItem {
+public class CheckItem {
 
     /**
      * name of the product
@@ -70,14 +73,19 @@ public class BoughtItem {
      */
     public void setNameForUser(String nameForUser) {
         this.nameForUser = nameForUser;
+        if(Objects.equals(this.generalCategory, ItemCategories.NOT_DISTRIBUTED) && (nameForUser!=null)){
+            this.generalCategory = CategoryDefinition.defineGeneralCategory(this.nameForUser);
+            if(this.generalCategory.equals(ItemCategories.CATEGORY_EAT)){
+                this.subjectCategory = CategoryDefinition.defineSubjectEatCategory(this.nameForUser);
+            }
+        }
     }
 
 
-
     /**
-     * @param id              - tracking ID
+     * @param id - tracking ID
      */
-    private BoughtItem(int id) {
+    private CheckItem(int id) {
         this.id = id;
 
     }
@@ -121,8 +129,8 @@ public class BoughtItem {
      */
     public void setName(String name) {
         this.name = name;
-        if(this.nameForUser == null){
-            this.nameForUser = name;
+        if (this.nameForUser == null) {
+            setNameForUser(name);
         }
     }
 
@@ -252,7 +260,7 @@ public class BoughtItem {
          */
         public Builder setName(String name) {
             this.name = name;
-            if(this.nameForUser == null){
+            if (this.nameForUser == null) {
                 this.nameForUser = name;
             }
             return this;
@@ -294,15 +302,24 @@ public class BoughtItem {
         }
 
 
-        public BoughtItem build() {
-            BoughtItem boughtItemObject = new BoughtItem(this.id);
-            boughtItemObject.setName(this.name);
-            boughtItemObject.setGeneralCategory(this.generalCategory);
-            boughtItemObject.setSubjectCategory(this.subjectCategory);
-            boughtItemObject.setNameForUser(this.nameForUser);
-            boughtItemObject.setPrice(this.price);
-            boughtItemObject.setQuantity(this.quantity);
-            return boughtItemObject;
+        public CheckItem build() {
+
+            CheckItem checkItemObject = new CheckItem(this.id);
+            if((Objects.equals(this.generalCategory, ItemCategories.NOT_DISTRIBUTED))&&
+                    (nameForUser != null)){
+                this.generalCategory = CategoryDefinition.defineGeneralCategory(this.nameForUser);
+                if(this.generalCategory.equals(ItemCategories.CATEGORY_EAT)){
+                    this.subjectCategory = CategoryDefinition.defineSubjectEatCategory(this.nameForUser);
+                }
+            }
+            checkItemObject.setGeneralCategory(this.generalCategory);
+            checkItemObject.setSubjectCategory(this.subjectCategory);
+            checkItemObject.setName(this.name);
+            checkItemObject.setNameForUser(this.nameForUser);
+            checkItemObject.setPrice(this.price);
+            checkItemObject.setQuantity(this.quantity);
+
+            return checkItemObject;
         }
 
     }

@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.example.qra.CheckDataBase;
 import com.example.qra.CheckEditingException;
 import com.example.qra.R;
-import com.example.qra.model.check.BoughtItem;
+import com.example.qra.model.check.CheckItem;
 import com.example.qra.model.check.CheckInformationStorage;
 
 /**
@@ -25,7 +25,7 @@ public class AddGoodInCheckActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_good_in_check);
 
-        BoughtItem boughtItems[];
+        CheckItem checkItems[];
         CheckInformationStorage check;
 
         EditText nameTxt = findViewById(R.id.name_text);
@@ -38,15 +38,15 @@ public class AddGoodInCheckActivity extends AppCompatActivity {
 
         final CheckInformationStorage checkList[] = CheckDataBase.getCheckList(getApplicationContext());
         check = checkList[position];
-        boughtItems = check.getShoppingList();
+        checkItems = check.getShoppingList();
 
         CreateGoodBtn.setOnClickListener(action -> {
 
-            BoughtItem[] newList = new BoughtItem[boughtItems.length + 1];
-            for (int i = 0; i < boughtItems.length; i++) {
-                newList[i] = boughtItems[i];
+            CheckItem[] newList = new CheckItem[checkItems.length + 1];
+            for (int i = 0; i < checkItems.length; i++) {
+                newList[i] = checkItems[i];
             }
-            BoughtItem newItem = new BoughtItem.Builder()
+            CheckItem newItem = new CheckItem.Builder()
                     .setName(nameTxt.getText().toString())
                     .setNameForUser(nameTxt.getText().toString())
                     .setQuantity(Integer.parseInt(quantityTxt.getText().toString()))

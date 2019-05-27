@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.qra.CheckDataBase;
 import com.example.qra.CheckEditingException;
 import com.example.qra.R;
-import com.example.qra.model.check.BoughtItem;
+import com.example.qra.model.check.CheckItem;
 import com.example.qra.model.check.CheckInformationStorage;
 
 /**
@@ -24,7 +24,7 @@ import com.example.qra.model.check.CheckInformationStorage;
  */
 public class EditCheckDataActivity extends AppCompatActivity {
 
-    private BoughtItem boughtItems[];
+    private CheckItem checkItems[];
     private String itemNames[];
     private CheckInformationStorage check;
 
@@ -92,7 +92,7 @@ public class EditCheckDataActivity extends AppCompatActivity {
         Button deleteBtn = dialog.findViewById(R.id.delete_btn);
         deleteBtn.setOnClickListener(v -> {
             try {
-                CheckDataBase.deleteItem(boughtItems[index].getId(),getApplicationContext());
+                CheckDataBase.deleteItem(checkItems[index].getId(),getApplicationContext());
             } catch (CheckEditingException e) {
                 Toast.makeText(EditCheckDataActivity.this, e.getErrorMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -114,10 +114,10 @@ public class EditCheckDataActivity extends AppCompatActivity {
         final CheckInformationStorage checkList[] = CheckDataBase.getCheckList(getApplicationContext());
         check = checkList[position];
 
-        boughtItems = check.getShoppingList();
-        itemNames = new String[boughtItems.length];
-        for (int i = 0; i < boughtItems.length; i++) {
-            itemNames[i] = boughtItems[i].getNameForUser();
+        checkItems = check.getShoppingList();
+        itemNames = new String[checkItems.length];
+        for (int i = 0; i < checkItems.length; i++) {
+            itemNames[i] = checkItems[i].getNameForUser();
         }
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, itemNames);
         listView.setAdapter(arrayAdapter);

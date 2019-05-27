@@ -11,7 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.SettingsActivity"></activity>
+        <activity android:name=".AllCategoryActivity"></activity>
+        <activity android:name=".ListProductsByCategoryActivity" />
+        <activity android:name=".category.ClothesCategoryActivity" />
+        <activity android:name=".category.EatCategoryActivity" />
+        <activity android:name=".category.AllCategoryActivity" />
+        <activity android:name=".view.SettingsActivity" />
 
         <service
             android:name=".model.webRequests.WebRequestService"

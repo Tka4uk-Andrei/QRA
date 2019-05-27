@@ -1339,4 +1339,21 @@ public class CheckDataBase {
                 + " WHERE checkList_id=" + checkObject.getId());
     }
 
+    public static String [] getAllCheckNames(Context context){
+        initialization(context);
+        Cursor cursor = sqLiteDatabase.query(StorageCheckDataBase.TABLE_NAME_CHECK_LIST, null,
+                null, null, null, null, null);
+        cursor.moveToFirst();
+        CheckInformationStorage[] checkList = new CheckInformationStorage[cursor.getCount()];
+
+
+        String [] checkNames = new String[cursor.getCount()];
+        for (int i = 0; i < cursor.getCount(); i++) {
+            checkNames[i] = cursor.getString(cursor.getColumnIndex(StorageCheckDataBase.COLUMN_NAME_CHECK_NAME));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return checkNames;
+    }
+
 }

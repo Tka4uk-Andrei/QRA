@@ -5,5 +5,5 @@ public interface IShowAllChecksView extends IView {
     /**
      * Method that update information on the screen \\
      */
-    void update();
+    void update(String[] checkList);
 }

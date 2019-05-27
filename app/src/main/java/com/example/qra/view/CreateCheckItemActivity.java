@@ -23,26 +23,24 @@ public class CreateCheckItemActivity extends AppCompatActivity implements ICreat
         EditText categoryTxt = findViewById(R.id.category_text);
         EditText quantityTxt = findViewById(R.id.quantity_text);
         EditText priceTxt = findViewById(R.id.price_text);
-        Button CreateGoodBtn = findViewById(R.id.create_good_btn);
-
-        Intent intent = getIntent();
+        Button CreateItemBtn = findViewById(R.id.create_item_btn);
 
         CreateCheckItemPresenter presenter = new CreateCheckItemPresenter(this);
         presenter.onCreate();
 
-        CreateGoodBtn.setOnClickListener(action -> {
-
-            try {
-                presenter.addItem(intent.getIntExtra("checkNumber", 0),
-                        nameTxt.getText().toString(),
-                        categoryTxt.getText().toString(),
-                        quantityTxt.getText().toString(),
-                        priceTxt.getText().toString());
+        CreateItemBtn.setOnClickListener(action -> {
+            boolean success = presenter.tryAddItem(nameTxt.getText().toString(),
+                    categoryTxt.getText().toString(),
+                    quantityTxt.getText().toString(),
+                    priceTxt.getText().toString());
+            if(success){
                 finish();
-            } catch (Exception e) {
-                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void showErrorMessage(String msg){
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override

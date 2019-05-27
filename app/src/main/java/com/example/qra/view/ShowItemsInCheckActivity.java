@@ -8,15 +8,16 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.qra.R;
 import com.example.qra.model.check.BoughtItem;
+import com.example.qra.model.check.CheckInformationStorage;
 import com.example.qra.presenter.ShowItemsInCheckPresenter;
 import com.example.qra.view.dialogs.EditCheckItemDialog;
 import com.example.qra.view.interfaces.IShowItemsInCheckView;
 
 public class ShowItemsInCheckActivity extends AppCompatActivity implements IShowItemsInCheckView {
-
     private BoughtItem items[];
     private ArrayAdapter<BoughtItem> arrayAdapter;
     private ListView listView;
@@ -32,38 +33,39 @@ public class ShowItemsInCheckActivity extends AppCompatActivity implements IShow
         presenter.onCreate();
 
         listView = findViewById(R.id.check_data);
-        update();
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, presenter.getShoppingList());
+        listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener((adapterView, view, i, l) -> showInputBox(i));
 
-        Button addGoodButton = findViewById(R.id.add_good_btn);
-        addGoodButton.setOnClickListener(v -> {
-            Intent intent1 = new Intent(getApplicationContext(), CreateCheckItemActivity.class);
-            intent1.putExtra("checkNumber", getIntent().getIntExtra("checkNumber", 0));
-            startActivityForResult(intent1, 1);
+        Button addItemButton = findViewById(R.id.add_item_btn);
+        addItemButton.setOnClickListener(v -> {
+            presenter.startCreateCheckItemActivity();
         });
 
         Button deleteCheckButton = findViewById(R.id.delete_check_btn);
         deleteCheckButton.setOnClickListener(v -> {
             presenter.deleteCheck();
-            finish();
+            //finish();
         });
 
-        if (presenter.getCheckObtainingMethod().equals("FNS")) {
-            addGoodButton.setVisibility(View.INVISIBLE);
+        if (presenter.getCheckObtainingMethod().equals(CheckInformationStorage.OBTAIN_METHOD_FNS)) {
+            addItemButton.setVisibility(View.INVISIBLE);
         }
+    }
+
+    public void showErrorMessage(String msg){
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showInputBox(final int index) {
-        presenter.update();
-        getIntent().putExtra("Index", index);
+        presenter.setCurrentItem(index);
         EditCheckItemDialog dialog = new EditCheckItemDialog(ShowItemsInCheckActivity.this, this);
         dialog.show();
     }
 
     @Override
-    public void update() {
-        items = presenter.getShoppingList();
+    public void update(BoughtItem[] items) {
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
         listView.setAdapter(arrayAdapter);
     }
@@ -72,7 +74,7 @@ public class ShowItemsInCheckActivity extends AppCompatActivity implements IShow
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-            update();
+            presenter.updateView();
         }
     }
 
@@ -86,9 +88,9 @@ public class ShowItemsInCheckActivity extends AppCompatActivity implements IShow
         return getIntent();
     }
 
-    public ArrayAdapter getArrayAdapter() {
-        return arrayAdapter;
-    }
+    //private ArrayAdapter getArrayAdapter() {
+      //  return arrayAdapter;
+    //}
 
     public ShowItemsInCheckPresenter getPresenter() {
         return presenter;

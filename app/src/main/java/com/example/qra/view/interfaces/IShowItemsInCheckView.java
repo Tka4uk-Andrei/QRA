@@ -1,5 +1,7 @@
 package com.example.qra.view.interfaces;
 
+import com.example.qra.model.check.BoughtItem;
+
 public interface IShowItemsInCheckView extends IView {
 
     /**
@@ -12,6 +14,7 @@ public interface IShowItemsInCheckView extends IView {
     /**
      * Method that update information on the screen \\
      */
-    void update();
+    void update(BoughtItem[] items);
 
+    void showErrorMessage(String msg);
 }

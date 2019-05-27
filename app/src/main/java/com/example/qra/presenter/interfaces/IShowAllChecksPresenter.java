@@ -10,4 +10,5 @@ public interface IShowAllChecksPresenter extends IPresenter {
      * @return names of all user's checks \\
      */
     String[] getCheckList();
+    void updateView();
 }

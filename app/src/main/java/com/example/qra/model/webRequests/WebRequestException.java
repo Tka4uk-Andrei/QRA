@@ -19,13 +19,14 @@ public class WebRequestException extends Exception implements Parcelable {
     public static final String INCORRECT_PHONE_MESSAGE = "Uncorrect phone";
     public static final String USER_NOT_FOUND_MESSAGE = "User not found";
     public static final String NO_INTERNET_CONNECTION_MESSAGE = "No internet connection";
-    public static final String SMTH_WENT_WRONG_MESSAGE = "Something went wrong. Try again";
+    public static final String CHECK_ALLREADY_CHECKED = "Something went wrong. Try again";
 
 
     private String message;
 
     /**
-     * Assigns the correct message \\
+     * Assigns a message corresponding to a code returned by the request \\
+     * If no code was returned, assigns a default error message \\
      *
      * @param code the code that returned the web request \\
      * @param msg message from caught exception \\
@@ -49,7 +50,7 @@ public class WebRequestException extends Exception implements Parcelable {
         } else if (code == 404) {
             message = USER_NOT_FOUND_MESSAGE;
         } else if (code == 202) {
-            message = SMTH_WENT_WRONG_MESSAGE;
+            message = CHECK_ALLREADY_CHECKED;
             // if code not recognized
         } else if (code > 0) {
             message = "Error code is " + code;

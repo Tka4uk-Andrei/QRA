@@ -1,5 +1,6 @@
 package com.example.qra.presenter;
 
+import android.content.Intent;
 import android.widget.Toast;
 
 import com.example.qra.CheckDataBase;
@@ -7,22 +8,32 @@ import com.example.qra.CheckEditingException;
 import com.example.qra.model.check.BoughtItem;
 import com.example.qra.model.check.CheckInformationStorage;
 import com.example.qra.presenter.interfaces.IShowItemsInCheckPresenter;
+import com.example.qra.view.CreateCheckItemActivity;
 import com.example.qra.view.interfaces.IShowItemsInCheckView;
 
 public class ShowItemsInCheckPresenter extends AndroidPresenter implements IShowItemsInCheckPresenter {
-    private IShowItemsInCheckView editCheckDataView;
+    private IShowItemsInCheckView showItemsInCheckView;
+    public static final String CURRENT_ITEM = "ITEM";
+
 
     private int position;
     private BoughtItem boughtItems[];
     private CheckInformationStorage check;
 
-    public ShowItemsInCheckPresenter(IShowItemsInCheckView editCheckDataView) {
-        super(editCheckDataView);
-        this.editCheckDataView = editCheckDataView;
+    public ShowItemsInCheckPresenter(IShowItemsInCheckView showItemsInCheckView) {
+        super(showItemsInCheckView);
+        this.showItemsInCheckView = showItemsInCheckView;
+    }
+
+    public void startCreateCheckItemActivity() {
+        Intent intent1 = new Intent(getView().getContext(), CreateCheckItemActivity.class);
+        intent1.putExtra(ShowAllChecksPresenter.CURRENT_CHECK,
+                showItemsInCheckView.getStarterIntent().getIntExtra(ShowAllChecksPresenter.CURRENT_CHECK, 0));
+        startActivityForResult(intent1, 1);
     }
 
     @Override
-    public BoughtItem[] getShoppingList(){
+    public BoughtItem[] getShoppingList() {
         final CheckInformationStorage checkList[] = CheckDataBase.getCheckList(getView().getContext());
         check = checkList[position];
 
@@ -30,21 +41,22 @@ public class ShowItemsInCheckPresenter extends AndroidPresenter implements IShow
     }
 
     @Override
-    public void deleteCheck(){
+    public void deleteCheck() {
         CheckDataBase.deleteCheck(check.getId(), getView().getContext());
+        finish();
     }
 
     @Override
-    public String getCheckObtainingMethod(){
+    public String getCheckObtainingMethod() {
         return check.getObtainingMethod();
     }
 
     @Override
     public void changeItemName(int index, String newName) throws Exception {
-        if(newName.length() == 0){
+        if (newName.length() == 0) {
             throw new Exception("Введите имя товара");
         }
-        if(boughtItems[index].getNameForUser().equals(newName)){
+        if (boughtItems[index].getNameForUser().equals(newName)) {
             return;
         }
         boughtItems[index].setNameForUser(newName);
@@ -55,10 +67,10 @@ public class ShowItemsInCheckPresenter extends AndroidPresenter implements IShow
 
     @Override
     public void changeItemCategory(int index, String newCategory) throws Exception {
-        if(newCategory.length() == 0){
+        if (newCategory.length() == 0) {
             throw new Exception("Введите количество товара");
         }
-        if(boughtItems[index].getSubjectCategory().equals(newCategory)){
+        if (boughtItems[index].getSubjectCategory().equals(newCategory)) {
             return;
         }
         boughtItems[index].setSubjectCategory(newCategory);
@@ -69,14 +81,14 @@ public class ShowItemsInCheckPresenter extends AndroidPresenter implements IShow
 
     @Override
     public void changeItemQuantity(int index, String newQuantity) throws Exception {
-        if(newQuantity.length() == 0){
+        if (newQuantity.length() == 0) {
             throw new Exception("Введите количество товара");
         }
         if (newQuantity.length() > 9) {
             throw new Exception("Количество товара должно быть не больше 1000000000");
         }
         int quantity = Integer.parseInt(newQuantity);
-        if(boughtItems[index].getQuantity() == quantity){
+        if (boughtItems[index].getQuantity() == quantity) {
             return;
         }
         boughtItems[index].setQuantity(quantity);
@@ -87,7 +99,6 @@ public class ShowItemsInCheckPresenter extends AndroidPresenter implements IShow
 
     @Override
     public void changeItemPrice(int index, String newPrice) throws Exception {
-
         if (newPrice.length() == 0) {
             throw new Exception("Введите цену товара");
         }
@@ -98,18 +109,18 @@ public class ShowItemsInCheckPresenter extends AndroidPresenter implements IShow
         } catch (Exception e) {
             Toast.makeText(getView().getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-        if(doublePrice >= 10000000) {
+        if (doublePrice >= 10000000) {
             throw new Exception("Цена за товар должна быть не больше 10000000.00 рублей");
         }
 
         doublePrice *= 100;
-        if(doublePrice -(int)doublePrice != 0) {
+        if (doublePrice - (int) doublePrice != 0) {
             throw new Exception("Цена может содержать 0-2 цифры после точки");
         }
 
 
         int price = (int) doublePrice;
-        if(boughtItems[index].getPrice() == price){
+        if (boughtItems[index].getPrice() == price) {
             return;
         }
         boughtItems[index].setPrice(price);
@@ -120,17 +131,22 @@ public class ShowItemsInCheckPresenter extends AndroidPresenter implements IShow
 
 
     @Override
-    public void deleteItem(int index){
+    public void deleteItem(int index) {
         try {
             CheckDataBase.deleteItem(boughtItems[index].getId(), getView().getContext());
         } catch (CheckEditingException e) {
-            Toast.makeText(getView().getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            showItemsInCheckView.showErrorMessage(e.getMessage());
         }
+    }
+
+    public void setCurrentItem(int index) {
+        boughtItems = check.getShoppingList();
+        showItemsInCheckView.getStarterIntent().putExtra(CURRENT_ITEM, index);
     }
 
     @Override
     public void onCreate() {
-        position = editCheckDataView.getStarterIntent().getIntExtra("checkNumber", 0);
+        position = showItemsInCheckView.getStarterIntent().getIntExtra(ShowAllChecksPresenter.CURRENT_CHECK, 0);
         final CheckInformationStorage checkList[] = CheckDataBase.getCheckList(getView().getContext());
         check = checkList[position];
 
@@ -138,7 +154,21 @@ public class ShowItemsInCheckPresenter extends AndroidPresenter implements IShow
     }
 
     @Override
-    public void update(){
-        boughtItems = check.getShoppingList();
+    public void updateView() {
+        showItemsInCheckView.update(getShoppingList());
+    }
+
+    @Override
+    public boolean tryChangeItem(int index, String name, String category, String quantity, String price) {
+        try {
+            changeItemName(index, name);
+            changeItemCategory(index, category);
+            changeItemQuantity(index, quantity);
+            changeItemPrice(index, price);
+        } catch (Exception e) {
+            showItemsInCheckView.showErrorMessage(e.getMessage());
+            return false;
+        }
+        return true;
     }
 }

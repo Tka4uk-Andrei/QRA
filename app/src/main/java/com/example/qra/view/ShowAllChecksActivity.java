@@ -17,7 +17,6 @@ public class ShowAllChecksActivity extends AppCompatActivity implements IShowAll
 
     private ShowAllChecksPresenter presenter;
 
-    private String checkList[];
     private ListView listView;
     private ArrayAdapter<String> arrayAdapter;
 
@@ -29,24 +28,20 @@ public class ShowAllChecksActivity extends AppCompatActivity implements IShowAll
         presenter = new ShowAllChecksPresenter(this);
         presenter.onCreate();
 
-        update();
+        listView = findViewById(R.id.choose_check);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, presenter.getCheckList());
+        listView.setAdapter(arrayAdapter);
 
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
-            Intent intent = new Intent(getApplicationContext(), ShowItemsInCheckActivity.class);
-            intent.putExtra("checkNumber", i);
-            startActivityForResult(intent, 1);
+            presenter.startShowItemsInCheckActivity(i);
         });
 
         Button addCheckButton = findViewById(R.id.add_check_btn);
-        addCheckButton.setOnClickListener(v -> {
-            presenter.addCheck();
-            update();
-        });
+        addCheckButton.setOnClickListener(v -> presenter.addCheck());
     }
 
     @Override
-    public void update() {
-        checkList = presenter.getCheckList();
+    public void update(String[] checkList) {
         listView = findViewById(R.id.choose_check);
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, checkList);
         listView.setAdapter(arrayAdapter);
@@ -57,7 +52,7 @@ public class ShowAllChecksActivity extends AppCompatActivity implements IShowAll
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-            update();
+            presenter.updateView();
         }
     }
 

@@ -51,9 +51,7 @@ public interface IShowItemsInCheckPresenter extends IPresenter {
      * @param index item's index \\
      */
     void deleteItem(int index);
+    void updateView();
 
-    /**
-     * Method that update information about items in check \\
-     */
-    void update();
+    boolean tryChangeItem(int index, String name, String category, String quantity, String price);
 }

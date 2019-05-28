@@ -3,6 +3,7 @@ package com.example.qra.view;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,9 @@ public class CreateCheckItemActivity extends AppCompatActivity implements ICreat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_check_item);
+
+        ActionBar bar = getSupportActionBar();
+        bar.setTitle("Добавление нового товара");
 
         EditText nameTxt = findViewById(R.id.name_text);
         EditText categoryTxt = findViewById(R.id.category_text);

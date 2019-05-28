@@ -3,7 +3,7 @@ package com.example.qra;
 public class CheckEditingException extends Exception {
 
     private String errorMessage;
-    private final String DEFAULT_ERROR_MESSAGE = "this check from fns";
+    public final String DEFAULT_ERROR_MESSAGE = "this check from fns";
 
     public CheckEditingException() {
         errorMessage = DEFAULT_ERROR_MESSAGE;
@@ -13,6 +13,12 @@ public class CheckEditingException extends Exception {
         this.errorMessage = errorMessage;
     }
 
+    @Override
+    public String getMessage() {
+        return errorMessage;
+    }
+
+    @Deprecated
     public String getErrorMessage() {
         return errorMessage;
     }

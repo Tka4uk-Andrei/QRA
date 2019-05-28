@@ -1,9 +1,5 @@
 package com.example.qra.presenter.interfaces;
 
-public interface ISettingsPresenter extends IPresenter {
-
-    void singOut();
-
-    void singOutBtnPressed();
+public interface ISettingsPresenter extends IPresenter, ILogOutPresenter {
 
 }

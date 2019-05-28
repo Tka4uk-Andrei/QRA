@@ -1,64 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.MainActivity"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp"
-    tools:context=".view.MainActivity">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
+    <include
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/hello_world_txt"
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:padding="10dp"
-        android:paddingBottom="20dp"
-        android:text="Hello! I'm QRA app."
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="20sp" />
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/main_menu_drawler"/>
 
-    <Button
-        android:id="@+id/send_request_btn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Send web request" />
-
-    <Button
-        android:id="@+id/edit_goods_btn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Edit goods" />
-
-    <Button
-        android:id="@+id/settings_btn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Settings" />
-
-    <!--<android.support.design.widget.FloatingActionButton-->
-    <!--android:id="@+id/qr_scan_btn"-->
-    <!--android:layout_width="75dp"-->
-    <!--android:layout_height="75dp"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:src="@drawable/logo5"-->
-    <!--android:backgroundTint="#37DCD2"-->
-    <!--android:layout_margin="16dp"-->
-    <!--tools:targetApi="lollipop" />-->
-
-    <Button
-        android:id="@+id/qr_scan_btn"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_gravity="center"
-        android:layout_margin="16dp"
-        android:background="@drawable/logo5"
-        tools:targetApi="lollipop" />
-
-
-</android.widget.LinearLayout>
+</android.support.v4.widget.DrawerLayout>

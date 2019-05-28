@@ -16,6 +16,7 @@ public class UserDataForFns {
     private String phoneNumber;
     private String userEmail;
     private String password;
+    private boolean loggedInFlag;
 
     /**
      * key to access {@link SharedPreferences}
@@ -42,6 +43,8 @@ public class UserDataForFns {
      */
     private static final String USER_NAME_KEY = "NAME";
 
+    private static final String IS_LOGGED = "IS_LOGGED";
+
     /**
      * Method that provides access to {@link UserDataForFns} class
      * @param context android {@link Context} class, used to get info from cache memory.
@@ -67,6 +70,7 @@ public class UserDataForFns {
         return ourDefaultInstance;
     }
 
+    @Deprecated
     private UserDataForFns()
     {
         phoneNumber = "+79097984616";
@@ -76,8 +80,10 @@ public class UserDataForFns {
 //        password = "385280";
         userName = "Kate";
         userEmail = "novoselova.ei@mail.ru";
+        loggedInFlag = true;
     }
 
+    // TODO doc
     private UserDataForFns(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(USER_LOGIN_DATA, MODE_PRIVATE);
 
@@ -85,6 +91,7 @@ public class UserDataForFns {
         password = preferences.getString(PASSWORD_KEY, "");
         userName = preferences.getString(USER_NAME_KEY, "");
         userEmail = preferences.getString(USER_MAIL_KEY, "");
+        loggedInFlag = preferences.getBoolean(IS_LOGGED, false);
     }
 
     public String getUserName() {
@@ -102,6 +109,8 @@ public class UserDataForFns {
     public String getPassword() {
         return password;
     }
+
+    public boolean isLogged(){return loggedInFlag;}
 
     /**
      * Set phone number
@@ -151,6 +160,10 @@ public class UserDataForFns {
         this.userName = userName;
     }
 
+    public void setLoggedInFlag(boolean loggedInFlag){
+        this.loggedInFlag = loggedInFlag;
+    }
+
     /**
      * Save data from {@link UserDataForFns} to {@link SharedPreferences}
      *
@@ -162,6 +175,7 @@ public class UserDataForFns {
         editor.putString(USER_MAIL_KEY, userEmail);
         editor.putString(PASSWORD_KEY, password);
         editor.putString(USER_NAME_KEY, userName);
+        editor.putBoolean(IS_LOGGED, loggedInFlag);
         editor.apply();
     }
 }

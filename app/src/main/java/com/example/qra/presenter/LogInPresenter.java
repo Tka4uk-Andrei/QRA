@@ -22,48 +22,30 @@ public class LogInPresenter extends AndroidPresenter implements ILoginPresenter 
     public static final String STARTER_ACTIVITY = "ACTIVITY";
     public static final String PHONE_EXTRA = "PHONE_EXTRA";
 
-    private static final String LOGIN = "login";
-    private static final String IS_LOGGED = "is_login_succeeded";
-
-    private ILoginView loginView;
+    private ILoginView view;
 
     // login view should be extend from AppCompatActivity
-    public LogInPresenter(ILoginView loginView) {
-        super(loginView);
-        this.loginView = loginView;
+    public LogInPresenter(ILoginView view) {
+        super(view);
+        this.view = view;
     }
 
     @Override
     public void onCreate() {
 
         // obtain launch Intent
-        Intent launchIntent = loginView.getStarterIntent();
+        Intent launchIntent = view.getStarterIntent();
         if (launchIntent != null && launchIntent.getStringExtra(STARTER_ACTIVITY) != null) {
             //check if activity launched from LogInPresenter or RegisterPresenter
             if (launchIntent.getStringExtra(STARTER_ACTIVITY).equals(LogInPresenter.class.getName())
                     || launchIntent.getStringExtra(STARTER_ACTIVITY).equals(RegisterPresenter.class.getName()))
-                loginView.updatePhoneText(launchIntent.getStringExtra(PHONE_EXTRA));
-            //check if user wants to logout
-            if (launchIntent.getStringExtra(STARTER_ACTIVITY).equals(SettingsPresenter.class.getName())){
-                // Update status. Now user not logged in
-                SharedPreferences.Editor editor = getView().getContext().getSharedPreferences(LOGIN, MODE_PRIVATE).edit();
-                editor.putBoolean(IS_LOGGED, false);
-                editor.apply();
-
-                // Clear user data
-                UserDataForFns.getInstance(getView().getContext()).setPhoneNumber("");
-                UserDataForFns.getInstance(getView().getContext()).setUserName("");
-                UserDataForFns.getInstance(getView().getContext()).setUserEmail("");
-                UserDataForFns.getInstance(getView().getContext()).setPassword("");
-                UserDataForFns.getInstance(getView().getContext()).apply(getView().getContext());
-            }
+                view.updatePhoneText(launchIntent.getStringExtra(PHONE_EXTRA));
         }
 
         // check if user logged in
-        SharedPreferences firstTimePreference = getView().getContext().getSharedPreferences(LOGIN, MODE_PRIVATE);
-        boolean loggedFlag = firstTimePreference.getBoolean(IS_LOGGED, false);
+        boolean loggedFlag = UserDataForFns.getInstance(view.getContext()).isLogged();
         if (loggedFlag) {
-            loginView.showLoginSucceededMessage();
+            view.showLoginSucceededMessage();
             startActivity(MainActivity.class, true);
         }
     }
@@ -86,24 +68,20 @@ public class LogInPresenter extends AndroidPresenter implements ILoginPresenter 
 
     // if login succeed
     private void singUpSucceeded(String name, String email) {
-        // Update status. Now user logged in
-        SharedPreferences.Editor editor = getView().getContext().getSharedPreferences(LOGIN, MODE_PRIVATE).edit();
-        editor.putBoolean(IS_LOGGED, true);
-        editor.apply();
-
         // Update user data
         UserDataForFns.getInstance(getView().getContext()).setUserEmail(email);
         UserDataForFns.getInstance(getView().getContext()).setUserName(name);
+        UserDataForFns.getInstance(view.getContext()).setLoggedInFlag(true);
         UserDataForFns.getInstance(getView().getContext()).apply(getView().getContext());
 
         // Show success message and launch main screen
-        loginView.showLoginSucceededMessage();
+        view.showLoginSucceededMessage();
         startActivity(MainActivity.class, true);
     }
 
     // if login failed
     private void singUpNotSucceeded() {
-        loginView.showLoginNotSucceededMessage();
+        view.showLoginNotSucceededMessage();
     }
 
 

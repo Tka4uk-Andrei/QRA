@@ -64,7 +64,7 @@ public class ShowItemsInCheckActivity extends AppCompatActivity implements IShow
 
         // disable button if check from fns
         if (presenter.getCheckObtainingMethod().equals(CheckInformationStorage.OBTAIN_METHOD_FNS)) {
-            findViewById(R.id.add_item_btn).setVisibility(View.INVISIBLE);
+            findViewById(R.id.add_item_btn).setVisibility(View.GONE);
         }
     }
 

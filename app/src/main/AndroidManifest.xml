@@ -40,7 +40,9 @@
         <activity
             android:name=".view.ShowItemsInCheckActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.CreateCheckItemActivity" />
+        <activity
+            android:name=".view.CreateCheckItemActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.MainActivity"
             android:exported="true"

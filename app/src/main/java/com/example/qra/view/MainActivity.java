@@ -25,11 +25,6 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     public static final String QR_DATA_EXTRA = "QR_DATA";
 
-    private Button qrScanButton;
-    private Button requestButton;
-    private Button editGoodsButton;
-    private Button settingsButton;
-
     IMainPresenter presenter;
     INavigationBarPresenter navPresenter;
 
@@ -54,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         navigation.setNavigationItemSelectedListener(new OnNavigationViewListener(navPresenter, this));
 
         // set up qrButton listener
-        qrScanButton.setOnClickListener(action -> presenter.switchToScanQr());
+        findViewById(R.id.qr_scan_btn).setOnClickListener(action -> presenter.switchToScanQr());
 
         // TODO set up diagrams
 

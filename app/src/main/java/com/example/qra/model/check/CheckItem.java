@@ -1,8 +1,8 @@
 package com.example.qra.model.check;
 
 
-import com.example.qra.CategoryDefinition;
-import com.example.qra.ItemCategories;
+import com.example.qra.model.CategoryDefinition;
+import com.example.qra.model.ItemCategories;
 
 import java.util.Objects;
 

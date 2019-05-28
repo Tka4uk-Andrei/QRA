@@ -1,6 +1,6 @@
 package com.example.qra.presenter;
 
-import com.example.qra.CheckDataBase;
+import com.example.qra.model.CheckDataBase;
 import com.example.qra.model.check.BoughtItem;
 import com.example.qra.model.check.CheckInformationStorage;
 import com.example.qra.presenter.interfaces.ICreateCheckItemPresenter;

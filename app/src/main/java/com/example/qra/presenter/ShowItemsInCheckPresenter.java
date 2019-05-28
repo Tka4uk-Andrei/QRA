@@ -3,8 +3,8 @@ package com.example.qra.presenter;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.example.qra.CheckDataBase;
-import com.example.qra.CheckEditingException;
+import com.example.qra.model.CheckDataBase;
+import com.example.qra.model.CheckEditingException;
 import com.example.qra.model.check.BoughtItem;
 import com.example.qra.model.check.CheckInformationStorage;
 import com.example.qra.presenter.interfaces.IShowItemsInCheckPresenter;

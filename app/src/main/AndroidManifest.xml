@@ -12,9 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".SpinnerActivity"></activity>
-        <activity android:name=".AllCategoryActivity" />
-        <activity android:name=".ListProductsByCategoryActivity" />
+        <activity android:name=".view.SpinnerActivity"></activity>
+        <activity android:name=".view.AllCategoryActivity" />
+        <activity android:name=".view.ListProductsByCategoryActivity" />
 
         <service
             android:name=".model.webRequests.WebRequestService"

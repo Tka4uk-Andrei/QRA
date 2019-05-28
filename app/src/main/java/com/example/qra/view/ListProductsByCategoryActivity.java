@@ -1,4 +1,4 @@
-package com.example.qra;
+package com.example.qra.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,7 +6,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
+import com.example.qra.R;
+import com.example.qra.model.CheckDataBase;
+import com.example.qra.model.ItemCategories;
 import com.example.qra.model.check.CheckItem;
+import com.example.qra.view.AllCategoryActivity;
+import com.example.qra.view.adapter.CheckItemAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

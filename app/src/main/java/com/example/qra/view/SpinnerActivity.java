@@ -1,4 +1,4 @@
-package com.example.qra;
+package com.example.qra.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.qra.R;
+
+@Deprecated
 public class SpinnerActivity extends AppCompatActivity {
 
     @Override

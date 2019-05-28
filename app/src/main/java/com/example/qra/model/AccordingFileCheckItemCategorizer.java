@@ -1,4 +1,4 @@
-package com.example.qra;
+package com.example.qra.model;
 
 import android.content.Context;
 

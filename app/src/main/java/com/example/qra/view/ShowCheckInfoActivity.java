@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.qra.CheckDataBase;
+import com.example.qra.model.CheckDataBase;
 import com.example.qra.model.parser.ParsingJson;
 import com.example.qra.model.parser.ParsingJsonException;
 import com.example.qra.R;

@@ -1,4 +1,4 @@
-package com.example.qra;
+package com.example.qra.model;
 
 
 import com.example.qra.model.check.CheckItem;

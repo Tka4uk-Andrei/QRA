@@ -2,7 +2,7 @@ package com.example.qra.presenter;
 
 import android.content.Intent;
 
-import com.example.qra.CheckDataBase;
+import com.example.qra.model.CheckDataBase;
 import com.example.qra.model.check.CheckInformationStorage;
 import com.example.qra.presenter.interfaces.IShowAllChecksPresenter;
 import com.example.qra.view.ShowItemsInCheckActivity;

@@ -1,4 +1,4 @@
-package com.example.qra;
+package com.example.qra.view.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 
+import com.example.qra.R;
 import com.example.qra.model.check.CheckItem;
 
 import java.util.List;

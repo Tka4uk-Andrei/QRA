@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import com.example.qra.R;
 import com.example.qra.presenter.interfaces.INavigationBarPresenter;
-import com.example.qra.view.interfaces.IView;
 
 public class OnNavigationViewListener implements
         NavigationView.OnNavigationItemSelectedListener {

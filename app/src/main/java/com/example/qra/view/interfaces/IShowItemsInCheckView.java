@@ -2,7 +2,7 @@ package com.example.qra.view.interfaces;
 
 import com.example.qra.model.check.BoughtItem;
 
-public interface IShowItemsInCheckView extends IView {
+public interface IShowItemsInCheckView extends IView, ILogOutView {
 
     /**
      * Method that allows to change the item's info \\

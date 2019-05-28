@@ -2,4 +2,5 @@
     <string name="app_name">QRA</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="confirm_log_out">"Вы точно хотите выйти?"</string>
 </resources>

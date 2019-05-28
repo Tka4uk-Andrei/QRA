@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ConnectViewsWithCode();
-        setViewListeners();
+//        ConnectViewsWithCode();
+//        setViewListeners();
 
         presenter = new MainPresenter(this);
         navPresenter = new NavigationBarPresenter(this);
@@ -50,10 +50,10 @@ public class MainActivity extends AppCompatActivity implements IMainView {
      * Author: Andrey Tkachuk
      */
     public void ConnectViewsWithCode() {
-        qrScanButton = findViewById(R.id.qr_scan_btn);
-        requestButton = findViewById(R.id.send_request_btn);
-        editGoodsButton = findViewById(R.id.edit_goods_btn);
-        settingsButton = findViewById(R.id.settings_btn);
+//        qrScanButton = findViewById(R.id.qr_scan_btn);
+//        requestButton = findViewById(R.id.send_request_btn);
+//        editGoodsButton = findViewById(R.id.edit_goods_btn);
+//        settingsButton = findViewById(R.id.settings_btn);
     }
 
     /**
@@ -97,18 +97,18 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         public void onClick(View v) {
             Intent intent = null;
 
-            if (v == requestButton)
-                intent = new Intent(getApplicationContext(), WebRequestActivity.class);
-            else if (v == editGoodsButton)
-                intent = new Intent(getApplicationContext(), EditBoughtDataActivity.class);
-            else if (v == settingsButton)
-                intent = new Intent(getApplicationContext(), SettingsActivity.class);
-
-            if (intent != null)
-                startActivity(intent);
-            else
-                Toast.makeText(getApplicationContext(), "ERROR. Don't know what activity i need to start",
-                        Toast.LENGTH_SHORT).show();
+//            if (v == requestButton)
+//                intent = new Intent(getApplicationContext(), WebRequestActivity.class);
+//            else if (v == editGoodsButton)
+//                intent = new Intent(getApplicationContext(), EditBoughtDataActivity.class);
+//            else if (v == settingsButton)
+//                intent = new Intent(getApplicationContext(), SettingsActivity.class);
+//
+//            if (intent != null)
+//                startActivity(intent);
+//            else
+//                Toast.makeText(getApplicationContext(), "ERROR. Don't know what activity i need to start",
+//                        Toast.LENGTH_SHORT).show();
         }
     };
 }

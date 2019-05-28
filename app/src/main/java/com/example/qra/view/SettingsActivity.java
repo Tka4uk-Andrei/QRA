@@ -18,7 +18,7 @@ public class SettingsActivity extends AppCompatActivity implements ISettingsView
         setContentView(R.layout.activity_settings);
 
         SettingsPresenter presenter = new SettingsPresenter(this);
-        findViewById(R.id.log_out_btn).setOnClickListener(action -> presenter.singOutBtnPressed());
+        findViewById(R.id.log_out_btn).setOnClickListener(action -> presenter.onSingOutCall());
 
         presenter.onCreate();
     }

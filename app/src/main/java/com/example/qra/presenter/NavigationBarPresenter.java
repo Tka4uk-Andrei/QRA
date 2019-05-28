@@ -1,9 +1,9 @@
 package com.example.qra.presenter;
 
 import com.example.qra.presenter.interfaces.INavigationBarPresenter;
-import com.example.qra.view.EditCheckDataActivity;
 import com.example.qra.view.MainActivity;
 import com.example.qra.view.SettingsActivity;
+import com.example.qra.view.ShowAllChecksActivity;
 import com.example.qra.view.interfaces.ILogOutView;
 
 public class NavigationBarPresenter extends LogOutPresenter implements INavigationBarPresenter {
@@ -20,20 +20,20 @@ public class NavigationBarPresenter extends LogOutPresenter implements INavigati
 
     @Override
     public void switchToShowCheckList() {
-        if (!(getView() instanceof EditCheckDataActivity))
-            startActivity(EditCheckDataActivity.class, false);
+        if (!(getView() instanceof ShowAllChecksActivity))
+            startActivity(ShowAllChecksActivity.class, false);
     }
 
     @Override
     public void switchToShowAllItems() {
-        if (!(getView() instanceof EditCheckDataActivity))
-            startActivity(EditCheckDataActivity.class, false);
+        if (!(getView() instanceof ShowAllChecksActivity))
+            startActivity(ShowAllChecksActivity.class, false);
     }
 
     @Override
     public void switchToShowCategoryList() {
-        if (!(getView() instanceof EditCheckDataActivity))
-            startActivity(EditCheckDataActivity.class, false);
+        if (!(getView() instanceof ShowAllChecksActivity))
+            startActivity(ShowAllChecksActivity.class, false);
     }
 
     @Override

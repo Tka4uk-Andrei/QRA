@@ -35,12 +35,12 @@
             android:name=".view.WebRequestActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.EditBoughtDataActivity"
+            android:name=".view.ShowAllChecksActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.EditCheckDataActivity"
+            android:name=".view.ShowItemsInCheckActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.AddGoodInCheckActivity" />
+        <activity android:name=".view.CreateCheckItemActivity" />
         <activity
             android:name=".view.MainActivity"
             android:exported="true"

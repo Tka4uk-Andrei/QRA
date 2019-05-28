@@ -18,7 +18,7 @@ import com.example.qra.view.dialogs.EditCheckItemDialog;
 import com.example.qra.view.interfaces.IShowItemsInCheckView;
 
 public class ShowItemsInCheckActivity extends AppCompatActivity implements IShowItemsInCheckView {
-    private BoughtItem items[];
+
     private ArrayAdapter<BoughtItem> arrayAdapter;
     private ListView listView;
 
@@ -29,31 +29,27 @@ public class ShowItemsInCheckActivity extends AppCompatActivity implements IShow
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_items_in_check);
 
+        // initialize presenter
         presenter = new ShowItemsInCheckPresenter(this);
         presenter.onCreate();
 
-        listView = findViewById(R.id.check_data);
+        // set arrayView
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, presenter.getShoppingList());
+        listView = findViewById(R.id.check_data);
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener((adapterView, view, i, l) -> showInputBox(i));
 
-        Button addItemButton = findViewById(R.id.add_item_btn);
-        addItemButton.setOnClickListener(v -> {
-            presenter.startCreateCheckItemActivity();
-        });
+        // set clickListeners
+        findViewById(R.id.add_item_btn).setOnClickListener(v -> presenter.startCreateCheckItemActivity());
+        findViewById(R.id.delete_check_btn).setOnClickListener(v -> presenter.deleteCheck());
 
-        Button deleteCheckButton = findViewById(R.id.delete_check_btn);
-        deleteCheckButton.setOnClickListener(v -> {
-            presenter.deleteCheck();
-            //finish();
-        });
-
+        // disable button if check from fns
         if (presenter.getCheckObtainingMethod().equals(CheckInformationStorage.OBTAIN_METHOD_FNS)) {
-            addItemButton.setVisibility(View.INVISIBLE);
+            findViewById(R.id.add_item_btn).setVisibility(View.INVISIBLE);
         }
     }
 
-    public void showErrorMessage(String msg){
+    public void showErrorMessage(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
@@ -87,10 +83,6 @@ public class ShowItemsInCheckActivity extends AppCompatActivity implements IShow
     public Intent getStarterIntent() {
         return getIntent();
     }
-
-    //private ArrayAdapter getArrayAdapter() {
-      //  return arrayAdapter;
-    //}
 
     public ShowItemsInCheckPresenter getPresenter() {
         return presenter;

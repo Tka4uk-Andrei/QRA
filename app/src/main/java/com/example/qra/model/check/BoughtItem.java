@@ -73,9 +73,8 @@ public class BoughtItem {
     }
 
 
-
     /**
-     * @param id              - tracking ID
+     * @param id - tracking ID
      */
     private BoughtItem(int id) {
         this.id = id;
@@ -121,7 +120,7 @@ public class BoughtItem {
      */
     public void setName(String name) {
         this.name = name;
-        if(this.nameForUser == null){
+        if (this.nameForUser == null) {
             this.nameForUser = name;
         }
     }
@@ -252,7 +251,7 @@ public class BoughtItem {
          */
         public Builder setName(String name) {
             this.name = name;
-            if(this.nameForUser == null){
+            if (this.nameForUser == null) {
                 this.nameForUser = name;
             }
             return this;
@@ -304,6 +303,33 @@ public class BoughtItem {
             boughtItemObject.setQuantity(this.quantity);
             return boughtItemObject;
         }
+    }
 
+    @Override
+    public String toString() {
+        return new StringBuilder(nameForUser)
+                .append(", ")
+                .append(subjectCategory)
+                .append(", ")
+                .append(quantity)
+                .append(" ic, ")
+                .append(changePriceFormat(price))
+                .append(" rub")
+                .toString();
+    }
+
+    /**
+     * Method that change price format to rubles
+     *
+     * @param price price of item
+     */
+    String changePriceFormat(int price){
+        double newPrice = (double)price;
+        newPrice/=100;
+        return ((Double) newPrice).toString();
+    }
+
+    public String getPriceForUser(){
+        return changePriceFormat(price);
     }
 }

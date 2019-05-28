@@ -12,7 +12,7 @@ import com.example.qra.CheckDataBase;
 import com.example.qra.model.parser.ParsingJson;
 import com.example.qra.model.parser.ParsingJsonException;
 import com.example.qra.R;
-import com.example.qra.model.check.BoughtItem;
+import com.example.qra.model.check.CheckItem;
 import com.example.qra.model.check.CheckInformationStorage;
 import com.example.qra.view.dialogs.ErrorDialog;
 
@@ -72,7 +72,7 @@ public class ShowCheckInfoActivity extends AppCompatActivity {
             linearLayout.addView(new CardLayout(getApplicationContext(),
                     "Товары",""));
 
-            for (BoughtItem item : checkInfo.getShoppingList()) {
+            for (CheckItem item : checkInfo.getShoppingList()) {
                 linearLayout.addView(new CardLayout(getApplicationContext(),
                         item.getName(), String.valueOf(item.getPrice()/100.)));
             }

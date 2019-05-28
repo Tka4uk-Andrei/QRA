@@ -11,6 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".SpinnerActivity"></activity>
+        <activity android:name=".AllCategoryActivity" />
+        <activity android:name=".ListProductsByCategoryActivity" />
+
         <service
             android:name=".model.webRequests.WebRequestService"
             android:enabled="true"

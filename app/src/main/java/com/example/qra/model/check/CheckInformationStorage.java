@@ -9,6 +9,12 @@ public class CheckInformationStorage {
 
     public static final String OBTAIN_METHOD_FNS = "FNS";
     public static final String OBTAIN_METHOD_USER = "user";
+    public static final String CHECK_NAME_UNDEFINED = "undefined";
+
+    /**
+     * name of check
+     */
+    private String checkName;
 
     /**
      * method of obtaining (FNS or user) on default is user
@@ -46,9 +52,14 @@ public class CheckInformationStorage {
     private String buyTime;
 
     /**
+     * buying date
+     */
+    private String buyDate;
+
+    /**
      * array of your products list
      */
-    private BoughtItem[] shoppingList;
+    private CheckItem[] shoppingList;
 
 
     /**
@@ -71,6 +82,22 @@ public class CheckInformationStorage {
      * fiscal sign
      */
     private int fiscalSign;
+
+    /**
+     * @return name of check
+     */
+    public String getCheckName() {
+        return checkName;
+    }
+
+    /**
+     * This method allows you to set name of check
+     *
+     * @param checkName
+     */
+    public void setCheckName(String checkName) {
+        this.checkName = checkName;
+    }
 
     /**
      * @return fiscal document number
@@ -181,6 +208,13 @@ public class CheckInformationStorage {
     }
 
     /**
+     * @return buying date
+     */
+    public String getBuyDate() {
+        return buyDate;
+    }
+
+    /**
      * @return buying time
      */
     public String getBuyTime() {
@@ -191,7 +225,7 @@ public class CheckInformationStorage {
     /**
      * @return array of your products list
      */
-    public BoughtItem[] getShoppingList() {
+    public CheckItem[] getShoppingList() {
         return shoppingList;
     }
 
@@ -207,11 +241,26 @@ public class CheckInformationStorage {
 
 
     /**
+     * This method allows you to set buying date
+     *
+     * @param buyDate
+     */
+    public void setBuyDate(String buyDate) {
+        if (checkName == CHECK_NAME_UNDEFINED) {
+            checkName = buyDate;
+        }
+        this.buyDate = buyDate;
+    }
+
+    /**
      * This method allows you to set buying time
      *
      * @param buyTime
      */
     public void setBuyTime(String buyTime) {
+        if (checkName == CHECK_NAME_UNDEFINED) {
+            checkName = buyTime;
+        }
         this.buyTime = buyTime;
     }
 
@@ -239,7 +288,7 @@ public class CheckInformationStorage {
      *
      * @param shoppingList array of your products list
      */
-    public void setShoppingList(BoughtItem[] shoppingList) {
+    public void setShoppingList(CheckItem[] shoppingList) {
         this.shoppingList = shoppingList;
         if (shoppingList != null) {
             this.quantityPurchases = shoppingList.length;
@@ -308,9 +357,19 @@ public class CheckInformationStorage {
         private String buyTime;
 
         /**
+         * buying date
+         */
+        private String buyDate;
+
+        /**
+         * name of check
+         */
+        private String checkName;
+
+        /**
          * array of your products list
          */
-        private BoughtItem[] shoppingList;
+        private CheckItem[] shoppingList;
 
 
         /**
@@ -415,6 +474,28 @@ public class CheckInformationStorage {
         }
 
         /**
+         * This method allows you to set buying date
+         *
+         * @param buyDate
+         * @return object with a filled field
+         */
+        public Builder setBuyDate(String buyDate) {
+            this.buyDate = buyDate;
+            return this;
+        }
+
+        /**
+         * This method allows you to set name of check
+         *
+         * @param checkName
+         * @return object with a filled field
+         */
+        public Builder setCheckName(String checkName) {
+            this.checkName = checkName;
+            return this;
+        }
+
+        /**
          * This method allows you to set paied nds sum (nds10% + nds18%)
          *
          * @param paidNdsSum paied nds sum (nds10% + nds18%)
@@ -443,7 +524,7 @@ public class CheckInformationStorage {
          * @param shoppingList array of your products list
          * @return object with a filled field
          */
-        public Builder setShoppingList(BoughtItem[] shoppingList) {
+        public Builder setShoppingList(CheckItem[] shoppingList) {
             this.shoppingList = shoppingList;
             if (shoppingList != null) {
                 this.quantityPurchases = shoppingList.length;
@@ -478,12 +559,25 @@ public class CheckInformationStorage {
             checkObject.setPaidNdsSum(this.paidNdsSum);
             checkObject.setAddressOfPurchase(this.addressOfPurchase);
             checkObject.setBuyTime(this.buyTime);
+            checkObject.setBuyDate(this.buyDate);
             checkObject.setFiscalDocumentNumber(this.fiscalDocumentNumber);
             checkObject.setFiscalDriveNumber(this.fiscalDriveNumber);
             checkObject.setFiscalSign(this.fiscalSign);
             checkObject.setQuantityPurchases(this.quantityPurchases);
             checkObject.setShoppingList(this.shoppingList);
             checkObject.setObtainingMethod(this.obtainingMethod);
+            if (this.checkName == null){
+                if((this.buyDate!= null)&& (this.buyTime!=null)) {
+                    this.checkName = this.buyDate + ", " + this.buyTime;
+                }else if(this.buyDate!= null){
+                    this.checkName = this.buyDate;
+                }else if(this.buyTime!=null){
+                    this.checkName = this.buyTime;
+                }else{
+                    this.checkName = CHECK_NAME_UNDEFINED;
+                }
+            }
+            checkObject.setCheckName(this.checkName);
             return checkObject;
         }
     }

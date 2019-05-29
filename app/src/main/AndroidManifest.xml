@@ -2,18 +2,57 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.qra">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo5"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+
+        <activity android:name=".view.SpinnerActivity"></activity>
+        <activity android:name=".view.AllCategoryActivity" />
+        <activity android:name=".view.ListProductsByCategoryActivity" />
+
+        <service
+            android:name=".model.webRequests.WebRequestService"
+            android:enabled="true"
+            android:exported="true"
+            android:process="my.PC" />
+
+        <activity android:name=".view.RestorePasswordActivity" />
+        <activity android:name=".view.RegisterInFnsActivity" />
+        <activity android:name=".view.LogInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".view.SettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".view.ShowCheckInfoActivity" />
+        <activity
+            android:name=".view.WebRequestActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.ShowAllChecksActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.ShowItemsInCheckActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.CreateCheckItemActivity"/>
+        <activity
+            android:name=".view.MainActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
     </application>

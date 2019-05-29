@@ -2,6 +2,7 @@ package com.example.qra.presenter;
 
 import android.content.Intent;
 
+import com.example.qra.model.CheckAddingException;
 import com.example.qra.model.CheckDataBase;
 import com.example.qra.model.check.CheckInformationStorage;
 import com.example.qra.presenter.interfaces.IShowAllChecksPresenter;
@@ -37,7 +38,12 @@ public class ShowAllChecksPresenter extends AndroidPresenter implements IShowAll
                 .setObtainingMethod(CheckInformationStorage.OBTAIN_METHOD_USER)
                 .setBuyTime(strDate)
                 .build();
-        CheckDataBase.insert(newCheck, getView().getContext());
+        try {
+            CheckDataBase.insert(newCheck, getView().getContext());
+        } catch (CheckAddingException e) {
+            // todo
+            e.printStackTrace();
+        }
         showAllChecksView.update(getCheckList());
     }
 

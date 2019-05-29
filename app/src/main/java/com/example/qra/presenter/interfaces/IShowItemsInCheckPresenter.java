@@ -1,12 +1,13 @@
 package com.example.qra.presenter.interfaces;
-import com.example.qra.model.check.BoughtItem;
+
+import com.example.qra.model.check.CheckItem;
 
 public interface IShowItemsInCheckPresenter extends IPresenter {
 
     /**
      * @return list of check items \\
      */
-    BoughtItem[] getShoppingList();
+    CheckItem[] getShoppingList();
 
     /**
      * Method that delete check \\

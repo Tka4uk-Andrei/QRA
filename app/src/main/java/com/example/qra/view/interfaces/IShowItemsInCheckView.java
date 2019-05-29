@@ -1,6 +1,6 @@
 package com.example.qra.view.interfaces;
 
-import com.example.qra.model.check.BoughtItem;
+import com.example.qra.model.check.CheckItem;
 
 public interface IShowItemsInCheckView extends IView, ILogOutView {
 
@@ -14,7 +14,7 @@ public interface IShowItemsInCheckView extends IView, ILogOutView {
     /**
      * Method that update information on the screen \\
      */
-    void update(BoughtItem[] items);
+    void update(CheckItem[] items);
 
     void showErrorMessage(String msg);
 }

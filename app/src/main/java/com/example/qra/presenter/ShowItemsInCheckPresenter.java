@@ -5,8 +5,8 @@ import android.widget.Toast;
 
 import com.example.qra.model.CheckDataBase;
 import com.example.qra.model.CheckEditingException;
-import com.example.qra.model.check.BoughtItem;
 import com.example.qra.model.check.CheckInformationStorage;
+import com.example.qra.model.check.CheckItem;
 import com.example.qra.presenter.interfaces.IShowItemsInCheckPresenter;
 import com.example.qra.view.CreateCheckItemActivity;
 import com.example.qra.view.interfaces.IShowItemsInCheckView;
@@ -17,7 +17,7 @@ public class ShowItemsInCheckPresenter extends AndroidPresenter implements IShow
 
 
     private int position;
-    private BoughtItem boughtItems[];
+    private CheckItem boughtItems[];
     private CheckInformationStorage check;
 
     public ShowItemsInCheckPresenter(IShowItemsInCheckView showItemsInCheckView) {
@@ -33,7 +33,7 @@ public class ShowItemsInCheckPresenter extends AndroidPresenter implements IShow
     }
 
     @Override
-    public BoughtItem[] getShoppingList() {
+    public CheckItem[] getShoppingList() {
         final CheckInformationStorage checkList[] = CheckDataBase.getCheckList(getView().getContext());
         check = checkList[position];
 

@@ -7,8 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.qra.R;
-import com.example.qra.model.check.BoughtItem;
 import com.example.qra.model.check.CheckInformationStorage;
+import com.example.qra.model.check.CheckItem;
 import com.example.qra.presenter.ShowItemsInCheckPresenter;
 import com.example.qra.view.ShowItemsInCheckActivity;
 
@@ -21,7 +21,7 @@ public class EditCheckItemDialog extends Dialog {
         ShowItemsInCheckPresenter presenter = starterActivity.getPresenter();
 
         int index = activity.getIntent().getIntExtra(ShowItemsInCheckPresenter.CURRENT_ITEM, 0);
-        BoughtItem item = presenter.getShoppingList()[index];
+        CheckItem item = presenter.getShoppingList()[index];
 
         setTitle("Input Box");
         setContentView(R.layout.input_box);

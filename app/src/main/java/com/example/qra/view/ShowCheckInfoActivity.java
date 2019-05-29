@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.qra.model.CheckAddingException;
 import com.example.qra.model.CheckDataBase;
 import com.example.qra.model.parser.ParsingJson;
 import com.example.qra.model.parser.ParsingJsonException;
@@ -44,7 +45,12 @@ public class ShowCheckInfoActivity extends AppCompatActivity {
             dialog.show(getSupportFragmentManager(), "ERROR");
         } else {
 
-            CheckDataBase.insert(checkInfo,getApplicationContext());
+            try {
+                CheckDataBase.insert(checkInfo,getApplicationContext());
+            } catch (CheckAddingException e) {
+                // todo catch exception
+                e.printStackTrace();
+            }
             linearLayout.addView(new CardLayout(getApplicationContext(),
                     "Общая сумма",
                     String.valueOf(checkInfo.getTotalSum())));

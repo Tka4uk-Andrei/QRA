@@ -15,8 +15,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.qra.R;
-import com.example.qra.model.check.BoughtItem;
 import com.example.qra.model.check.CheckInformationStorage;
+import com.example.qra.model.check.CheckItem;
 import com.example.qra.presenter.NavigationBarPresenter;
 import com.example.qra.presenter.ShowItemsInCheckPresenter;
 import com.example.qra.view.dialogs.EditCheckItemDialog;
@@ -26,7 +26,7 @@ import com.example.qra.view.listeners.OnNavigationViewListener;
 
 public class ShowItemsInCheckActivity extends AppCompatActivity implements IShowItemsInCheckView {
 
-    private ArrayAdapter<BoughtItem> arrayAdapter;
+    private ArrayAdapter<CheckItem> arrayAdapter;
     private ListView listView;
 
     private ShowItemsInCheckPresenter presenter;
@@ -80,7 +80,7 @@ public class ShowItemsInCheckActivity extends AppCompatActivity implements IShow
     }
 
     @Override
-    public void update(BoughtItem[] items) {
+    public void update(CheckItem[] items) {
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
         listView.setAdapter(arrayAdapter);
     }

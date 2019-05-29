@@ -1,8 +1,8 @@
 package com.example.qra.presenter;
 
 import com.example.qra.model.CheckDataBase;
-import com.example.qra.model.check.BoughtItem;
 import com.example.qra.model.check.CheckInformationStorage;
+import com.example.qra.model.check.CheckItem;
 import com.example.qra.presenter.interfaces.ICreateCheckItemPresenter;
 import com.example.qra.view.interfaces.ICreateCheckItemView;
 
@@ -55,17 +55,17 @@ public class CreateCheckItemPresenter extends AndroidPresenter implements ICreat
             }
             int intPrice = (int) doublePrice;
 
-            BoughtItem boughtItems[];
+            CheckItem boughtItems[];
             CheckInformationStorage check;
             final CheckInformationStorage checkList[] = CheckDataBase.getCheckList(getView().getContext());
             check = checkList[position];
             boughtItems = check.getShoppingList();
 
-            BoughtItem[] newList = new BoughtItem[boughtItems.length + 1];
+            CheckItem[] newList = new CheckItem[boughtItems.length + 1];
             for (int i = 0; i < boughtItems.length; i++) {
                 newList[i] = boughtItems[i];
             }
-            BoughtItem newItem = new BoughtItem.Builder()
+            CheckItem newItem = new CheckItem.Builder()
                     .setName(name)
                     .setNameForUser(name)
                     .setSubjectCategory(category)

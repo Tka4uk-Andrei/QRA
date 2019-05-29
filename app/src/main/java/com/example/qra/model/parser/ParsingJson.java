@@ -43,6 +43,7 @@ public class ParsingJson {
     private static final String STRING_FISCAL_DOCUMENT_NUMBER_JSON_FIELD = "fiscalDocumentNumber";
     private static final String STRING_FISCAL_DRIVE_NUMBER_JSON_FIELD = "fiscalDriveNumber";
     private static final String STRING_FISCAL_SIGN_JSON_FIELD = "fiscalSign";
+    private static final String ADRESS_NOT_DEFINED = "not defined";
 
     /**
      * @param stringJSON
@@ -82,6 +83,12 @@ public class ParsingJson {
                 nds += receipt.getInt(STRING_NDS_10_JSON_FIELD);
             } catch (JSONException e) {
             }
+            String adress;
+            try {
+                adress = receipt.getString(STRING_RETAIL_PLACE_ADDRESS_JSON_FIELD);
+            }catch (JSONException e) {
+                adress = ADRESS_NOT_DEFINED;
+            }
             // split("T", 2) split line "2019-04-20T12:51:00" by character "T"
             String[] timeDate = receipt.getString(STRING_DATE_TIME_JSON_FIELD).split("T", 2);
 
@@ -89,7 +96,7 @@ public class ParsingJson {
                     .setTotalSum(receipt.getInt(STRING_TOTAL_SUM_JSON_FIELD))
                     .setInn(receipt.getString(USER_INN_JSON_FIELD))
                     .setPaidNdsSum(nds)
-                    .setAddressOfPurchase(receipt.getString(STRING_RETAIL_PLACE_ADDRESS_JSON_FIELD))
+                    .setAddressOfPurchase(adress)
                     .setBuyTime(timeDate[1])
                     .setBuyDate(timeDate[0])
                     .setFiscalDocumentNumber(receipt.getInt(STRING_FISCAL_DOCUMENT_NUMBER_JSON_FIELD))
